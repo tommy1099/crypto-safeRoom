@@ -1,5 +1,5 @@
 import LoginForm from "../LoginForm/LoginForm";
-import Shape from "../../../../components/ui/Shape/Shape";
+import { Shape } from "../../../../components/ui";
 import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
@@ -11,6 +11,7 @@ const LoginPage = () => {
       <Link to="/welcome">
         <BsFillArrowLeftSquareFill
           style={{
+            color: "#5B6A6E",
             top: "50%",
             left: "2%",
             position: "fixed",

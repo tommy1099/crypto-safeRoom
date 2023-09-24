@@ -1,18 +1,18 @@
-import Shape from "../../components/ui/Shape/Shape";
-import HelloHero from "../../components/forms/HelloHero/HelloHero";
-import { SiBitcoincash } from "react-icons/si";
+import { Shape } from "../../components/ui";
+import HelloHero from "../../components/forms";
+import { BsCurrencyBitcoin } from "react-icons/bs";
 
 const WelcomePage = () => {
   return (
     <>
       <HelloHero />
       <Shape>
-        <SiBitcoincash
+        <BsCurrencyBitcoin
           style={{
             color: "white",
-            position: "fixed",
-            top: "10px",
-            left: "650px",
+            posision: "absolute",
+            marginTop: "-30%",
+
             fontSize: "750px",
           }}
         />

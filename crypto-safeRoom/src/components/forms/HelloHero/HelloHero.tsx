@@ -4,7 +4,7 @@ const HelloHero = () => {
     <Link to="/auth" />;
   };
   return (
-    <div className="absolute hero min-h-screen bg-base-100 z-1 left-10 w-[500px]">
+    <div className="z-2 absolute hero h-[70%] top-[15%] w-[500px] bg-white rounded-3xl mx-14 shadow-lg">
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-4xl font-bold">Welcome to</h1>
@@ -15,7 +15,7 @@ const HelloHero = () => {
           </p>
           <Link
             to="/auth/login"
-            className="btn btn-neutral"
+            className="btn bg-patternColors-green text-white"
             onClick={handleRoute}
           >
             Get Started

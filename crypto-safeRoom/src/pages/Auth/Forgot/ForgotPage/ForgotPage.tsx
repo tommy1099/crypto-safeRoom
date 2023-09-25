@@ -1,4 +1,4 @@
-import { ForgotForm } from "../../../Auth";
+import { ForgotForm } from "../../..";
 import { Shape } from "../../../../components/ui";
 import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 import { Link } from "react-router-dom";

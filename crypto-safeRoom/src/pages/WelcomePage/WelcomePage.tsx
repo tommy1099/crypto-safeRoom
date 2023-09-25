@@ -1,5 +1,5 @@
 import { Shape } from "../../components/ui";
-import HelloHero from "../../components/forms";
+import { HelloHero } from "../../components/forms";
 import { BsCurrencyBitcoin } from "react-icons/bs";
 
 const WelcomePage = () => {

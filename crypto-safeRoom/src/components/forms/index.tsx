@@ -1,2 +1,3 @@
 import HelloHero from "./HelloHero/HelloHero";
-export default HelloHero;
+import ContactForm from "./ContactForm/ContactForm";
+export { HelloHero, ContactForm };

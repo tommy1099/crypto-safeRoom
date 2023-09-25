@@ -41,10 +41,10 @@ const SignupForm = () => {
               </button>
             </div>
           </div>
-          <div className="z-10 ml-4 mb-5 flex">
+          <div className="z-10 ml-[13%] mb-[10%] flex">
             <p className="z-10 text-gray-900">Already have an account?</p>
             <Link to="/auth/login">
-              <line className="underline ml-2 text-gray-900 cursor-pointer">
+              <line className="underline ml-2 text-patternColors-red cursor-pointer">
                 Login
               </line>
             </Link>

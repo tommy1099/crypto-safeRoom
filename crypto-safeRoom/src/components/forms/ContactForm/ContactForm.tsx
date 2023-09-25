@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
-const LoginForm = () => {
+// import { Link } from "react-router-dom";
+interface Props {
+  style: string;
+}
+const ContactForm = ({ style }: Props) => {
   return (
-    <div className="absolute w-0 justify-start top-[30%] left-[10%] hero bg-base-100">
+    <div className={style}>
       <div className="hero-content flex-col lg:flex-row-reverse w-full">
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
@@ -17,39 +20,32 @@ const LoginForm = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Subject</span>
               </label>
               <input
                 type="text"
-                placeholder="password"
+                placeholder="subject"
                 className="input input-bordered"
               />
+            </div>
+            <div className="form-control">
               <label className="label">
-                <Link
-                  to="/auth/forgot"
-                  className="label-text-alt link link-hover"
-                >
-                  Forgot password?
-                </Link>
+                <span className="label-text">Messege</span>
               </label>
+              <textarea
+                className="textarea textarea-bordered"
+                placeholder="Bio"
+              ></textarea>
             </div>
             <div className="form-control mt-6">
               <button className="btn bg-patternColors-green text-white">
-                Login
+                Send
               </button>
             </div>
-          </div>
-          <div className="z-10 ml-[13%] mb-[10%] flex">
-            <p className="z-10 text-gray-900">Dont have an account?</p>
-            <Link to="/auth/signup">
-              <line className="underline ml-2 text-patternColors-red cursor-pointer">
-                SignUp
-              </line>
-            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 };
-export default LoginForm;
+export default ContactForm;

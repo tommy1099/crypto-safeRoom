@@ -1,13 +1,16 @@
+import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
-    <div className="navbar bg-base-100 fixed">
+    <div className="navbar bg-base-100 w-[90%] ml-[5%] fixed z-20 rounded-3xl shadow-xl top-4">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">Crypto-SafeRoom</a>
+        <Link to="/welcome" className="cursor-pointer ml-5 font-bold text-xl">
+          Crypto Safe Room
+        </Link>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="">
-            <div className="indicator mr-5 mt-2">
+            <div className="cursor-pointer indicator mr-5 mt-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-7 w-7"
@@ -31,9 +34,11 @@ const NavBar = () => {
           >
             <div className="card-body">
               <span className="font-bold text-lg">0 Items</span>
-              <span className="text-info">Subtotal: $0</span>
+              <span className="text-patternColors-red">Subtotal: $0</span>
               <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+                <button className="btn bg-patternColors-green btn-block text-white">
+                  View cart
+                </button>
               </div>
             </div>
           </div>
@@ -58,7 +63,7 @@ const NavBar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Signin/Signup</a>
+              <Link to="/login">Login</Link>
             </li>
           </ul>
         </div>

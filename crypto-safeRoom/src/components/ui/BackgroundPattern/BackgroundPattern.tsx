@@ -2,7 +2,7 @@ import backgroundImg from "../../../assets/img/cryptocurrency-financial-items-se
 const BackgroundPattern = () => {
   return (
     <div
-      className="absolute w-screen h-screen"
+      className=" absolute w-screen h-screen"
       style={{
         backgroundImage: `url(${backgroundImg})`,
         filter: "grayscale(80%)",

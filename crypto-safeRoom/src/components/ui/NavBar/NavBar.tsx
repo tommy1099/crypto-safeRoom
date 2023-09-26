@@ -1,13 +1,30 @@
 import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
-    <div className="navbar bg-base-100 w-[90%] ml-[5%] fixed z-20 rounded-3xl shadow-xl top-4">
+    <div className="navbar bg-base-100 fixed z-20 rounded-xl shadow-xl top-4">
       <div className="flex-1">
         <Link to="/welcome" className="cursor-pointer ml-5 font-bold text-xl">
           Crypto Safe Room
         </Link>
       </div>
-      <div className="flex-none">
+      <div className="hidden lg:flex left-[40%] right-[40%] gap-10 cursor-pointer">
+        <Link to="/signals">
+          <p>Signals</p>
+        </Link>
+        <Link to="/welcome">
+          <p>News</p>
+        </Link>
+        <Link to="/welcome">
+          <p>Tutorials</p>
+        </Link>
+        <Link to="/welcome">
+          <p>Products</p>
+        </Link>
+        <Link to="/welcome">
+          <p>Events</p>
+        </Link>
+      </div>
+      <div className="ml-10 flex-none">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="">
             <div className="cursor-pointer indicator mr-5 mt-2">
@@ -28,6 +45,7 @@ const NavBar = () => {
               <span className="badge badge-sm indicator-item">0</span>
             </div>
           </label>
+
           <div
             tabIndex={0}
             className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
@@ -36,7 +54,7 @@ const NavBar = () => {
               <span className="font-bold text-lg">0 Items</span>
               <span className="text-patternColors-red">Subtotal: $0</span>
               <div className="card-actions">
-                <button className="btn bg-patternColors-green btn-block text-white">
+                <button className="btn btn-accent btn-block text-black">
                   View cart
                 </button>
               </div>
@@ -46,7 +64,11 @@ const NavBar = () => {
         <div className="dropdown dropdown-end ">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="/src/assets/img/proxy-image.png" />
+              <div className="avatar placeholder">
+                <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
+                  <span className="text-2xl">T</span>
+                </div>
+              </div>
             </div>
           </label>
           <ul
@@ -63,7 +85,7 @@ const NavBar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/auth/login">Login</Link>
             </li>
           </ul>
         </div>

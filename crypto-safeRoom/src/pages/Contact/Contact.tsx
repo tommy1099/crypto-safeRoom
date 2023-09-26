@@ -10,14 +10,13 @@ const Contact = () => {
         {
           <>
             <ContactForm style="absolute justify-start w-[350px] top-[10%] left-[10%] hero" />
-            <div className="hidden w-[50%] h-32 lg:flex flex-col justify-start items-center ml-[35%] mt-[15%] text-6xl font-bold gap-4">
-              <p className="text-6xl">Contact us via this form</p>
-              <p className="text-3xl">Let us know what you think</p>
+            <div className="hidden w-[50%] h-32 lg:flex flex-col justify-start items-center ml-[35%] mt-[15%] font-bold gap-4">
+              <p className="text-3xl xl:text-6xl">Contact us via this form</p>
+              <p className=" text-xl xl:text-3xl">Let us know what you think</p>
             </div>
-
-            <Footer />
           </>
         }
+        <Footer />
       </Container>
     </>
   );

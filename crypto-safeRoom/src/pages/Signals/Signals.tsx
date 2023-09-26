@@ -30,17 +30,6 @@ const Signals = () => {
               }}
               tags={{ tag1: "Long: x10", tag2: "SL: 15%" }}
             />
-            <Card
-              expire={5000}
-              src={Pic}
-              title="CELR/USDT"
-              desc={{
-                desc1: "Target Price 1: 20%",
-                desc2: "Target Price 2: 30%",
-                desc3: "Target Price 3: 50%",
-              }}
-              tags={{ tag1: "Long: x10", tag2: "SL: 15%" }}
-            />
             {/* remove ================================================= */}
           </Container>
           <div className="">

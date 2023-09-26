@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
-    <div className="navbar bg-base-100 fixed z-20 rounded-xl shadow-xl top-4">
+    <div className="navbar bg-base-100 z-20 sticky rounded-xl shadow-xl top-0">
       <div className="flex-1">
         <Link to="/welcome" className="cursor-pointer ml-5 font-bold text-xl">
           Crypto Safe Room

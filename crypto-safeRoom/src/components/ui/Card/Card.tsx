@@ -26,9 +26,9 @@ const Card = ({ title, desc, src, tags, expire }: Props) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  });
   return (
-    <div className=" card w-auto bg-base-100 image-full shadow-xl">
+    <div className="card w-auto bg-base-100 image-full shadow-xl z-10">
       <figure>
         <img src={src} alt="Signal" />
       </figure>
@@ -54,7 +54,7 @@ const Card = ({ title, desc, src, tags, expire }: Props) => {
           <div className="ml-2 badge badge-outline">{tags.tag2}</div>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-accent ">Show More</button>
+          <button className="z-1 btn btn-accent ">Show More</button>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 const Footer = () => {
   return (
-    <footer className="mt-[12%] footer footer-center bg-white text-base-content">
+    <footer className="mt-[10%] footer footer-center bg-white text-base-content">
       <nav className="grid grid-flow-col gap-4">
         <Link to="/welcome" className="link link-hover">
           About us

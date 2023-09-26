@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
-    <div className="flex">
+    <div className="relative mt-[13%]">
       <LoginForm />
 
       <Link to="/welcome">

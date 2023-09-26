@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const SignupPage = () => {
   return (
-    <div className="flex">
+    <div className="relative mt-[10%]">
       <SignupForm />
 
       <Link to="/auth/login">

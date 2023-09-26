@@ -14,8 +14,8 @@ const NotFound = () => {
             alt=""
           />
           <Link to="/welcome">
-            <button className="absolute top-[75%] left-[42%] btn w-64 bg-patternColors-green text-white">
-              Go to Home
+            <button className="absolute top-[75%] left-[40%] btn w-64 bg-patternColors-green text-white">
+              Home Page
             </button>
           </Link>
         </>

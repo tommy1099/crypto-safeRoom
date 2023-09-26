@@ -9,12 +9,12 @@ import {
   NotFound,
   Signals,
 } from "./pages";
-import { BackgroundPattern } from "./components/ui";
+// import { BackgroundPattern } from "./components/ui";
 
 function App() {
   return (
-    <div className="m-0 p-0 box-border overflow-y-scroll">
-      <BackgroundPattern />
+    <div className="">
+      {/* <BackgroundPattern /> */}
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/news" element={<WelcomePage />} />

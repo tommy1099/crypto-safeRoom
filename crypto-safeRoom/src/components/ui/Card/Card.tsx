@@ -28,7 +28,7 @@ const Card = ({ title, desc, src, tags, expire }: Props) => {
     };
   });
   return (
-    <div className="card w-auto bg-base-100 image-full shadow-xl z-10">
+    <div className="cursor-pointer mb-[10%] card w-[80%] bg-base-100 image-full hover:shadow-2xl z-10">
       <figure>
         <img src={src} alt="Signal" />
       </figure>
@@ -53,9 +53,9 @@ const Card = ({ title, desc, src, tags, expire }: Props) => {
           <div className=" badge badge-outline">{tags.tag1}</div>
           <div className="ml-2 badge badge-outline">{tags.tag2}</div>
         </div>
-        <div className="card-actions justify-end">
-          <button className="z-1 btn btn-accent ">Show More</button>
-        </div>
+        {/* <div className="card-actions justify-center">
+          <button className="z-1 btn btn-accent w-[%]">Show More</button>
+        </div> */}
       </div>
     </div>
   );

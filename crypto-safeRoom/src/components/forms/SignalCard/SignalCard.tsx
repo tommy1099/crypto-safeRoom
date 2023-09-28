@@ -14,9 +14,9 @@ interface Props extends React.PropsWithChildren {
     tag2: string;
   };
 }
-const Card = ({ blur, title, desc, src, tags }: Props) => {
+const SignalCard = ({ blur, title, desc, src, tags }: Props) => {
   return (
-    <div className="hover:border-green-300 border-2 rounded-2xl m-3">
+    <div className="hover:border-gray-400 border-white border-4 rounded-3xl m-3">
       <div
         className={`${
           blur ? " grayscale-[100%]" : ""
@@ -45,4 +45,4 @@ const Card = ({ blur, title, desc, src, tags }: Props) => {
   );
 };
 
-export default Card;
+export default SignalCard;

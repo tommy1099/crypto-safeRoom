@@ -9,8 +9,10 @@ import Contact from "./Contact/Contact";
 import Container from "../components/ui/Container/Container";
 import NotFound from "./Auth/NotFound/NotFound";
 import Signals from "./Signals/Signals";
+import News from "./News/News";
 
 export {
+  News,
   Signals,
   NotFound,
   Container,

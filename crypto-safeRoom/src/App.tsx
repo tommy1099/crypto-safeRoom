@@ -8,6 +8,7 @@ import {
   SignupPage,
   NotFound,
   Signals,
+  News,
 } from "./pages";
 // import { BackgroundPattern } from "./components/ui";
 
@@ -17,7 +18,7 @@ function App() {
       {/* <BackgroundPattern /> */}
       <Routes>
         <Route path="/" element={<WelcomePage />} />
-        <Route path="/news" element={<WelcomePage />} />
+        <Route path="/news" element={<News />} />
         <Route path="/tutorial" element={<WelcomePage />} />
         <Route path="/events" element={<WelcomePage />} />
         <Route path="/profile" element={<WelcomePage />} />

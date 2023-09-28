@@ -1,5 +1,6 @@
 import { Container } from "..";
-import { NavBar, Footer, Card, SidePanelFilter } from "../../components/ui";
+import { NavBar, Footer, SidePanel } from "../../components/ui";
+import { SignalCard, SignalFilters } from "../../components/forms";
 
 import Pic from "../../assets/img/bearandbull.png";
 import { useSelector } from "react-redux";
@@ -102,10 +103,12 @@ const Signals = () => {
   return (
     <>
       <NavBar />
-      <SidePanelFilter />
+      <SidePanel>
+        <SignalFilters />
+      </SidePanel>
       <Container style=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 ml-[5%] mr-[20%] mt-[3%]">
         {filteredComponents.map((component) => (
-          <Card
+          <SignalCard
             blur={component.blur}
             id={component.id}
             expire={component.expire}

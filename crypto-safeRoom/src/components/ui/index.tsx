@@ -3,4 +3,5 @@ import Shape from "./Shape/Shape";
 import BackgroundPattern from "./BackgroundPattern/BackgroundPattern";
 import Footer from "./Footer/Footer";
 import Card from "./Card/Card";
-export { NavBar, Shape, BackgroundPattern, Footer, Card };
+import SidePanelFilter from "./SidePanelFilter/SidePanelFilter";
+export { NavBar, Shape, BackgroundPattern, Footer, Card, SidePanelFilter };

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-
 interface Props extends React.PropsWithChildren {
+  blur: boolean;
+  id: number;
   expire: number;
   title: string;
   desc: {
@@ -14,50 +14,35 @@ interface Props extends React.PropsWithChildren {
     tag2: string;
   };
 }
-const Card = ({ title, desc, src, tags, expire }: Props) => {
-  const [showDiv, setShowDiv] = useState(true);
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setShowDiv(false);
-    }, expire);
-    {
-      /*14400*/
-    }
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  });
+const Card = ({ blur, title, desc, src, tags }: Props) => {
   return (
-    <div className="cursor-pointer mb-[10%] card w-[80%] bg-base-100 image-full hover:shadow-2xl z-10">
-      <figure>
-        <img src={src} alt="Signal" />
-      </figure>
-      <div className="card-body">
-        <h2 className="card-title">
-          {title}
-          <div>
-            {showDiv && (
-              <div id="rmDiv" className="badge badge-secondary">
-                NEW
-              </div>
-            )}
+    <div className="hover:border-green-300 border-2 rounded-2xl m-3">
+      <div
+        className={`${
+          blur ? " grayscale-[100%]" : ""
+        } hover:cursor-pointer mb-[10%] card h-full w-full bg-base-100 image-full hover:shadow-xl z-10`}
+      >
+        <figure>
+          <img src={src} alt="Signal" />
+        </figure>
+        <div className="card-body">
+          <h2 className="card-title text-white">{title}</h2>
+          <div className="my-[5%]">
+            <p className="text-white">{desc.desc1}</p>
+            <p className="text-white">{desc.desc2}</p>
+            <p className="text-white">{desc.desc3}</p>
           </div>
-        </h2>
-        <div className="my-[5%]">
-          <p>{desc.desc1}</p>
-          <p>{desc.desc2}</p>
-          <p>{desc.desc3}</p>
-        </div>
 
-        <div className="ard-actions justify-end">
-          <div className=" badge badge-outline">{tags.tag1}</div>
-          <div className="ml-2 badge badge-outline">{tags.tag2}</div>
+          <div className="ard-actions justify-end">
+            <div className=" badge badge-outline ">{tags.tag1}</div>
+            <div className="ml-2 badge badge-outline text-white">
+              {tags.tag2}
+            </div>
+          </div>
         </div>
-        {/* <div className="card-actions justify-center">
-          <button className="z-1 btn btn-accent w-[%]">Show More</button>
-        </div> */}
       </div>
     </div>
   );
 };
+
 export default Card;

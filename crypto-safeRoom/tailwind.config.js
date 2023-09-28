@@ -2,6 +2,9 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    blur: {
+      custom: "1px",
+    },
     extend: {
       colors: {
         patternColors: {

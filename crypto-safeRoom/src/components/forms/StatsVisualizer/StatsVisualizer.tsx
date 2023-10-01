@@ -15,7 +15,7 @@ const StatsVisualizer = () => {
   const ratio = calculateRatio(stats.successful, stats.failed);
 
   return (
-    <div className="bg-white top-[8%] right-[5%] hidden fixed sm:flex z-20 gap-2">
+    <div className="bg-white top-[9%] right-[5%] hidden fixed sm:flex z-20 gap-2">
       <p className=" p-2 rounded-md">Total: {stats.all}</p>
       <p className="text-green-700 p-2 rounded-md">
         Successful: {stats.successful}

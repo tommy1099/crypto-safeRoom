@@ -49,50 +49,61 @@ const SignalCard = ({ blur, crypto, desc, src, tags, state }: Props) => {
     if (blur) {
       if (state) {
         return (
-          <div className="absolute top-[10%] right-[10%]">
-            <div className="text-green-500 text-[30px]">
-              {" "}
-              <IoMdCheckmarkCircle />
+          <div className="">
+            <div className="text-green-500 flex gap-2">
+              <p>Result:</p>
+
+              <div className="mt-1">
+                <IoMdCheckmarkCircle />
+              </div>
             </div>
           </div>
         );
       } else {
         return (
-          <div className="absolute top-[10%] right-[10%]">
-            <div className="text-red-500 text-[30px]">
-              {" "}
-              <ImCross />
+          <div className="">
+            <div className="text-red-500 flex gap-2">
+              <p>Result:</p>
+              <div className="mt-1">
+                <ImCross />
+              </div>
             </div>
           </div>
         );
       }
+    } else {
+      return (
+        <div className="text-yellow-400 flex gap-2">
+          <p>Result: Active</p>
+        </div>
+      );
     }
   };
 
   return (
     <div
       // onClick={handleButtonClick}
-      className="hover:border-gray-700 border-gray-300 border-4 rounded-3xl m-3s m-2 shadow-sm"
+      className="hover:border-patternColors-red hover:shadow-xl p-5 border-gray-300 border-4 rounded-3xl m-3s m-2 shadow-sm bg-gray-800 overflow-hidden"
     >
       <div
         className={`${
           blur ? " grayscale-[70%]" : ""
         } hover:cursor-pointer mb-[10%] card image-full hover:shadow-xl h-full w-full  `}
       >
-        <figure>
+        {/* <figure>
           <img className="overflow-hidden" src={src} alt="Signal" />
-        </figure>
-        <div className="card-body">
-          <h2 className={"card-title text-black inline-block"}>{crypto}</h2>
+        </figure> */}
+        <div className="card-body ">
+          <h2 className={"card-title text-white text-2xl block"}>{crypto}</h2>
           {handleState()}
           <div className="my-[5%]">
-            <p className="text-black text-[14px]">{desc.desc1}</p>
-            <p className="text-black text-[14px]">{desc.desc2}</p>
-            <p className="text-black text-[14px]">{desc.desc3}</p>
+            <p className="text-white text-[14px]">{desc.desc1}</p>
+            <p className="text-white text-[14px]">{desc.desc2}</p>
+            <p className="text-white text-[14px]">{desc.desc3}</p>
           </div>
           <div className="card-actions">
-            <div className=" badge badge-outline text-black">{tags.tag1}</div>
-            <div className=" badge badge-outline text-black">{tags.tag2}</div>
+            <div className=" badge badge-outline text-white">{tags.tag1}</div>
+            <div className=" badge badge-outline text-white">{tags.tag2}</div>
           </div>
         </div>
       </div>

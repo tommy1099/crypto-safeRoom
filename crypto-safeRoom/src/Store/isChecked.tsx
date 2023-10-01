@@ -15,9 +15,16 @@ const toggle = createSlice({
     toggleSwitch: (state) => {
       state.switch = !state.switch;
     },
+    toggleSwitchFalse: (state) => {
+      state.switch = false;
+    },
+    toggleSwitchTrue: (state) => {
+      state.switch = true;
+    },
   },
 });
 
-export const { toggleSwitch } = toggle.actions;
+export const { toggleSwitch, toggleSwitchFalse, toggleSwitchTrue } =
+  toggle.actions;
 
 export default toggle.reducer;

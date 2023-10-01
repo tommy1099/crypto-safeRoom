@@ -1,163 +1,144 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-const NavBar = () => {
+import { useMediaQuery } from "react-responsive";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { ProfileDropdown } from "../../forms";
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
   return (
-    <div className="z-20 drawer">
-      <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col">
-        {/* Navbar */}
-        <div className="w-full navbar shadow-xl rounde-md">
-          <div className="flex-none lg:hidden">
-            <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="inline-block w-6 h-6 stroke-current"
+    <nav className="bg-gray-800 border-b-2 fixed top-0 w-full z-20">
+      <div className=" mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            <Link
+              to="/"
+              className="flex-shrink-0 flex items-center text-white font-bold text-xl"
+            >
+              Crypto Safe Room
+            </Link>
+          </div>
+          {isMobile ? (
+            <div className="flex items-center">
+              <button
+                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+                aria-expanded="false"
+                onClick={toggleDrawer}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-            </label>
-          </div>
-          <Link className="cursor-pointer flex-1 px-2 mx-2" to="home">
-            <div>Crypto Safe Room</div>
-          </Link>
-          <div className="flex-none hidden lg:block">
-            <ul className="mt-2 menu menu-horizontal p-0">
-              <li>
-                <Link to="/signals">
-                  <p>Signals</p>
-                </Link>
-              </li>
-              <li>
-                <Link to="/news">
-                  <p>News</p>
-                </Link>
-              </li>
-              <li>
-                <Link to="/welcome">
-                  <p>Tutorial</p>
-                </Link>
-              </li>
-              <li>
-                <Link to="/welcome">
-                  <p>Products</p>
-                </Link>
-              </li>
-              <li>
-                <Link to="/welcome">
-                  <p>Events</p>
-                </Link>
-              </li>
-              <div className="dropdown dropdown-end">
-                <label
-                  tabIndex={0}
-                  className="mr-3 -mt-1 btn btn-ghost btn-circle"
+                <span className="sr-only">Open main menu</span>
+                {open ? <FaTimes /> : <FaBars />}
+              </button>
+            </div>
+          ) : (
+            <div className="hidden sm:block sm:ml-6 mt-3">
+              <div className="flex space-x-4">
+                <Link
+                  to="/"
+                  className="text-white hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  <div className="indicator">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                    <span className="badge badge-sm indicator-item ">8</span>
-                  </div>
-                </label>
-                <div
-                  tabIndex={0}
-                  className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+                  Home
+                </Link>
+                <Link
+                  to="/about"
+                  className="text-white hover:bg-gray-100 hover:text-gray-800  px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  <div className="card-body">
-                    <span className="font-bold text-lg">8 Items</span>
-                    <span className="text-info">Subtotal: $999</span>
-                    <div className="card-actions">
-                      <button className="btn btn-primary btn-block">
-                        View cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  About
+                </Link>
+                <Link
+                  to="/contact"
+                  className="text-white hover:bg-gray-100 hover:text-gray-800  px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Contact
+                </Link>
+                <Link
+                  to="/event"
+                  className="text-white hover:bg-gray-100 hover:text-gray-800  px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Events
+                </Link>
+                <Link
+                  to="/tutorials"
+                  className="text-white hover:bg-gray-100 hover:text-gray-800  px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Tutorials
+                </Link>
+                <Link
+                  to="/product"
+                  className="text-white hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Products
+                </Link>
+                <ProfileDropdown />
               </div>
-              <div className="dropdown dropdown-end">
-                <label
-                  tabIndex={0}
-                  className="btn btn-ghost btn-circle avatar -mt-1"
-                >
-                  <div className="w-10 rounded-full">
-                    <div className="avatar placeholder">
-                      <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-                        <span className="text-2xl">T</span>
-                      </div>
-                    </div>
-                  </div>
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>Settings</a>
-                  </li>
-                  <li>
-                    <a>Logout</a>
-                  </li>
-                </ul>
-              </div>
-            </ul>
-          </div>
+            </div>
+          )}
         </div>
       </div>
-      <div className="drawer-side">
-        <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200">
-          {/* Sidebar content here */}
-          <li>
-            <Link to="/signals">
-              <p>Signals</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/welcome">
-              <p>News</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/welcome">
-              <p>Tutorial</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/welcome">
-              <p>Products</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/welcome">
-              <p>Events</p>
-            </Link>
-          </li>
-        </ul>
-      </div>
-    </div>
+      {isMobile && (
+        <div
+          className={`${
+            open ? "block " : "hidden "
+          } absolute top-16 inset-x-0 p-2 transition transform origin-top-right md:hidden`}
+        >
+          <div className="rounded-lg w-[50%] z-20 fixed right-0 top-10 ring-1 ring-black ring-opacity-5 bg-gray-800 divide-y-2 divide-gray-50">
+            <div className="pt-5 pb-6 px-5">
+              <div className="mt-6">
+                <nav className="grid gap-y-8">
+                  <Link
+                    to="/"
+                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                  >
+                    <span className="ml-3 text-base font-medium text-white">
+                      Home
+                    </span>
+                  </Link>
+                  <Link
+                    to="/about"
+                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                  >
+                    <span className="ml-3 text-base font-medium text-white">
+                      About
+                    </span>
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
+                  >
+                    <span className="ml-3 text-base font-medium text-white">
+                      Contact
+                    </span>
+                  </Link>
+                  <Link
+                    to="/event"
+                    className="text-white hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Events
+                  </Link>
+                  <Link
+                    to="/tutorials"
+                    className="text-white hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Tutorials
+                  </Link>
+                  <Link
+                    to="/product"
+                    className="text-white hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Products
+                  </Link>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
-export default NavBar;
+
+export default Navbar;

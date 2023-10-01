@@ -1,32 +1,40 @@
-import { useDispatch, useSelector } from "react-redux";
-import { toggleSwitch } from "../../../Store/isChecked";
-import { RootState } from "../../../Store/Store";
+import { useDispatch } from "react-redux";
+import { toggleSwitchFalse, toggleSwitchTrue } from "../../../Store/isChecked";
+import { Dropdown } from "../../ui";
+import { useSearchParams } from "react-router-dom";
 const SignalFilters = () => {
+  const [searchParams, setSearchParams] = useSearchParams({ toggle: "false" });
+  const switchToggle = searchParams.get("toggle") === "true";
   const dispatch = useDispatch();
-  const switchState = useSelector(
-    (state: RootState) => state.toggleReducer.switch
-  );
 
+  //====================================================all/active filter
   const handleCheck = () => {
-    dispatch(toggleSwitch());
+    if (switchToggle) setSearchParams({ toggle: "false" });
+    else {
+      setSearchParams({ toggle: "true" });
+    }
   };
-  return (
-    <div className="form-control">
-      <label className="gap-2 label cursor-pointer">
-        <span className="label-text">Active</span>
-        {switchState ? (
-          <input
-            type="checkbox"
-            onClick={handleCheck}
-            className="toggle"
-            checked
-          />
-        ) : (
-          <input type="checkbox" onClick={handleCheck} className="toggle" />
-        )}
 
-        <span className="label-text">All</span>
-      </label>
+  const handleCheckTrueFalse = (option: string) => {
+    if (option === "Active" && switchToggle) {
+      dispatch(toggleSwitchFalse());
+
+      handleCheck();
+    } else if (option === "All" && !switchToggle) {
+      dispatch(toggleSwitchTrue());
+
+      handleCheck();
+    }
+  };
+  //====================================================all/active filter
+
+  return (
+    <div className="flex flex-col gap-1">
+      <Dropdown
+        label="All/Active"
+        options={["All", "Active"]}
+        onSelect={handleCheckTrueFalse}
+      />
     </div>
   );
 };

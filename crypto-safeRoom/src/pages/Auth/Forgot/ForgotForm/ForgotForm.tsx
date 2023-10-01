@@ -1,28 +1,22 @@
+import { Container } from "../../..";
+import { Button, Input } from "../../../../components/ui";
+
 const ForgotForm = () => {
   return (
-    <div className="absolute w-0 justify-start top-[35%] left-[10%] hero bg-base-100">
-      <div className="hero-content flex-col lg:flex-row-reverse w-full">
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <div className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="text"
-                placeholder="email"
-                className="input input-bordered"
-              />
-            </div>
-            <div className="form-control mt-6">
-              <button className="btn bg-patternColors-green text-white">
-                Login
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container style="w-[300px] h-[300px] shadow-2xl rounded-lg relative mt-[16%] ml-[7%] p-10">
+      <form action="/welcome" className="mt-3">
+        <label htmlFor="forgot">Email</label>
+        <Input
+          style="w-full h-10 border-2 border-gray-300 rounded-md"
+          placeHolder="email"
+          type="text"
+          id="forgot"
+        />
+        <Button style="text-white bg-patternColors-green p-2 rounded-md mt-[30%] ml-[12%]">
+          Reset my password
+        </Button>
+      </form>
+    </Container>
   );
 };
 export default ForgotForm;

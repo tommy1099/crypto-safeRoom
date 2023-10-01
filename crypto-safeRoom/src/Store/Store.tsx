@@ -1,9 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import divs from "./SignalDivs";
-import toggle from "./isChecked";
+import Filtertoggle from "./isChecked";
+import SidePaneltoggle from "./IsShrunk";
+import stats from "./SignalStatsTracker";
+
 const rootReducer = combineReducers({
   SignalDivs: divs,
-  toggleReducer: toggle,
+  toggleReducer: Filtertoggle,
+  SidePanelToggle: SidePaneltoggle,
+  statsTracker: stats,
 });
 const store = configureStore({
   reducer: rootReducer,

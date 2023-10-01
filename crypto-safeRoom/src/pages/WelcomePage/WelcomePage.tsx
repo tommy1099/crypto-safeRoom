@@ -11,7 +11,7 @@ const WelcomePage = () => {
           style={{
             color: "white",
             posision: "absolute",
-            marginTop: "-30%",
+            marginTop: "-20%",
 
             fontSize: "750px",
           }}

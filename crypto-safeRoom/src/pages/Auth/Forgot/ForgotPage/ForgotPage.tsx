@@ -22,7 +22,7 @@ const ForgotPage = () => {
       </Link>
       <Shape
         children={
-          <div className="md:p-22 md:py-10 lg:px-28 lg:py-20">
+          <div className="md:p-22 md:py-12 lg:px-28 lg:py-[15%]">
             <h1 className="font-bold text-white text-5xl">
               Recover your account
             </h1>

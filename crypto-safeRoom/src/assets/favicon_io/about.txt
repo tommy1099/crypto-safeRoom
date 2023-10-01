@@ -1,6 +1,6 @@
 This favicon was generated using the following font:
 
-- Font Title: Ubuntu Mono
-- Font Author: Copyright 2011 Canonical Ltd. Licensed under the Ubuntu Font Licence 1.0
-- Font Source: http://fonts.gstatic.com/s/ubuntumono/v17/KFO8CneDtsqEr0keqCMhbCc_Mn33tYhkf3O1GVg.ttf
-- Font License: Ubuntu Font License, 1.0 (http://font.ubuntu.com/ufl/))
+- Font Title: Sofia Sans Semi Condensed
+- Font Author: Copyright 2019 The Sofia Sans Project Authors (https://github.com/lettersoup/Sofia-Sans)
+- Font Source: http://fonts.gstatic.com/s/sofiasanssemicondensed/v4/46kOlaPnUDrQoNsWDCGXXxYlujh5Wv0nwP4RwxURm28cA7YLHsIVvoqyFu9TGahllIhN.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))

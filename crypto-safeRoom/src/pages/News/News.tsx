@@ -1,5 +1,10 @@
 import { Container } from "..";
-import { NavBar, Footer, SidePanel } from "../../components/ui";
+import {
+  NavBar,
+  Footer,
+  ExpandedSidePanel,
+  ShrunkSidePanel,
+} from "../../components/ui";
 import { NewsCard } from "../../components/forms";
 import Pic from "../../assets/img//proxy-image.jpg";
 // import { useSelector } from "react-redux";
@@ -59,8 +64,9 @@ const News = () => {
   return (
     <>
       <NavBar />
-      <SidePanel />
-      <Container style=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ml-[5%] mr-[20%] mt-[3%]">
+      <ExpandedSidePanel />
+      <ShrunkSidePanel />
+      <Container style=" dracula grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ml-[5%] mr-[20%] mt-[3%]">
         {cardComponents.map((component) => (
           <NewsCard
             src={component.src}

@@ -12,7 +12,7 @@ interface Props extends React.PropsWithChildren {
 }
 const NewsCard = ({ title, desc, src, tags }: Props) => {
   return (
-    <div className="border-white hover:border-gray-300 border-2 rounded-2xl m-3 shadow-md">
+    <div className="border-gray-800 hover:border-pink-200 border-2 rounded-2xl m-3 shadow-md">
       <div
         className={` hover:cursor-pointer mb-[10%] card h-full w-full bg-base-100 hover:shadow-xl z-10`}
       >

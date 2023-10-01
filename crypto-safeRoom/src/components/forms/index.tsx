@@ -1,6 +1,18 @@
 import HelloHero from "./HelloHero/HelloHero";
 import ContactForm from "./ContactForm/ContactForm";
-import SignalCard from "../forms/SignalCard/SignalCard";
-import NewsCard from "./NewsCard/NewsCard";
+import SignalCard from "./Cards/SignalCard/SignalCard";
+import NewsCard from "./Cards/NewsCard/NewsCard";
 import SignalFilters from "./SignalFilters/SignalFilters";
-export { HelloHero, ContactForm, SignalCard, NewsCard, SignalFilters };
+import SignalModal from "./SignalModal/SignalModal";
+import ProfileDropdown from "./ProfileDropdown/ProfileDropdown";
+import PasswordInput from "./PasswordInput/PasswordInput";
+export {
+  PasswordInput,
+  ProfileDropdown,
+  HelloHero,
+  ContactForm,
+  SignalCard,
+  NewsCard,
+  SignalFilters,
+  SignalModal,
+};

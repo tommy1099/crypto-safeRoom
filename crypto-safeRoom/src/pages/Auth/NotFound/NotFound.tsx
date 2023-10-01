@@ -13,8 +13,8 @@ const NotFound = () => {
             src={notfoundPic}
             alt=""
           />
-          <Link to="/welcome">
-            <button className="absolute top-[75%] left-[40%] btn w-64 bg-patternColors-green text-white">
+          <Link className="flex flex-col mt-[35%] ml-[40%]" to="/welcome">
+            <button className="h-10 rounded-md flex items-center justify-center w-64 bg-patternColors-green text-white">
               Home Page
             </button>
           </Link>

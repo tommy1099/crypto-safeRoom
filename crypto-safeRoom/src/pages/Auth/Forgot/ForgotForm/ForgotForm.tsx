@@ -3,7 +3,7 @@ import { Button, Input } from "../../../../components/ui";
 
 const ForgotForm = () => {
   return (
-    <Container style="w-[300px] h-[300px] shadow-2xl rounded-lg relative mt-[16%] ml-[7%] p-10">
+    <Container style="w-[300px] h-[300px] shadow-2xl rounded-lg relative mt-[50%] ml-[15%] lg:mt-[16%] lg:ml-[7%] p-10">
       <form action="/welcome" className="mt-3">
         <label htmlFor="forgot">Email</label>
         <Input

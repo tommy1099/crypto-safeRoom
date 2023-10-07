@@ -8,7 +8,9 @@ import ShrunkSidePanel from "./SidePanel/ShrunkSidePanel/ShrunkSidePanel";
 import Button from "./Button/Button";
 import Input from "./Input/Input";
 import Dropdown from "./DropDown/DropDown";
+import NarrowContainer from "./NarrowContainer/NarrowContainer";
 export {
+  NarrowContainer,
   Dropdown,
   Button,
   Input,

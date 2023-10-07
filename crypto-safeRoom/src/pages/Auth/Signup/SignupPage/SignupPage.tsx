@@ -12,7 +12,7 @@ const SignupPage = () => {
         <BsFillArrowLeftSquareFill
           style={{
             color: "#5B6A6E",
-            top: "50%",
+            top: "66%",
             left: "2%",
             position: "fixed",
             fontSize: "40px",

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-
+import { RootState } from "../../../Store/Store";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { setSelectedOption } from "../../../Store/DropDownReducer";
 interface DropdownProps {
   label: string;
   options: string[];
@@ -7,32 +10,32 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const dispatch = useDispatch();
+  const selectedOption = useSelector(
+    (state: RootState) => state.dropDown.selectedOption
+  );
   const [isOpen, setIsOpen] = useState(false);
-  //   setSelectedOption(options[0]);
   const handleOptionSelect = (option: string) => {
-    setSelectedOption(option);
+    dispatch(setSelectedOption(option));
     onSelect(option);
     setIsOpen(false); // Set isOpen to false after an option is selected
   };
-
   const handleDropdownClick = () => {
     setIsOpen(!isOpen); // Toggle isOpen when the dropdown is clicked
   };
 
   return (
-    <div className="flex mt-6 ml-[5%] gap-2 items-center p-5">
+    <div className="flex ml-[5%] mt-[10px] lg:mt-[10px] gap-2 items-center">
       <label className="mb-1 items-center text-[11px]">{label}</label>
-      <div className="relative w-[150px]">
+      <div className="relative w-[85px]">
         <button
-          className="w-full border border-gray-300 rounded-md px-3 py-2 text-left focus:outline-none focus:ring-2 focus:ring-patternColors-green"
+          className="px-3 py-2 w-full text-left rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-patternColors-green"
           onClick={handleDropdownClick}
         >
-          {selectedOption || "Select an option"}
+          {selectedOption}
           <svg
             className={`h-5 w-5 absolute top-0 right-0 m-2 pointer-events-none ${
-              isOpen ? "transform rotate-180" : ""
-            }`}
+              isOpen ? "transform rotate-180" : ""}`}
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -48,7 +51,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
             {options.map((option) => (
               <button
                 key={option}
-                className="block w-full text-left px-3 py-2 hover:bg-gray-100 focus:outline-none"
+                className="block px-3 py-2 w-full text-left hover:bg-gray-100 focus:outline-none"
                 onClick={() => handleOptionSelect(option)}
               >
                 {option}

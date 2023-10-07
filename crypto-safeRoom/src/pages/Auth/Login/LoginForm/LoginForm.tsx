@@ -9,7 +9,7 @@ const LoginForm = () => {
     event.preventDefault();
   };
   return (
-    <Container style=" absolute w-[400px] h-[500px] flex sm:left-[15%] md:left-[20%] lg:left-[7%] shadow-2xl p-10 flex flex-col justify-center items-start rounded-lg">
+    <Container style=" absolute w-[400px] h-[500px] flex left-[5px] sm:left-[15%] md:left-[20%] lg:left-[7%] shadow-2xl p-10 flex flex-col justify-center items-start rounded-lg">
       <div className="ml-[11%] w-full h-24 flex items-center">
         <p className="text-3xl font-bold text-patternColors-green">
           Crypto Safe Room

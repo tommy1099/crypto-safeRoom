@@ -1,20 +1,26 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
 import divs from "./SignalDivs";
 import Filtertoggle from "./isChecked";
-import SidePaneltoggle from "./IsShrunk";
+import FullScreenToggle from "./IsFullScreen";
 import stats from "./SignalStatsTracker";
-
+import radioReducer from "./RadioState";
+import DropDownReducer from "./DropDownReducer";
+import { persistConfig } from "../../reduxPersistConfig";
 const rootReducer = combineReducers({
   SignalDivs: divs,
   toggleReducer: Filtertoggle,
-  SidePanelToggle: SidePaneltoggle,
+  FullScreenToggleReducer: FullScreenToggle,
   statsTracker: stats,
+  Radio: radioReducer,
+  dropDown: DropDownReducer,
 });
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
 });
-export default store;
+const persistor = persistStore(store);
+export { store, persistor };
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
-// console.log("store state:", store.getState());

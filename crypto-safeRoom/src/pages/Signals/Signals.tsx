@@ -1,6 +1,7 @@
 import { Container } from "..";
 import { NavBar, Footer } from "../../components/ui";
-import { SignalCard } from "../../components/forms";
+// import { SignalCard } from "../../components/forms";
+import Card from "../../components/forms/Cards/Card"; //change
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -9,16 +10,22 @@ import {
   reset,
 } from "../../Store/SignalStatsTracker";
 import Pic from "../../assets/img/bearandbull.png";
+import btc from "../../assets/img/test2.jpeg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/Store";
-import { SignalFilters } from "../../components/forms";
+import { Filters } from "../../components/forms";
 import StatsVisualizer from "../../components/forms/StatsVisualizer/StatsVisualizer";
+import { NarrowContainer } from "../../components/ui";
+import uuid from "react-uuid";
 const Signals = () => {
+  const isFullscreen = useSelector(
+    (state: RootState) => state.FullScreenToggleReducer.fullScreen
+  );
   const cardComponents = [
     {
+      id: uuid(),
       state: true,
       blur: true,
-      id: Date.now(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -31,7 +38,7 @@ const Signals = () => {
     },
     {
       blur: false,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -44,10 +51,10 @@ const Signals = () => {
     },
     {
       blur: false,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
-      crypto: "CELR/USDT",
+      crypto: "ATOM/USDT",
       desc: {
         desc1: "First TP: 20%",
         desc2: "Second TP: 30%",
@@ -58,7 +65,7 @@ const Signals = () => {
     {
       state: true,
       blur: true,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -72,7 +79,7 @@ const Signals = () => {
     {
       state: false,
       blur: true,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -85,7 +92,21 @@ const Signals = () => {
     },
     {
       blur: false,
-      id: Date.now(),
+      id: uuid(),
+      expire: 5000,
+      src: btc,
+      crypto: "BTC/USDT",
+      desc: {
+        desc1: "First TP: 20%",
+        desc2: "Second TP: 30%",
+        desc3: "Third TP: 50%",
+      },
+      tags: { tag1: "Long: x10", tag2: "SL: 15%" },
+    },
+    {
+      state: true,
+      blur: true,
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -99,21 +120,7 @@ const Signals = () => {
     {
       state: true,
       blur: true,
-      id: Date.now(),
-      expire: 5000,
-      src: Pic,
-      crypto: "CELR/USDT",
-      desc: {
-        desc1: "First TP: 20%",
-        desc2: "Second TP: 30%",
-        desc3: "Third TP: 50%",
-      },
-      tags: { tag1: "Long: x10", tag2: "SL: 15%" },
-    },
-    {
-      state: true,
-      blur: true,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -127,7 +134,7 @@ const Signals = () => {
     {
       state: false,
       blur: true,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -141,7 +148,7 @@ const Signals = () => {
     {
       state: false,
       blur: true,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -155,7 +162,7 @@ const Signals = () => {
     {
       state: false,
       blur: true,
-      id: Date.now(),
+      id: uuid(),
       expire: 5000,
       src: Pic,
       crypto: "CELR/USDT",
@@ -197,18 +204,23 @@ const Signals = () => {
   return (
     <div className="">
       <NavBar />
-      <div className="z-[19] fixed w-full h-[12%] top-[3%] border-b-2  bg-white">
-        <SignalFilters />
+      <NarrowContainer
+        style={`"z-[19] bg-white fixed w-full h-[60px] top-[64px] border-b-2 z-20 bg-white" ${
+          isFullscreen ? "hidden" : ""
+        }`}
+      >
+        <Filters type="signals" />
         <StatsVisualizer />
-      </div>
-      <Container style=" relative mb-[100px] mt-[10%] z-0 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%] ">
+      </NarrowContainer>
+      <Container style="relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%] ">
         {filteredComponents.map((component) => (
-          <SignalCard
+          <Card
+            type="signals"
             state={component.state}
             blur={component.blur}
             id={component.id}
             expire={component.expire}
-            src={component.src}
+            imgSrc={component.src}
             crypto={component.crypto}
             desc={component.desc}
             tags={component.tags}

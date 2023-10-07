@@ -1,7 +1,8 @@
-import { PropsWithChildren } from "react";
+import { ReactNode } from "react";
 
-interface Props extends PropsWithChildren {
+interface Props {
   style: string;
+  children: ReactNode;
 }
 const Button = ({ children, style }: Props) => {
   return <button className={style}>{children}</button>;

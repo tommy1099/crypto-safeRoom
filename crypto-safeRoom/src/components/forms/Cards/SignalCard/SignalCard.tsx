@@ -7,8 +7,8 @@ import { ImCross } from "react-icons/im";
 //   reset,
 // } from "../../../../Store/SignalStatsTracker";
 // import { useEffect } from "react";
-// import { useState } from "react";
-// import { SignalModal } from "../..";
+import { useState } from "react";
+import { SignalModal } from "../..";
 interface Props extends React.PropsWithChildren {
   // getModal: () => void;
   state?: boolean;
@@ -36,15 +36,15 @@ const SignalCard = ({ blur, crypto, desc, src, tags, state }: Props) => {
   //   }
   //   // dispatch(reset());
   // }, [state, dispatch, blur]);
-  // const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  // const handleButtonClick = () => {
-  //   setShowModal(true);
-  // };
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
 
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   const handleState = () => {
     if (blur) {
       if (state) {
@@ -82,17 +82,12 @@ const SignalCard = ({ blur, crypto, desc, src, tags, state }: Props) => {
 
   return (
     <div
-      // onClick={handleButtonClick}
-      className="hover:border-patternColors-red hover:shadow-xl p-5 border-gray-300 border-4 rounded-3xl m-3s m-2 shadow-sm bg-gray-800 overflow-hidden"
+      onClick={handleShowModal}
+      className="hover:border-patternColors-red hover:shadow-xl p-4 border-gray-300 border-4 rounded-3xl m-3s m-2 shadow-sm bg-gray-800 overflow-hidden"
     >
       <div
-        className={`${
-          blur ? " grayscale-[70%]" : ""
-        } hover:cursor-pointer mb-[10%] card image-full hover:shadow-xl h-full w-full  `}
+        className={` hover:cursor-pointer mb-[10%] card image-full h-full w-full  `}
       >
-        {/* <figure>
-          <img className="overflow-hidden" src={src} alt="Signal" />
-        </figure> */}
         <div className="card-body ">
           <h2 className={"card-title text-white text-2xl block"}>{crypto}</h2>
           {handleState()}
@@ -102,21 +97,21 @@ const SignalCard = ({ blur, crypto, desc, src, tags, state }: Props) => {
             <p className="text-white text-[14px]">{desc.desc3}</p>
           </div>
           <div className="card-actions">
-            <div className=" badge badge-outline text-white">{tags.tag1}</div>
-            <div className=" badge badge-outline text-white">{tags.tag2}</div>
+            <div className=" border-t text-white">{tags.tag1}</div>
+            <div className=" border-b text-white">{tags.tag2}</div>
           </div>
         </div>
       </div>
-      {/* <SignalModal
+      <SignalModal
         showModal={showModal}
-        handleCloseModal={handleCloseModal}
-        img={Pic}
-        desc={`${desc.desc1} ${desc.desc2} ${desc.desc3} `}
+        handleClose={handleCloseModal}
+        img={src}
+        desc={desc}
         tags={tags}
         state={state}
         blur={blur}
         crypto={crypto}
-      /> */}
+      />
     </div>
   );
 };

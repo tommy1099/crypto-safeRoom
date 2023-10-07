@@ -15,13 +15,13 @@ const StatsVisualizer = () => {
   const ratio = calculateRatio(stats.successful, stats.failed);
 
   return (
-    <div className="bg-white top-[9%] right-[5%] hidden fixed sm:flex z-20 gap-2">
-      <p className=" p-2 rounded-md">Total: {stats.all}</p>
-      <p className="text-green-700 p-2 rounded-md">
+    <div className="bg-white bottom-0 w-full h-[20px] lg:w-[382px] lg:bottom-[85%] flex pl-[15%] lg:pl-0 lg:top-[70px] lg:right-[5%] fixed lg:flex z-[15] lg:gap-2 gap-3">
+      <p className=" lg:p-2 rounded-md">Total: {stats.all}</p>
+      <p className="text-green-700 lg:p-2 rounded-md">
         Successful: {stats.successful}
       </p>
-      <p className=" text-red-700 p-2 rounded-md">Failed: {stats.failed}</p>
-      <p className=" p-2 rounded-md">Ratio: {ratio}%</p>
+      <p className=" text-red-700 lg:p-2 rounded-md">Failed: {stats.failed}</p>
+      <p className=" lg:p-2 rounded-md">Ratio: {ratio}%</p>
     </div>
   );
 };

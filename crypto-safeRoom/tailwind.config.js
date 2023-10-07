@@ -4,7 +4,8 @@ export default {
 
   theme: {
     blur: {
-      custom: "1px",
+      custom: "5px",
+      none: "0px",
     },
     extend: {
       colors: {

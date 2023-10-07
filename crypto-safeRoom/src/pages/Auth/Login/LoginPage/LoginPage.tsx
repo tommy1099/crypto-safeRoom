@@ -12,7 +12,7 @@ const LoginPage = () => {
         <BsFillArrowLeftSquareFill
           style={{
             color: "#5B6A6E",
-            top: "50%",
+            top: "60%",
             left: "2%",
             position: "fixed",
             fontSize: "40px",

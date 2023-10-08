@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { ImCross } from "react-icons/im";
 import Modal from "../Modal/Modal";
-import uuid from "react-uuid";
 // Define the props for the Card component
 interface Props {
   type: string;
   state?: boolean;
   blur?: boolean;
-  id?: string;
+  id: string;
   expire?: number;
   crypto?: string;
   title?: string;
@@ -69,7 +68,7 @@ const Card = ({
   // Function to render the description based on desc prop
   const renderDescription = () => {
     return (
-      <div className="my-[5%]">
+      <div id={id} className="my-[5%]">
         {desc?.desc1 && (
           <p
             className={`text-${
@@ -158,7 +157,7 @@ const Card = ({
         </div>
       </div>
       <Modal
-        id={uuid()}
+        id={id}
         type={type}
         showModal={showModal}
         handleClose={handleCloseModal}

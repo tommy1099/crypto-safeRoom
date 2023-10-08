@@ -9,6 +9,8 @@ import {
 import img from "../../assets/img/bearandbull.png";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/Store";
+import uuid from "react-uuid";
+
 const Tutorials = () => {
   const selectedRadioValue: string | null = useSelector(
     (state: RootState) => state.Radio.selectedValue
@@ -16,84 +18,111 @@ const Tutorials = () => {
 
   const cardComponents = [
     {
+      id: uuid(),
       title: "beginner",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Beginner" },
     },
     {
+      id: uuid(),
+
       title: "advanced",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Advanced" },
     },
     {
+      id: uuid(),
+
       title: "advanced",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Advanced" },
     },
     {
+      id: uuid(),
+
       title: "strategies",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Strategies" },
     },
     {
+      id: uuid(),
+
       title: "strategies",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Strategies" },
     },
     {
+      id: uuid(),
+
       title: "strategies",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Strategies" },
     },
     {
+      id: uuid(),
+
       title: "strategies",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Strategies" },
     },
     {
+      id: uuid(),
+
       title: "emotions management",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Emotions Management" },
     },
     {
+      id: uuid(),
+
       title: "emotions management",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Emotions Management" },
     },
     {
+      id: uuid(),
+
       title: "money management",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Money Management" },
     },
     {
+      id: uuid(),
+
       title: "money management",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Money Management" },
     },
     {
+      id: uuid(),
+
       title: "money management",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "Money Management" },
     },
     {
+      id: uuid(),
+
       title: "placeholder",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "notebook", tag2: "candle" },
     },
     {
+      id: uuid(),
+
       title: "placeholder",
       imgSrc: img,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
@@ -114,6 +143,7 @@ const Tutorials = () => {
         {selectedRadioValue === "All"
           ? cardComponents.map((component) => (
               <Card
+                id={component.id}
                 type="tutorials"
                 imgSrc={component.imgSrc}
                 title={component.title}
@@ -123,6 +153,7 @@ const Tutorials = () => {
             ))
           : filteredCardComponents.map((component) => (
               <Card
+                id={component.id}
                 type="tutorials"
                 imgSrc={component.imgSrc}
                 title={component.title}

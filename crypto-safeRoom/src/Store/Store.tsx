@@ -7,6 +7,9 @@ import stats from "./SignalStatsTracker";
 import radioReducer from "./RadioState";
 import DropDownReducer from "./DropDownReducer";
 import { persistConfig } from "../../reduxPersistConfig";
+import CartListReducer from "./CartListReducer";
+import ShoppingCartBadge from "./ShoppingCartBadge";
+
 const rootReducer = combineReducers({
   SignalDivs: divs,
   toggleReducer: Filtertoggle,
@@ -14,6 +17,8 @@ const rootReducer = combineReducers({
   statsTracker: stats,
   Radio: radioReducer,
   dropDown: DropDownReducer,
+  cartList: CartListReducer,
+  wholeQuantity: ShoppingCartBadge,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

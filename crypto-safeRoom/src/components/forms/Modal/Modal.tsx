@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../Store/Store";
 import { fullScreenToggle } from "../../../Store/IsFullScreen";
 import { Button } from "../../ui";
+import { addItem } from "../../../Store/CartListReducer";
+// const dispatch = useDispatch();
 
 interface Props {
   id: string;
@@ -76,12 +78,15 @@ const Modal = ({
       document.removeEventListener("mousedown", handleCrossClick);
     };
   }, [showModal, handleClose]);
-
+  const handleAddToCart = () => {
+    if (title && img && id) dispatch(addItem({ id, title, img, quantity: 0 }));
+  };
   return (
     <>
       {showModal && (
         <div
           key={id}
+          id={id}
           className="flex fixed inset-0 z-20 justify-center items-center w-full h-full bg-black bg-opacity-50"
         >
           <div
@@ -187,7 +192,10 @@ const Modal = ({
               )}
             </div>
             {type !== "signals" && type !== "news" && (
-              <Button style="p-3 bg-patternColors-green rounded-md my-10 text-white">
+              <Button
+                onClick={handleAddToCart}
+                style="p-3 bg-patternColors-green rounded-md my-10 text-white"
+              >
                 Add to cart
               </Button>
             )}

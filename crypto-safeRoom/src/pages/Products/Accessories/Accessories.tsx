@@ -10,7 +10,8 @@ const Accessories = () => {
     {
       id: uuid(),
       title: "accessories",
-      imgSrc: img,
+      img: img,
+      price: 30,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "notebook", tag2: "candle" },
     },
@@ -18,7 +19,8 @@ const Accessories = () => {
       id: uuid(),
 
       title: "accessories",
-      imgSrc: img,
+      img: img,
+      price: 30,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "notebook", tag2: "candle" },
     },
@@ -26,7 +28,8 @@ const Accessories = () => {
       id: uuid(),
 
       title: "accessories",
-      imgSrc: img,
+      img: img,
+      price: 30,
       desc: { desc1: "buy it now it has a good deal and off on it bitches" },
       tags: { tag1: "notebook", tag2: "candle" },
     },
@@ -38,9 +41,10 @@ const Accessories = () => {
       <Container style="  relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mx-[5%]">
         {cardComponents.map((component) => (
           <Card
+            price={component.price}
             id={component.id}
             type="products"
-            imgSrc={component.imgSrc}
+            img={component.img}
             title={component.title}
             desc={component.desc}
             tags={component.tags}

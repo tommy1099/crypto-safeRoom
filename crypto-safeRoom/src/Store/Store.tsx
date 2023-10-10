@@ -9,7 +9,7 @@ import DropDownReducer from "./DropDownReducer";
 import { persistConfig } from "../../reduxPersistConfig";
 import CartListReducer from "./CartListReducer";
 import ShoppingCartBadge from "./ShoppingCartBadge";
-
+import priceReducer from "./priceReducer";
 const rootReducer = combineReducers({
   SignalDivs: divs,
   toggleReducer: Filtertoggle,
@@ -19,6 +19,7 @@ const rootReducer = combineReducers({
   dropDown: DropDownReducer,
   cartList: CartListReducer,
   wholeQuantity: ShoppingCartBadge,
+  Price: priceReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

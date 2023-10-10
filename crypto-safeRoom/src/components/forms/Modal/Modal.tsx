@@ -12,6 +12,7 @@ interface Props {
   type?: string;
   showModal?: boolean;
   handleClose?: () => void;
+  price?: number;
   img?: string;
   desc?: {
     desc1: string;
@@ -27,6 +28,7 @@ interface Props {
 }
 
 const Modal = ({
+  price,
   id,
   type,
   showModal,
@@ -79,7 +81,8 @@ const Modal = ({
     };
   }, [showModal, handleClose]);
   const handleAddToCart = () => {
-    if (title && img && id) dispatch(addItem({ id, title, img, quantity: 0 }));
+    if (title && img && id && price)
+      dispatch(addItem({ id, title, img, quantity: 0, price: price }));
   };
   return (
     <>
@@ -87,11 +90,11 @@ const Modal = ({
         <div
           key={id}
           id={id}
-          className="flex fixed inset-0 z-20 justify-center items-center w-full h-full bg-black bg-opacity-50"
+          className="flex fixed inset-0 z-50 justify-center items-center w-full h-full bg-black bg-opacity-50"
         >
           <div
             id="inner"
-            className={`bg-white p-6 rounded-lg shadow-lg ${
+            className={`bg-white p-6 rounded-lg shadow-lg${
               type === "products" &&
               "w-[90%] h-[85%] lg:mt-[8%] lg:w-[80%] lg:h-[80%] overflow-y-auto"
             } ${type === "signals" && "lg:w-[40%] lg:mt-[8%] mt-[8%]"}
@@ -192,12 +195,18 @@ const Modal = ({
               )}
             </div>
             {type !== "signals" && type !== "news" && (
-              <Button
-                onClick={handleAddToCart}
-                style="p-3 bg-patternColors-green rounded-md my-10 text-white"
-              >
-                Add to cart
-              </Button>
+              <div>
+                {price && (
+                  <div className="mt-10 text-xl font-bold">{price}$</div>
+                )}
+
+                <Button
+                  onClick={handleAddToCart}
+                  style="p-3 bg-patternColors-green rounded-md my-10 text-white"
+                >
+                  Add to cart
+                </Button>
+              </div>
             )}
           </div>
         </div>

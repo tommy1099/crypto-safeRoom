@@ -3,13 +3,15 @@ import { NavBar, Footer } from "../../components/ui";
 // import { NewsCard } from "../../components/forms";
 import Pic from "../../assets/img//proxy-image.jpg";
 import Card from "../../components/forms/Cards/Card";
+import uuid from "react-uuid";
+
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../Store/Store";
 
 const News = () => {
   const cardComponents = [
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -18,7 +20,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -28,7 +30,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -38,7 +40,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -48,7 +50,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -58,7 +60,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -68,7 +70,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -78,7 +80,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -88,7 +90,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -98,7 +100,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -108,7 +110,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -118,7 +120,7 @@ const News = () => {
       },
     },
     {
-      id: Date.now(),
+      id: uuid(),
       src: Pic,
       type: "news",
       title: "Bitcoin Crashed!",
@@ -153,8 +155,9 @@ const News = () => {
           //   desc={component.desc.desc1}
           // />
           <Card
+            id={component.id}
             type="news"
-            imgSrc={component.src}
+            img={component.src}
             title={component.title}
             desc={component.desc}
           />

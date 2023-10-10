@@ -17,8 +17,10 @@ import {
   IndustrialMiners,
   Accessories,
   Tutorials,
+  Checkout,
+  Profile,
 } from "./pages";
-import Delete from "../Delete/Delete";
+// import Delete from "../Delete/Delete";
 import { Loading, Exam } from "./components/forms";
 // import { BackgroundPattern } from "./components/ui";
 
@@ -28,7 +30,9 @@ function App() {
       {/* <BackgroundPattern /> */}
       <Routes>
         <Route path="/" element={<Loading />} />
-        <Route path="/profile" element={<Delete />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/checkout" element={<Checkout />} />
+
         <Route
           //<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdQ7nj5Qi-mn4UEobqNEKk2xg_FioEFt7w8hVPBN1OWAh1_uw/viewform?embedded=true" width="640" height="1027" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
           path="/exam"

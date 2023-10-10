@@ -5,6 +5,7 @@ interface Div {
   // link: string;
   img: string;
   quantity: number;
+  price: number;
 }
 
 interface DivsState {
@@ -30,11 +31,21 @@ const CartListSlice = createSlice({
           id: action.payload.id,
           title: action.payload.title,
           img: action.payload.img,
+          price: action.payload.price,
           quantity: 1,
         });
       }
     },
     removeItem: (state, action: PayloadAction<Div>) => {
+      const existingItem = state.list.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (existingItem) {
+        state.list = state.list.filter((item) => item.id !== action.payload.id);
+      }
+    },
+    decreaseOne: (state, action: PayloadAction<Div>) => {
       const existingItem = state.list.find(
         (item) => item.id === action.payload.id
       );
@@ -51,6 +62,7 @@ const CartListSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, reset } = CartListSlice.actions;
+export const { addItem, removeItem, decreaseOne, reset } =
+  CartListSlice.actions;
 
 export default CartListSlice.reducer;

@@ -3,11 +3,11 @@ import { FaInstagram, FaTelegram } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 py-8 z-0 w-full relative bottom-0">
-      <div className="container mx-auto px-4">
+    <footer className="relative bottom-0 py-8 w-full bg-gray-800 z-1">
+      <div className="container px-4 mx-auto">
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-1/4">
-            <h4 className="text-white uppercase mb-2">Follow Us</h4>
+            <h4 className="mb-2 text-white uppercase">Follow Us</h4>
             <ul className="list-reset">
               <li className="mb-2">
                 <a
@@ -34,7 +34,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="w-full md:w-1/4">
-            <h4 className="text-white uppercase mb-2">Navigation</h4>
+            <h4 className="mb-2 text-white uppercase">Navigation</h4>
             <ul className="list-reset">
               <li className="mb-2">
                 <a href="/" className="text-gray-500 hover:text-white">
@@ -49,7 +49,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="w-full md:w-1/4">
-            <h4 className="text-white uppercase mb-2">Contact Us</h4>
+            <h4 className="mb-2 text-white uppercase">Contact Us</h4>
             <ul className="list-reset">
               <li className="mb-2">
                 <a
@@ -62,7 +62,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="w-full md:w-1/4">
-            <h4 className="text-white uppercase mb-2">Legal</h4>
+            <h4 className="mb-2 text-white uppercase">Legal</h4>
             <ul className="list-reset">
               <li className="mb-2">
                 <a href="/terms" className="text-gray-500 hover:text-white">
@@ -75,7 +75,7 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-            <p className="text-gray-500 mt-4">
+            <p className="mt-4 text-gray-500">
               &copy; 2023 - All rights reserved by the Crypto Safe Room team.
               Created by Tommy.
             </p>

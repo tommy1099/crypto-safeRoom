@@ -18,7 +18,11 @@ import GeneralMiners from "./Products/Miners/GeneralMiners/GeneralMiners";
 import IndustrialMiners from "./Products/Miners/IndustrialMiners/IndustrialMiners";
 import MinerParts from "./Products/Miners/MinerParts/MinerParts";
 import Tutorials from "./Tutorials/Tutorials";
+import Checkout from "./Checkout/Checkout";
+import Profile from "./Profile/Profile";
 export {
+  Profile,
+  Checkout,
   Tutorials,
   Accessories,
   Products,

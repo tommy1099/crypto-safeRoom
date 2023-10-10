@@ -47,39 +47,39 @@ const Navbar = () => {
               <div className="flex space-x-4">
                 <Link
                   to="/"
-                  className="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-100 hover:text-gray-800"
+                  className="px-3 py-2 text-sm font-medium text-white rounded-md transition-all hover:bg-gray-100 hover:text-gray-800"
                 >
                   Home
                 </Link>
                 <Link
                   to="/news"
-                  className="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-100 hover:text-gray-800"
+                  className="px-3 py-2 text-sm font-medium text-white rounded-md transition-all hover:bg-gray-100 hover:text-gray-800"
                 >
                   News
                 </Link>
                 <Link
                   onClick={handleDropDownValue}
                   to="/signals?toggle=true"
-                  className="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-100 hover:text-gray-800"
+                  className="px-3 py-2 text-sm font-medium text-white rounded-md transition-all hover:bg-gray-100 hover:text-gray-800"
                 >
                   Signals
                 </Link>
                 <Link
                   to="/exam"
-                  className="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-100 hover:text-gray-800"
+                  className="px-3 py-2 text-sm font-medium text-white rounded-md transition-all hover:bg-gray-100 hover:text-gray-800"
                 >
                   Exam
                 </Link>
                 <Link
                   onClick={handleRadioValue}
                   to="/tutorials?cat=All"
-                  className="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-100 hover:text-gray-800"
+                  className="px-3 py-2 text-sm font-medium text-white rounded-md transition-all hover:bg-gray-100 hover:text-gray-800"
                 >
                   Tutorials
                 </Link>
                 <Link
                   to="/product"
-                  className="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-100 hover:text-gray-800"
+                  className="px-3 py-2 text-sm font-medium text-white rounded-md transition-all hover:bg-gray-100 hover:text-gray-800"
                 >
                   Products
                 </Link>

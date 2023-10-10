@@ -46,7 +46,7 @@ const ProfileDropdown = () => {
             aria-labelledby="options-menu"
           >
             <a
-              href="#"
+              href="/auth/login"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
             >
@@ -60,7 +60,7 @@ const ProfileDropdown = () => {
               Settings
             </a>
             <a
-              href="#"
+              href="/profile"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
             >

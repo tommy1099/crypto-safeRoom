@@ -1,7 +1,7 @@
 import { Container } from "..";
 import { NavBar, Footer } from "../../components/ui";
-// import { SignalCard } from "../../components/forms";
 import Card from "../../components/forms/Cards/Card"; //change
+import { ScrollToTopIcon } from "../../components/forms";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -205,14 +205,14 @@ const Signals = () => {
     <div className="">
       <NavBar />
       <NarrowContainer
-        style={`"z-[19] bg-white fixed w-full h-[60px] top-[64px] border-b-2 z-20 bg-white" ${
+        style={`"z-[19] bg-white fixed w-full h-[60px] top-[64px] border-b-2 z-10 bg-white" ${
           isFullscreen ? "hidden" : ""
         }`}
       >
         <Filters type="signals" />
         <StatsVisualizer />
       </NarrowContainer>
-      <Container style="relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%] ">
+      <Container style="relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 mx-[5%] ">
         {filteredComponents.map((component) => (
           <Card
             type="signals"
@@ -220,7 +220,7 @@ const Signals = () => {
             blur={component.blur}
             id={component.id}
             expire={component.expire}
-            imgSrc={component.src}
+            img={component.src}
             crypto={component.crypto}
             desc={component.desc}
             tags={component.tags}
@@ -230,6 +230,9 @@ const Signals = () => {
 
       <div className="">
         <Footer />
+      </div>
+      <div className="fixed left-0 top-[92%] m-5 ">
+        <ScrollToTopIcon />
       </div>
     </div>
   );

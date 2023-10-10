@@ -12,7 +12,9 @@ import Card from "./Cards/Card";
 import Exam from "./Exam/Exam";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import Loading from "./Loading/Loading";
+import ScrollToTopIcon from "./ScrollToTopIcon/ScrollToTopIcon";
 export {
+  ScrollToTopIcon,
   Exam,
   ShoppingCart,
   Loading,

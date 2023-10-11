@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { priceCalculator, reset } from "../../Store/priceReducer";
 import { FaArrowsRotate } from "react-icons/fa6";
+import { ScrollToTopIcon } from "../../components/forms";
 const Checkout = () => {
   const myRef = useRef<HTMLInputElement>(null);
   const price = useSelector((state: RootState) => state.Price.price);
@@ -73,8 +74,8 @@ const Checkout = () => {
   return (
     <>
       <NavBar />
-      <div className="flex z-10 mb-[-10%]">
-        <Container style="absolute ml-[2%] mt-[5%] rounded-md w-[30%] h-[85%] p-5 shadow-2xl">
+      <div className="flex flex-col lg:flex-row z-10 mb-[-10%]">
+        <Container style="relative ml-[2%] mt-[20%] md:mt-[5%] rounded-md lg:w-[30%] lg:h-[90%] p-10 shadow-2xl">
           <p className="text-2xl font-bold">Order Summary</p>
           {cartItems.length ? (
             <ul className="my-5 h-[400px] overflow-y-auto">
@@ -142,7 +143,7 @@ const Checkout = () => {
             </div>
           )}
 
-          <div className="mt-[25%]">
+          <div className="mt-[5%]">
             <div className="flex justify-between items-center">
               <p>Code</p>
               <div className="flex">
@@ -180,7 +181,7 @@ const Checkout = () => {
             </div>
           </div>
         </Container>
-        <Container style="absolute ml-[35%] mt-[5%] rounded-md w-[55%] h-[45%] p-5">
+        <Container style="relative lg:ml-[5%] mt-[5%] rounded-md lg:w-[55%] lg:h-[45%] p-10">
           <div className="flex flex-col">
             <p className="text-3xl font-bold">Billing Info</p>
             <p className="mt-5">
@@ -190,107 +191,111 @@ const Checkout = () => {
           </div>
 
           <form action="" className="flex flex-col mt-10 w-full">
-            <div className="flex gap-[50px] mt-5">
-              <label
-                htmlFor="cryptoTrans"
-                key={"cryptoTrans"}
-                className={`relative rounded-md ${
-                  selectedPayment === "cryptoTrans"
-                    ? "border-2 border-patternColors-red shadow-lg"
-                    : "border-2 border-gray-200"
-                }`}
-              >
-                <Input
-                  id="cryptoTrans"
-                  type="radio"
-                  name="trans"
-                  style="hidden"
-                  defaultChecked={selectedPayment === "cryptoTrans"}
-                  onChange={() => handleSelectPayment("cryptoTrans")}
-                />
-                <img
-                  src={BTCPic}
-                  alt="cryptoTrans"
-                  className="w-[150px] h-[130px] cursor-pointer rounded-md object-cover"
-                  onClick={() => handleSelectPayment("cryptoTrans")}
-                />
-              </label>
-              <label
-                htmlFor="BMTrans"
-                key={"BMTrans"}
-                className={`relative rounded-md ${
-                  selectedPayment === "BMTrans"
-                    ? "border-2 border-patternColors-red shadow-lg"
-                    : "border-2 border-gray-200"
-                }`}
-              >
-                <Input
-                  id="BMTrans"
-                  type="radio"
-                  name="trans"
-                  style="hidden"
-                  defaultChecked={selectedPayment === "BMTrans"}
-                  onChange={() => handleSelectPayment("BMTrans")}
-                />
-                <img
-                  src={MellatPic}
-                  alt="MellatBank"
-                  className="w-[150px] h-[130px] cursor-pointer rounded-md object-cover"
-                  onClick={() => handleSelectPayment("BMTrans")}
-                />
-              </label>
-              <label
-                htmlFor="zarinPalTrans"
-                key={"zarinPalTrans"}
-                className={`relative rounded-md ${
-                  selectedPayment === "zarinPalTrans"
-                    ? "border-2 border-patternColors-red shadow-lg"
-                    : "border-2 border-gray-200"
-                }`}
-              >
-                <Input
-                  id="zarinPalTrans"
-                  type="radio"
-                  name="trans"
-                  style="hidden"
-                  defaultChecked={selectedPayment === "zarinPalTrans"}
-                  onChange={() => handleSelectPayment("zarinPalTrans")}
-                />
-                <img
-                  src={ZarinPalPic}
-                  alt="ZarinPal"
-                  className="w-[150px] h-[130px] cursor-pointer rounded-md "
-                  onClick={() => handleSelectPayment("zarinPalTrans")}
-                />
-              </label>
-              <label
-                htmlFor="paypalTrans"
-                key={"paypalTrans"}
-                className={`relative rounded-md ${
-                  selectedPayment === "paypalTrans"
-                    ? "border-2 border-patternColors-red shadow-lg"
-                    : "border-2 border-gray-200"
-                }`}
-              >
-                <Input
-                  id="paypalTrans"
-                  type="radio"
-                  name="trans"
-                  style="hidden"
-                  defaultChecked={selectedPayment === "paypalTrans"}
-                  onChange={() => handleSelectPayment("paypalTrans")}
-                />
-                <img
-                  src={PaypalPic}
-                  alt="PayPal"
-                  className="w-[150px] h-[130px] cursor-pointer rounded-md object-cover"
-                  onClick={() => handleSelectPayment("paypalTrans")}
-                />
-              </label>
+            <div className="flex flex-col md:flex-row gap-[20px] md:gap-[50px] mt-5">
+              <div className="flex gap-[20px]">
+                <label
+                  htmlFor="cryptoTrans"
+                  key={"cryptoTrans"}
+                  className={`relative rounded-md ${
+                    selectedPayment === "cryptoTrans"
+                      ? "border-2 border-patternColors-red shadow-lg"
+                      : "border-2 border-gray-200"
+                  }`}
+                >
+                  <Input
+                    id="cryptoTrans"
+                    type="radio"
+                    name="trans"
+                    style="hidden"
+                    defaultChecked={selectedPayment === "cryptoTrans"}
+                    onChange={() => handleSelectPayment("cryptoTrans")}
+                  />
+                  <img
+                    src={BTCPic}
+                    alt="cryptoTrans"
+                    className="w-[120px] h-[100px] cursor-pointer rounded-md object-cover"
+                    onClick={() => handleSelectPayment("cryptoTrans")}
+                  />
+                </label>
+                <label
+                  htmlFor="BMTrans"
+                  key={"BMTrans"}
+                  className={`relative rounded-md ${
+                    selectedPayment === "BMTrans"
+                      ? "border-2 border-patternColors-red shadow-lg"
+                      : "border-2 border-gray-200"
+                  }`}
+                >
+                  <Input
+                    id="BMTrans"
+                    type="radio"
+                    name="trans"
+                    style="hidden"
+                    defaultChecked={selectedPayment === "BMTrans"}
+                    onChange={() => handleSelectPayment("BMTrans")}
+                  />
+                  <img
+                    src={MellatPic}
+                    alt="MellatBank"
+                    className="w-[120px] h-[100px] cursor-pointer rounded-md object-cover"
+                    onClick={() => handleSelectPayment("BMTrans")}
+                  />
+                </label>
+              </div>
+              <div className="flex gap-[20px]">
+                <label
+                  htmlFor="zarinPalTrans"
+                  key={"zarinPalTrans"}
+                  className={`relative rounded-md ${
+                    selectedPayment === "zarinPalTrans"
+                      ? "border-2 border-patternColors-red shadow-lg"
+                      : "border-2 border-gray-200"
+                  }`}
+                >
+                  <Input
+                    id="zarinPalTrans"
+                    type="radio"
+                    name="trans"
+                    style="hidden"
+                    defaultChecked={selectedPayment === "zarinPalTrans"}
+                    onChange={() => handleSelectPayment("zarinPalTrans")}
+                  />
+                  <img
+                    src={ZarinPalPic}
+                    alt="ZarinPal"
+                    className="w-[120px] h-[100px] cursor-pointer rounded-md "
+                    onClick={() => handleSelectPayment("zarinPalTrans")}
+                  />
+                </label>
+                <label
+                  htmlFor="paypalTrans"
+                  key={"paypalTrans"}
+                  className={`relative rounded-md ${
+                    selectedPayment === "paypalTrans"
+                      ? "border-2 border-patternColors-red shadow-lg"
+                      : "border-2 border-gray-200"
+                  }`}
+                >
+                  <Input
+                    id="paypalTrans"
+                    type="radio"
+                    name="trans"
+                    style="hidden"
+                    defaultChecked={selectedPayment === "paypalTrans"}
+                    onChange={() => handleSelectPayment("paypalTrans")}
+                  />
+                  <img
+                    src={PaypalPic}
+                    alt="PayPal"
+                    className="w-[120px] h-[100px] cursor-pointer rounded-md object-cover"
+                    onClick={() => handleSelectPayment("paypalTrans")}
+                  />
+                </label>
+              </div>
             </div>
-            <div className="flex mt-[5%]">
-              <div className="flex flex-col">
-                <div className="flex gap-20">
+            <div className="flex w-[350px] md:w-[400px] mt-[5%]">
+              <div className="flex flex-col w-[350px]">
+                <div className="flex flex-col gap-20 md:flex-row">
                   <div>
                     <p className="mb-5 text-xl font-bold">Billing Address</p>
 
@@ -376,62 +381,65 @@ const Checkout = () => {
                       </div>
                     </div>
                   </div>
-                  <Container style="w-[400px] h-full">
+                  <Container style="">
                     <p className="text-xl font-bold">Shipping Method</p>
-                    <div className="flex mt-[5%]">
-                      <div className="mt-[5%]">
-                        <label
-                          htmlFor="pishtaz"
-                          key={"pishtaz"}
-                          className={`absolute rounded-md ${
-                            selectedShipping === "pishtaz"
-                              ? "border-2 border-patternColors-red shadow-lg"
-                              : "border-2 border-gray-200"
-                          }`}
-                        >
-                          <Input
-                            id="pishtaz"
-                            type="radio"
-                            name="shipping"
-                            style="hidden"
-                            defaultChecked={selectedShipping === "pishtaz"}
-                            onChange={() => handleSelectShipping("pishtaz")}
-                          />
-                          <img
-                            src={PishtazPic}
-                            alt="Pishtaz"
-                            className="w-[150px] h-[80px] cursor-pointer rounded-md "
-                            onClick={() => handleSelectShipping("pishtaz")}
-                          />
-                        </label>
+                    <div className="flex flex-col mt-[5%] gap-2">
+                      <div className="flex gap-2">
+                        <div className="flex gap-[20px]">
+                          <label
+                            htmlFor="pishtaz"
+                            key={"pishtaz"}
+                            className={`relative rounded-md ${
+                              selectedShipping === "pishtaz"
+                                ? "border-2 border-patternColors-red shadow-lg"
+                                : "border-2 border-gray-200"
+                            }`}
+                          >
+                            <Input
+                              id="pishtaz"
+                              type="radio"
+                              name="shipping"
+                              style="hidden"
+                              defaultChecked={selectedShipping === "pishtaz"}
+                              onChange={() => handleSelectShipping("pishtaz")}
+                            />
+                            <img
+                              src={PishtazPic}
+                              alt="Pishtaz"
+                              className="w-[120px] h-[100px] cursor-pointer rounded-md "
+                              onClick={() => handleSelectShipping("pishtaz")}
+                            />
+                          </label>
+                        </div>
+                        <div className="flex gap-[20px]">
+                          <label
+                            htmlFor="tipax"
+                            key={"tipax"}
+                            className={`relative rounded-md ${
+                              selectedShipping === "tipax"
+                                ? "border-2 border-patternColors-red shadow-lg"
+                                : "border-2 border-gray-200"
+                            }`}
+                          >
+                            <Input
+                              id="tipax"
+                              type="radio"
+                              name="shipping"
+                              style="hidden"
+                              defaultChecked={selectedShipping === "tipax"}
+                              onChange={() => handleSelectShipping("tipax")}
+                            />
+                            <img
+                              src={TipaxPic}
+                              alt="Tipax"
+                              className="w-[120px] h-[100px] cursor-pointer rounded-md "
+                              onClick={() => handleSelectShipping("pishtaz")}
+                            />
+                          </label>
+                        </div>
                       </div>
-                      <div className="mt-[5%] ml-[45%]">
-                        <label
-                          htmlFor="tipax"
-                          key={"tipax"}
-                          className={`absolute rounded-md ${
-                            selectedShipping === "tipax"
-                              ? "border-2 border-patternColors-red shadow-lg"
-                              : "border-2 border-gray-200"
-                          }`}
-                        >
-                          <Input
-                            id="tipax"
-                            type="radio"
-                            name="shipping"
-                            style="hidden"
-                            defaultChecked={selectedShipping === "tipax"}
-                            onChange={() => handleSelectShipping("tipax")}
-                          />
-                          <img
-                            src={TipaxPic}
-                            alt="Tipax"
-                            className="w-[150px] h-[80px] cursor-pointer rounded-md"
-                            onClick={() => handleSelectShipping("tipax")}
-                          />
-                        </label>
-                      </div>
-                      <div className="flex flex-col  mt-[30%] ml-[-45%]">
+
+                      <div className="relative">
                         <label htmlFor="textArea">Leave us a note</label>
                         <textarea
                           className="rounded-md border"
@@ -455,8 +463,11 @@ const Checkout = () => {
           </form>
         </Container>
       </div>
-      <div className="mt-[60%]">
+      <div className="mt-[10%] md:mt-[15%]">
         <Footer />
+      </div>
+      <div className="fixed left-0 top-[90%] m-5 ">
+        <ScrollToTopIcon />
       </div>
     </>
   );

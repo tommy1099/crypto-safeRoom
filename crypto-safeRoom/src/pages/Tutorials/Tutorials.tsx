@@ -166,7 +166,7 @@ const Tutorials = () => {
       <NavBar />
       <ExpandedSidePanel children={<Filters type="tutorials" />} />
       <ShrunkSidePanel children={<Filters type="tutorials" />} />
-      <Container style=" bg-white w-[75%]  relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 mx-[5%]">
+      <Container style=" bg-white lg:w-[75%]  relative mt-[15%] lg:mt-[4%] z-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 mx-[5%]">
         {selectedRadioValue === "All"
           ? cardComponents.map((component) => (
               <Card
@@ -194,7 +194,7 @@ const Tutorials = () => {
       <div className="">
         <Footer />
       </div>
-      <div className="fixed left-0 top-[92%] m-5 ">
+      <div className="fixed left-0 top-[90%] m-5 ">
         <ScrollToTopIcon />
       </div>
     </>

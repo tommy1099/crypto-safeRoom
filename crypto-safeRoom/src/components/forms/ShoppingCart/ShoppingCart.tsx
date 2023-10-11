@@ -101,7 +101,7 @@ const ShoppingCart = () => {
       </button>
       {/* Cart dropdown */}
       {isDropdownOpen && (
-        <div className="absolute max-h-[500px] right-0 mt-2 w-[350px] bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right overflow-y-auto">
+        <div className="absolute max-h-[500px] right-[-50px] lg:right-0 mt-4 w-[350px] bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right overflow-y-auto">
           <div className="fixed w-[335px] h-[7%] bg-white">
             <div className="flex justify-between items-center p-5">
               <p className="text-start">Shopping Cart</p>

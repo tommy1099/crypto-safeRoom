@@ -187,7 +187,7 @@ const Card = ({
                   onClickWithEvent={(
                     event: React.MouseEvent<HTMLButtonElement>
                   ) => handleAddToCartEvent(event)}
-                  style=" transition-all p-[3%] mt-2 border-gray-800 border-2 hover:bg-gray-800 hover:text-gray-200 rounded-md text-gray-800"
+                  style=" transition-all text-xs p-[3%] mt-2 border-gray-800 border-2 hover:bg-gray-800 hover:text-gray-200 rounded-md text-gray-800"
                 >
                   Add to cart
                 </Button>

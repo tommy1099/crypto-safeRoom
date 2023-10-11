@@ -9,7 +9,9 @@ import Button from "./Button/Button";
 import Input from "./Input/Input";
 import Dropdown from "./DropDown/DropDown";
 import NarrowContainer from "./NarrowContainer/NarrowContainer";
+import { RadialProgressBar } from "./RadialProgressBar/RadialProgressBar";
 export {
+  RadialProgressBar,
   NarrowContainer,
   Dropdown,
   Button,

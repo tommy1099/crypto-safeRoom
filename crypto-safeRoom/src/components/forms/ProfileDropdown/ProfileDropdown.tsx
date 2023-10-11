@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineUserCircle } from "react-icons/hi";
 
 const ProfileDropdown = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const ProfileDropdown = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        setOpen(false);
       }
     };
 
@@ -23,7 +23,7 @@ const ProfileDropdown = () => {
   }, [dropdownRef]);
 
   const handleToggle = () => {
-    setIsOpen(!isOpen);
+    setOpen(!isOpen);
   };
 
   return (
@@ -38,7 +38,7 @@ const ProfileDropdown = () => {
         </button>
       </div>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right">
+        <div className="absolute right-0 mt-4 w-48 bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right">
           <div
             className="py-1"
             role="menu"

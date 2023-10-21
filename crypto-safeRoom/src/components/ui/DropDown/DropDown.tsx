@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { RootState } from "../../../Store/Store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,8 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const dispatch = useDispatch();
   const selectedOption = useSelector(
     (state: RootState) => state.dropDown.selectedOption
@@ -20,14 +22,33 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
     onSelect(option);
     setIsOpen(false); // Set isOpen to false after an option is selected
   };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef, isOpen]);
   const handleDropdownClick = () => {
     setIsOpen(!isOpen); // Toggle isOpen when the dropdown is clicked
   };
 
   return (
-    <div className="flex ml-[5%] mt-[10px] lg:mt-[10px] gap-2 items-center">
+    <div
+      ref={dropdownRef}
+      className="flex flex-col ml-[5%] w-[120px] mt-[10px] lg:mt-[20px] bg-base-100 gap-2 text-neutral  items-center"
+    >
       <label className="mb-1 items-center text-[11px]">{label}</label>
-      <div className="relative w-[85px]">
+      <div className="relative w-[85px] bg-base-100">
         <button
           className="px-3 py-2 w-full text-left rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-patternColors-green"
           onClick={handleDropdownClick}
@@ -35,7 +56,8 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
           {selectedOption}
           <svg
             className={`h-5 w-5 absolute top-0 right-0 m-2 pointer-events-none ${
-              isOpen ? "transform rotate-180" : ""}`}
+              isOpen ? "transform rotate-180" : ""
+            }`}
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -47,11 +69,11 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
           </svg>
         </button>
         {isOpen && (
-          <div className="absolute z-10 w-full mt-1 bg-white rounded-md shadow-lg max-h-[200px] overflow-y-auto">
+          <div className="absolute bg-base-100 text-neutral w-full  rounded-md shadow-lg max-h-[200px] overflow-y-auto">
             {options.map((option) => (
               <button
                 key={option}
-                className="block px-3 py-2 w-full text-left hover:bg-gray-100 focus:outline-none"
+                className="block px-3 py-2 w-full text-left hover:text-secondary hover:bg-primary focus:outline-none"
                 onClick={() => handleOptionSelect(option)}
               >
                 {option}

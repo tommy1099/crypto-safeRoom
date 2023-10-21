@@ -88,12 +88,12 @@ const ShoppingCart = () => {
         className="relative"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <FaShoppingCart className="text-white text-[20px] mr-2 mt-[9px] " />
+        <FaShoppingCart className="text-neutral text-[20px] mr-2 mt-[9px] " />
         {/* Display the number of items in the cart */}
         {total > 0 && (
-          <span className="fixed top-[4px]">
-            <span className="absolute top-[4px] left-[2px] inset-0 w-[20px] h-[20px] bg-red-500 rounded-full opacity-75 animate-ping"></span>
-            <span className="inline-block relative px-2 py-1 text-xs text-white bg-red-500 rounded-full">
+          <span className="absolute bottom-3 left-3">
+            <span className="absolute top-[4px] left-[2px] inset-0 w-[22px] h-[20px] bg-primary rounded-full opacity-75 animate-ping"></span>
+            <span className="inline-block relative px-2 py-1 text-xs rounded-full text-secondary bg-primary">
               {total}
             </span>
           </span>
@@ -101,13 +101,13 @@ const ShoppingCart = () => {
       </button>
       {/* Cart dropdown */}
       {isDropdownOpen && (
-        <div className="absolute max-h-[500px] right-[-50px] lg:right-0 mt-4 w-[350px] bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right overflow-y-auto">
-          <div className="fixed w-[335px] h-[7%] bg-white">
+        <div className="absolute max-h-[500px] right-[-50px] lg:right-0 mt-4 w-[350px] text-neutral bg-base-100 rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right overflow-y-auto">
+          <div className="fixed w-[335px] h-[7%] bg-base-100">
             <div className="flex justify-between items-center p-5">
               <p className="text-start">Shopping Cart</p>
-              <div className="z-10 bg-white">
+              <div className="z-10 bg-base-100">
                 <Link to="/checkout">
-                  <button className="p-2 text-white bg-gray-800 rounded w-22 hover:bg-gray-600">
+                  <button className="p-2 rounded text-base-100 bg-primary w-22 hover:bg-orange-300">
                     Checkout
                   </button>
                 </Link>
@@ -141,10 +141,13 @@ const ShoppingCart = () => {
                       );
                     }}
                   >
-                    <BiSolidDownArrow />
+                    <div className="cursor-pointer text-primary hover:text-orange-300 active:text-orange-200">
+                      {" "}
+                      <BiSolidDownArrow />
+                    </div>
                   </div>
 
-                  <p className="flex p-1 text-red-500">{item.quantity}x</p>
+                  <p className="flex p-1 text-accent">{item.quantity}x</p>
                   <div
                     className="mr-5 text-gray-700 active:text-gray-400"
                     onClick={() => {
@@ -157,11 +160,14 @@ const ShoppingCart = () => {
                       );
                     }}
                   >
-                    <BiSolidUpArrow />
+                    <div className="cursor-pointer text-primary hover:text-orange-300 active:text-orange-200">
+                      {" "}
+                      <BiSolidUpArrow />
+                    </div>
                   </div>
 
                   <Button
-                    style="text-red-500 active:text-red-300"
+                    style="text-primary hover:text-orange-300 active:text-orange-200"
                     onClick={() => {
                       dispatch(decreaseQuantity());
                       handlerRemoveItem(

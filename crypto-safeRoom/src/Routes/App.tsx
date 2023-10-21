@@ -1,34 +1,41 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import WelcomePage from "./pages/WelcomePage/WelcomePage";
+import WelcomePage from "../pages/WelcomePage/WelcomePage";
 import {
   Contact,
-  ForgotPage,
-  LoginPage,
-  SignupPage,
   NotFound,
   Signals,
   News,
   Products,
-  TutorialPackages,
-  Wallet,
-  MinerParts,
-  GeneralMiners,
-  IndustrialMiners,
-  Accessories,
   Tutorials,
   Checkout,
   Profile,
-} from "./pages";
-// import Delete from "../Delete/Delete";
-import { Loading, Exam } from "./components/forms";
+} from "../pages";
+import { AdminApp, ProductApp, AuthApp } from ".";
+import { Loading, Exam } from "../components/forms";
 // import { BackgroundPattern } from "./components/ui";
-
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { RootState } from "../Store/Store";
+import { useTranslation } from "react-i18next";
+import "../Locales/fonts.css";
 function App() {
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+  const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
   return (
-    <div className="">
+    <div
+      className={`text-lg ${
+        currentLanguage === "en" ? "font-english" : "font-farsi"
+      }`}
+      data-theme={isDarkTheme ? "business" : "light"}
+    >
       {/* <BackgroundPattern /> */}
       <Routes>
+        <Route path="/admin/*" element={<AdminApp />} />
+        <Route path="/product" element={<Products />} />
+
+        <Route path="/product/*" element={<ProductApp />} />
+        <Route path="/auth/*" element={<AuthApp />} />
+
         <Route path="/" element={<Loading />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -47,28 +54,11 @@ function App() {
 
         <Route path="/news" element={<News />} />
         <Route path="/tutorials" element={<Tutorials />} />
-        <Route path="/product" element={<Products />} />
-        <Route
-          path="/product/tutorial_packages"
-          element={<TutorialPackages />}
-        />
-        <Route path="/product/wallet" element={<Wallet />} />
-        <Route path="/product/miner/miner_parts" element={<MinerParts />} />
-        <Route
-          path="/product/miner/general_miners"
-          element={<GeneralMiners />}
-        />
-        <Route
-          path="/product/miner/industrial_miners"
-          element={<IndustrialMiners />}
-        />
-        <Route path="/product/accessories" element={<Accessories />} />
+
         <Route path="/Signals" element={<Signals />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/auth/forgot" element={<ForgotPage />} />
-        <Route path="/auth/signup" element={<SignupPage />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

@@ -72,39 +72,38 @@ const Card = ({
         </div>
       );
     } else {
-      return <div className="flex gap-2 text-yellow-400">NEW</div>;
+      return <div className="flex gap-2 text-primary">NEW</div>;
     }
   };
-
+  const renderDescription = (text: string, maxLength: number) => {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  };
   // Function to render the description based on desc prop
-  const renderDescription = () => {
+  const renderDescriptions = () => {
     return (
-      <div id={id} className="my-[5%]">
+      <div id={id} className="my-[5%] p-1">
         {desc?.desc1 && (
           <p
-            className={`text-${
-              type === "signals" ? "white" : "black"
-            } text-[14px]`}
+            className={`text-${type === "signals" ? "" : "black"} text-[12px]`}
           >
-            {desc.desc1}
+            {renderDescription(desc.desc1, 100)}{" "}
+            {/* Display up to 100 characters */}
           </p>
         )}
         {desc?.desc2 && (
           <p
-            className={`text-${
-              type === "signals" ? "white" : "black"
-            } text-[14px]`}
+            className={`text-${type === "signals" ? "" : "black"} text-[12px]`}
           >
-            {desc.desc2}
+            {renderDescription(desc.desc2, 100)}{" "}
+            {/* Display up to 100 characters */}
           </p>
         )}
         {desc?.desc3 && (
           <p
-            className={`text-${
-              type === "signals" ? "white" : "black"
-            } text-[14px]`}
+            className={`text-${type === "signals" ? "" : "black"} text-[12px]`}
           >
-            {desc.desc3}
+            {renderDescription(desc.desc3, 100)}{" "}
+            {/* Display up to 100 characters */}
           </p>
         )}
       </div>
@@ -114,16 +113,20 @@ const Card = ({
   // Function to render tags based on tags prop and type
   const renderTags = () => {
     const tagClassName =
-      type === "signals" ? "text-white" : "text-xs text-black min-h-[20px]";
+      type === "signals" ? "" : "text-xs text-black min-h-[20px]";
 
     return (
       <div
-        className={`card-actions ${
+        className={`card-actions flex gap-0 ${
           type === "signals" ? "border-t" : ""
         } ${tagClassName}`}
       >
-        {tags && tags.tag1 && <div>{tags.tag1}</div>}
-        {tags && tags.tag2 && <div>{tags.tag2}</div>}
+        {tags && tags.tag1 && (
+          <div className="text-[12px]">Stop Loss: {tags.tag1}%</div>
+        )}
+        {tags && tags.tag2 && (
+          <div className="text-[12px]">Short/Long: {tags.tag2}</div>
+        )}
         {tags && tags.tag3 && <div>{tags.tag3}</div>}
         {tags && tags.tag4 && <div>{tags.tag4}</div>}
       </div>
@@ -133,12 +136,12 @@ const Card = ({
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
     event.stopPropagation();
-    if (title && id && price) {
+    if (title && id && price && img) {
       dispatch(addItem({ id, title, img, quantity: 0, price: price }));
     }
   };
   const handleAddToCart = (): void => {
-    if (title && id && price) {
+    if (title && id && price && img) {
       dispatch(addItem({ id, title, img, quantity: 0, price: price }));
     }
   };
@@ -146,19 +149,19 @@ const Card = ({
     <div
       key={id}
       onClick={handleShowModal}
-      className={` ${
+      className={`card ${
         type === "signals"
-          ? "hover:border-gray-800 transition-all hover:shadow-xl p-2 border-gray-300 border-4 rounded-3xl m-3s m-2 shadow-sm bg-gray-800 overflow-hidden"
+          ? " transition-all hover:shadow-xl p-2 border-neutral hover:border-primary border-4 rounded-3xl m-3s m-2 shadow-sm bg-base-100 overflow-hidden"
           : ""
       } ${
         type === "news"
           ? "hover:shadow-2xl transition-all rounded-sm m-2 shadow-md"
           : type === "products" || type === "tutorials"
-          ? "hover:border-gray-800 transition-all hover:shadow-xl p-4 border-gray-300 border-4 rounded-3xl m-3s m-2 shadow-sm overflow-hidden"
+          ? " transition-all hover:shadow-xl p-4 border-gray-300 border-4 rounded-3xl m-3s m-2 bg-base-100  shadow-sm overflow-hidden"
           : ""
       }`}
     >
-      <div className={`w-full h-[50%] hover:cursor-pointer card image-full`}>
+      <div className={`w-full h-[50%] hover:cursor-pointer image-full`}>
         {type !== "signals" && (
           <figure>
             <img className="" src={img} alt="img" />
@@ -167,13 +170,13 @@ const Card = ({
         <div className="flex flex-col">
           <h2
             className={`text-${
-              type === "news" ? "black" : type === "signals" ? "white" : ""
-            } text-xl font-bold block`}
+              type === "news" ? "black" : type === "signals" ? "" : ""
+            } text-xl p-1 font-bold block`}
           >
             {crypto || title}
           </h2>
           {type === "signals" && renderState()}
-          {desc && renderDescription()}
+          {desc && renderDescriptions()}
           {tags && renderTags()}
           {type !== "signals" && type !== "news" && (
             <div className="">
@@ -187,7 +190,7 @@ const Card = ({
                   onClickWithEvent={(
                     event: React.MouseEvent<HTMLButtonElement>
                   ) => handleAddToCartEvent(event)}
-                  style=" transition-all text-xs p-[3%] mt-2 border-gray-800 border-2 hover:bg-gray-800 hover:text-gray-200 rounded-md text-gray-800"
+                  style=" transition-all text-xs p-[3%] mt-2 border-2 rounded-md"
                 >
                   Add to cart
                 </Button>
@@ -197,6 +200,7 @@ const Card = ({
         </div>
       </div>
       <Modal
+        children={renderState()}
         price={price}
         id={id}
         type={type}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { PropsWithChildren, useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../Store/Store";
@@ -7,7 +7,7 @@ import { Button } from "../../ui";
 import { addItem } from "../../../Store/CartListReducer";
 // const dispatch = useDispatch();
 
-interface Props {
+interface Props extends PropsWithChildren {
   id: string;
   type?: string;
   showModal?: boolean;
@@ -28,6 +28,7 @@ interface Props {
 }
 
 const Modal = ({
+  children,
   price,
   id,
   type,
@@ -49,6 +50,7 @@ const Modal = ({
   };
 
   useEffect(() => {
+    console.log("title:", title);
     const handleOuterClick = (event: MouseEvent) => {
       const outerElement = document.querySelector("#inner") as HTMLDivElement;
 
@@ -90,14 +92,14 @@ const Modal = ({
         <div
           key={id}
           id={id}
-          className="flex fixed inset-0 z-50 justify-center items-center w-full h-full bg-black bg-opacity-50"
+          className="flex fixed inset-0 justify-center items-center w-full h-full bg-black bg-opacity-50 z-[2]"
         >
           <div
             id="inner"
             className={`bg-white p-6 rounded-lg shadow-lg${
               type === "products" &&
               "w-[90%] h-[85%] lg:mt-[8%] lg:w-[80%] lg:h-[80%] overflow-y-auto"
-            } ${type === "signals" && "lg:w-[40%] lg:mt-[8%] mt-[8%]"}
+            } ${type === "signals" && "lg:w-[40%] lg:mt-[0%] mt-[8%]"}
               ${type === "news" && "w-[80%] h-[80%] overflow-y-auto"}
             `}
           >
@@ -105,7 +107,7 @@ const Modal = ({
               <h2
                 className={`${
                   type === "signals"
-                    ? "text-xl bg-gray-300 rounded-full w-[130px] p-3 font-bold"
+                    ? "text-5xl rounded-full w-[130px] p-3 font-bold"
                     : ""
                 } ${
                   type === "news"
@@ -113,12 +115,19 @@ const Modal = ({
                     : ""
                 }`}
               >
-                {type === "signals" && <p className="">{crypto}</p>}
-                {type !== "signals" && <p className="text-3xl">{title}</p>}
+                {type === "signals" && children && (
+                  <div className="flex flex-col gap-1">
+                    <p className="text-4xl">{crypto}</p>
+                    <div className="text-xl">{children}</div>
+                  </div>
+                )}
+                {type !== "signals" && (
+                  <p className="text-3xl text-neutral">{title}</p>
+                )}
               </h2>
               <div
                 id="cross"
-                className="flex w-[40px] mt-1 h-[40px] text-2xl p-2 bg-gray-300 rounded-full cursor-pointer"
+                className="flex w-[40px] mt-1 h-[40px] text-2xl p-2 bg-primary text-secondary rounded-full cursor-pointer"
               >
                 <RxCross2 />
               </div>
@@ -127,7 +136,7 @@ const Modal = ({
               {type === "signals" && (
                 <p
                   onClick={handleImageClick}
-                  className="fixed text-white text-2xl rounded-full p-3 bg-gray-500 left-[32%] top-[37%] lg:left-[44%] lg:top-[40%] cursor-pointer opacity-60 z-10"
+                  className="flex absolute mt-[5%] right-[46%] justify-center items-center text-base-100 text-2xl rounded-full p-3 bg-gray-500  cursor-pointer opacity-60 z-[2]"
                 >
                   Click to Open
                 </p>
@@ -137,7 +146,7 @@ const Modal = ({
                 <img
                   className={`w-full h-64 object-cover blur-custom mb-4 cursor-pointer ${
                     isFullscreen
-                      ? "fixed z-20 lg:top-[9%] lg:left-[0%] w-full h-[30%] left-[0%] top-[35%] lg:w-full lg:h-full blur-none"
+                      ? "fixed z-[20] lg:top-[9%] lg:left-[5%] w-full h-[30%] left-[0%] top-[35%] lg:w-[90%] lg:h-[90%] blur-none"
                       : ""
                   }`}
                   src={img}
@@ -159,39 +168,53 @@ const Modal = ({
                     src={img}
                     alt={title}
                   />
-                  {desc && (
-                    <p className="p-5 text-patternColors-green">{desc.desc1}</p>
-                  )}
-                  {desc && (
-                    <p className="text-patternColors-green">{desc.desc2}</p>
-                  )}
-                  {desc && (
-                    <p className="text-patternColors-green">{desc.desc3}</p>
-                  )}
+                  {desc && <p className="p-5 text-neutral">{desc.desc1}</p>}
+                  {desc && <p className="text-neutral">{desc.desc2}</p>}
+                  {desc && <p className="text-neutral">{desc.desc3}</p>}
                 </div>
               )}
             </div>
             <div className="my-5">
               {type === "news" && <p className="mb-4">{desc && desc.desc1}</p>}
               {type === "signals" && desc !== undefined && (
-                <div>
-                  <p className="text-patternColors-green">{desc.desc1}</p>
-                  <p className="text-patternColors-green">{desc.desc2}</p>
-                  <p className="text-patternColors-green">{desc.desc3}</p>
+                <div className="flex p-1">
+                  <div className="shadow stats">
+                    <div className="flex justify-center items-center stat">
+                      <p className="text-sm text-neutral">{desc.desc1}</p>
+                    </div>
+
+                    <div className="flex justify-center items-center stat">
+                      <p className="text-sm text-neutral">{desc.desc2}</p>
+                    </div>
+
+                    <div className="flex justify-center items-center stat">
+                      <p className="text-sm text-neutral">{desc.desc3}</p>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
-            <div className="flex mt-2 space-x-2">
+            <div className="flex justify-center items-center mt-2 space-x-2">
               {tags && (
-                <span className="px-2 py-1 text-gray-700 bg-gray-200 rounded">
-                  {tags.tag1}
-                </span>
+                <div className="flex text-xl">
+                  <div className="shadow stats">
+                    <div className="flex justify-center items-center text-sm stat">
+                      <div className="stat-title">Stop Loss:</div>
+                      <p className="text-neutral">{tags.tag1}%</p>
+                    </div>
+                  </div>
+                </div>
               )}
               {tags && (
-                <span className="px-2 py-1 text-gray-700 bg-gray-200 rounded">
-                  {tags.tag2}
-                </span>
+                <div className="flex text-xl">
+                  <div className="shadow stats">
+                    <div className="flex justify-center items-center text-sm stat">
+                      <div className="stat-title">Short/Long:</div>
+                      <p className="text-neutral">{tags.tag2}</p>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
             {type !== "signals" && type !== "news" && (
@@ -202,7 +225,7 @@ const Modal = ({
 
                 <Button
                   onClick={handleAddToCart}
-                  style="p-3 bg-patternColors-green rounded-md my-10 text-white"
+                  style="p-3 bg-neutral rounded-md my-10 text-white"
                 >
                   Add to cart
                 </Button>

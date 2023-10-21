@@ -13,7 +13,9 @@ import Exam from "./Exam/Exam";
 import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import Loading from "./Loading/Loading";
 import ScrollToTopIcon from "./ScrollToTopIcon/ScrollToTopIcon";
+import Avatar from "./Avatar/Avatar";
 export {
+  Avatar,
   ScrollToTopIcon,
   Exam,
   ShoppingCart,

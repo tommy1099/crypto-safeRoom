@@ -1,136 +1,47 @@
 import { Container } from "..";
 import { NavBar, Footer } from "../../components/ui";
 // import { NewsCard } from "../../components/forms";
-import Pic from "../../assets/img//proxy-image.jpg";
 import Card from "../../components/forms/Cards/Card";
-import uuid from "react-uuid";
+import { useEffect, useState } from "react";
+import { Loading } from "../../components/forms";
 
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../Store/Store";
-
+type NewItem = {
+  id: string;
+  //   key: string;
+  img: string;
+  title: string;
+  desc: {
+    desc1: string;
+  };
+};
 const News = () => {
-  const cardComponents = [
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1: "blah blah blah...",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-    {
-      id: uuid(),
-      src: Pic,
-      type: "news",
-      title: "Bitcoin Crashed!",
-      desc: {
-        desc1:
-          "we just found out that the recent events had a pretty bad impact on the worth of Bitcoin",
-      },
-    },
-  ];
-  cardComponents.sort((a, b) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const [signalsList, setSignalsList] = useState<NewItem[]>([]);
+
+  useEffect(() => {
+    // console.log("signal list:", signalsList);
+
+    fetch("http://localhost:4444/admin/dashboard/news") // Replace with your API endpoint.
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Parse the response as JSON.
+      })
+      .then((responseData) => {
+        setIsLoaded(true);
+        setSignalsList(responseData); // Update the state with the data.
+      })
+      .catch((error) => {
+        setIsLoaded(true);
+        console.error("Error fetching data:", error);
+      });
+  });
+  // const cardComponents = [{}];
+  signalsList.sort((a, b) => {
     if (a.id === b.id) {
       return 0;
     } else if (a.id) {
@@ -146,9 +57,9 @@ const News = () => {
   return (
     <>
       <NavBar />
-
+      {!isLoaded && <Loading />}
       <Container style=" relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%]">
-        {cardComponents.map((component) => (
+        {signalsList.map((component) => (
           // <NewsCard
           //   src={component.src}
           //   title={component.title}
@@ -157,7 +68,7 @@ const News = () => {
           <Card
             id={component.id}
             type="news"
-            img={component.src}
+            img={component.img}
             title={component.title}
             desc={component.desc}
           />

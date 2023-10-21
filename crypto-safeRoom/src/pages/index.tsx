@@ -20,7 +20,13 @@ import MinerParts from "./Products/Miners/MinerParts/MinerParts";
 import Tutorials from "./Tutorials/Tutorials";
 import Checkout from "./Checkout/Checkout";
 import Profile from "./Profile/Profile";
+import AdminPage from "./Admin/AdminPage/AdminPage";
+import SignalsAdmin from "./Admin/SignalsAdmin.tsx/SignalsAdmin";
+import NewsAdmin from "./Admin/NewsAdmin/NewsAdmin";
 export {
+  NewsAdmin,
+  SignalsAdmin,
+  AdminPage,
   Profile,
   Checkout,
   Tutorials,

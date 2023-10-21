@@ -12,9 +12,11 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
     "@truffle/hdwallet-provider": "^1.0.41-1",
+    "i18next": "^23.6.0",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^13.3.1",
     "react-icons": "^4.11.0",
     "react-lorem-ipsum": "^1.4.10",
     "react-redux": "^8.1.2",

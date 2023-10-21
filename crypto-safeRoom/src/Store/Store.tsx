@@ -10,6 +10,8 @@ import { persistConfig } from "../../reduxPersistConfig";
 import CartListReducer from "./CartListReducer";
 import ShoppingCartBadge from "./ShoppingCartBadge";
 import priceReducer from "./priceReducer";
+import editModeReducer from "./EditModeReducer";
+import ThemeToggleReducer from "./ThemeToggleReducer";
 const rootReducer = combineReducers({
   SignalDivs: divs,
   toggleReducer: Filtertoggle,
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
   cartList: CartListReducer,
   wholeQuantity: ShoppingCartBadge,
   Price: priceReducer,
+  editMode: editModeReducer,
+  themeToggle: ThemeToggleReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

@@ -291,7 +291,7 @@ const SignalsAdmin: React.FC = () => {
   // };
 
   useEffect(() => {
-    fetch("http://localhost:4444/admin/dashboard/signals")
+    fetch("https://csrbackend.ir/admin/dashboard/signals")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

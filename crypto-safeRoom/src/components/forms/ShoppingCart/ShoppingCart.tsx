@@ -92,7 +92,6 @@ const ShoppingCart = () => {
         {/* Display the number of items in the cart */}
         {total > 0 && (
           <span className="absolute bottom-3 left-3">
-            <span className="absolute top-[4px] left-[2px] inset-0 w-[22px] h-[20px] bg-primary rounded-full opacity-75 animate-ping"></span>
             <span className="inline-block relative px-2 py-1 text-xs rounded-full text-secondary bg-primary">
               {total}
             </span>

@@ -3,6 +3,7 @@ import { Card, Filters, ScrollToTopIcon } from "../../components/forms";
 import {
   ExpandedSidePanel,
   Footer,
+  NarrowContainer,
   NavBar,
   ShrunkSidePanel,
 } from "../../components/ui";
@@ -164,9 +165,10 @@ const Tutorials = () => {
   return (
     <>
       <NavBar />
-      <ExpandedSidePanel children={<Filters type="tutorials" />} />
-      <ShrunkSidePanel children={<Filters type="tutorials" />} />
-      <Container style=" bg-white lg:w-[75%]  relative mt-[15%] lg:mt-[4%] z-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 mx-[5%]">
+      {/* <ExpandedSidePanel children={<Filters type="tutorials" />} />
+      <ShrunkSidePanel children={<Filters type="tutorials" />} /> */}
+      <NarrowContainer style="bg-neutral h-32 w-full fixed" />
+      <Container style=" bg-base-100 my-[10%] relative mt-[15%] lg:my-[8%] z-0 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4  xl:grid-cols-5 mx-[5%]">
         {selectedRadioValue === "All"
           ? cardComponents.map((component) => (
               <Card

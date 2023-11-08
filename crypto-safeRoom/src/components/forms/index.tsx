@@ -14,7 +14,9 @@ import ShoppingCart from "./ShoppingCart/ShoppingCart";
 import Loading from "./Loading/Loading";
 import ScrollToTopIcon from "./ScrollToTopIcon/ScrollToTopIcon";
 import Avatar from "./Avatar/Avatar";
+import ErrorAlert from "./Alert/ErrorAlert/ErrorAlert";
 export {
+  ErrorAlert,
   Avatar,
   ScrollToTopIcon,
   Exam,

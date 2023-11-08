@@ -8,6 +8,7 @@ import { ExpandedSidePanel } from "../../../components/ui";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../Store/Store";
 import { EditModeToggle } from "../../../Store/EditModeReducer";
+import { BackendAddress } from "../../../utils/BackendAddress/BackendAddress";
 // import { AiOutlineSend } from "react-icons/ai";
 
 type SentForm = {
@@ -56,7 +57,7 @@ const NewsAdmin = () => {
 
       console.log("formData:", formData);
       const response = await fetch(
-        "http://localhost:4444/admin/dashboard/news/create",
+        `${BackendAddress()}/admin/dashboard/news/create`,
         {
           method: "POST",
           body: formData, //sending the form data to the backend
@@ -164,7 +165,7 @@ const NewsAdmin = () => {
   const handleDeleteButton = async (itemId: string) => {
     try {
       const response = await fetch(
-        `http://localhost:4444/admin/dashboard/news/delete/${itemId}`,
+        `${BackendAddress()}/admin/dashboard/news/delete/${itemId}`,
         {
           method: "DELETE",
           headers: {
@@ -219,7 +220,7 @@ const NewsAdmin = () => {
   // };
 
   useEffect(() => {
-    fetch("http://localhost:4444/admin/dashboard/news")
+    fetch(`${BackendAddress()}/admin/dashboard/news`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

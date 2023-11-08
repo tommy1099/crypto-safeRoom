@@ -31,8 +31,6 @@ const Filters: React.FC<Props> = ({ type }) => {
     }
     dispatch(setSelectedValue(catValue));
 
-    console.log("selectedRadioValue:", selectedRadioValue);
-
     // dispatch(setSelectedValue(selectedRadioValue));
     // Optionally, you can notify the parent component of the filter change
     // if (onFilterChange) {

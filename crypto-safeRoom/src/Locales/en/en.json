@@ -3,7 +3,39 @@
     "news": "News",
     "home": "Home",
     "exam": "Exam",
-    "tutorials": "Exam",
-    "products": "Products"
+    "tutorials": "Courses",
+    "products": "Products",
+    "newSignals": "NEW Signals",
+    "oldSignals": "Previous Signals",
+    "result": "Result: ",
+    "new": "NEW",
+    "tp1": "Target Price 1: ",
+    "tp2": "Target Price 2: ",
+    "tp3": "Target Price 3: ",
+    "stop": "Stop Loss: ",
+    "sl": "Short/Long: ",
+    "total": "Total",
+    "successfull": "Successfull",
+    "failed": "Failed",
+    "successRate": "Success Rate",
+    "notIncludedSignals": "New Signals NOT included",
+
+
+    "profile": "Profile",
+    "light": "Light",
+    "theme": "Theme",
+    "lang": "Language",
+    "fa": "Fa",
+    "en": "En",
+    "logout": "Logout",
+    "login": "Login",
+
+    "profit": "Profit",
+    "loss": "Loss",
+    "totalprofit": "Total Profit",
+    "totalNumbers": "Total Numbers",
+    "totalNumbersDesc": "allt the numebers ....",
+    "errorAlertpart1": "You need to be a VIP member to be able to see the VIP signals",
+    "errorAlertpart2": "Become a VIP member"
     
 }

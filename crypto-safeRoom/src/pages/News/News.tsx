@@ -4,6 +4,7 @@ import { NavBar, Footer } from "../../components/ui";
 import Card from "../../components/forms/Cards/Card";
 import { useEffect, useState } from "react";
 import { Loading } from "../../components/forms";
+import { BackendAddress } from "../../utils/BackendAddress/BackendAddress";
 
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../Store/Store";
@@ -24,7 +25,7 @@ const News = () => {
   useEffect(() => {
     // console.log("signal list:", signalsList);
 
-    fetch("http://localhost:4444/admin/dashboard/news") // Replace with your API endpoint.
+    fetch(`${BackendAddress()}/admin/dashboard/news`) // Replace with your API endpoint.
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -58,7 +59,7 @@ const News = () => {
     <>
       <NavBar />
       {!isLoaded && <Loading />}
-      <Container style=" relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%]">
+      <Container style=" relative mb-[600px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%]">
         {signalsList.map((component) => (
           // <NewsCard
           //   src={component.src}

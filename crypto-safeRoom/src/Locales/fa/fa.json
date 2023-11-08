@@ -3,6 +3,40 @@
     "news": "اخبار",
     "home": "خانه",
     "exam": "امتحان",
-    "tutorials": "آموزش ها",
-    "products": "محصولات"
+    "tutorials": "دوره ها",
+    "products": "محصولات",
+    "newSignals": "سیگنال های جدید",
+    "oldSignals": "سیگنال های قبلی",
+    "result": "نتیجه: ",
+    "new": "جدید",
+    "tp1": "هدف ۱: ",
+    "tp2": "هدف ۲: ",
+    "tp3": "هدف ۳: ",
+    "stop": "حد ضرر: ",
+    "sl": "شرت/لانگ: ",
+    "total": "همه سیگنال ها",
+    "successfull": "موفقیت آمیز",
+    "failed": "شکست خورده",
+    "successRate": "درصد موفقیت",
+    "notIncludedSignals": "فقط سیگنال های با نتیجه مشخص",
+
+
+    "profile": "پروفایل",
+    "theme": "پوسته",
+    "lang": "زبان",
+    "fa": "Fa",
+    "en": "En",
+    "logout": "خروج",
+    "login": "ورود",
+
+    "profit": "سود",
+    "loss": "ضرر",
+    "totalprofit": "سود کلی",
+    "totalNumbers": "همه درصد ها",
+    "totalNumbersDesc": "همه درصد ها شاما همه اعداد ...",
+
+    "errorAlertpart1": "برای اینکه بتوانید سیگنال های وی آی پی رو ببینید میبایست کاربر وی آی پی باشید ",
+    "errorAlertpart2": "کاربر وی آی پی شوید"
+
+
 }

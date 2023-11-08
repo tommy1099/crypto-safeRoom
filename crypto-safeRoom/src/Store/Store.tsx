@@ -12,6 +12,11 @@ import ShoppingCartBadge from "./ShoppingCartBadge";
 import priceReducer from "./priceReducer";
 import editModeReducer from "./EditModeReducer";
 import ThemeToggleReducer from "./ThemeToggleReducer";
+import IsLoggedin from "./isLoggedInReducer";
+import setUser from "./UserReducer";
+import SignalsReducer from "./SignalsReducer";
+import LanguageReducer from "./LanguageReducer";
+import signalIndicator from "./signalIndicator";
 const rootReducer = combineReducers({
   SignalDivs: divs,
   toggleReducer: Filtertoggle,
@@ -24,6 +29,11 @@ const rootReducer = combineReducers({
   Price: priceReducer,
   editMode: editModeReducer,
   themeToggle: ThemeToggleReducer,
+  isLoggedin: IsLoggedin,
+  user: setUser,
+  signals: SignalsReducer,
+  lang: LanguageReducer,
+  signalIndicator: signalIndicator,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

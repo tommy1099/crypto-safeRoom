@@ -8,9 +8,10 @@ import { ExpandedSidePanel } from "../../../components/ui";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../Store/Store";
 import { EditModeToggle } from "../../../Store/EditModeReducer";
-// import { AiOutlineSend } from "react-icons/ai";
-import { IoMdCheckmarkCircle } from "react-icons/io";
+import { AiOutlineSend } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
+import { BackendAddress } from "../../../utils/BackendAddress/BackendAddress";
+import { Container } from "../..";
 type SentForm = {
   img: File | null;
   crypto: string;
@@ -23,6 +24,7 @@ type SentForm = {
     tag1: string;
     tag2: string;
   };
+  vip: boolean;
   blur: boolean;
   state: boolean;
 };
@@ -39,10 +41,20 @@ type recievedSignals = {
     tag1: string;
     tag2: string;
   };
+  vip: boolean;
   blur: boolean;
   state: boolean;
+  tp: {
+    tp1: boolean;
+    tp2: boolean;
+    tp3: boolean;
+  };
 };
 const SignalsAdmin: React.FC = () => {
+  const isFa = useSelector((state: RootState) => state.lang.isFa);
+
+  const abortController = new AbortController();
+  const { signal } = abortController;
   const [isLoaded, setIsLoaded] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -60,6 +72,7 @@ const SignalsAdmin: React.FC = () => {
       tag1: "",
       tag2: "",
     },
+    vip: false,
     blur: false, // Initialize 'blur' and 'state' with default values
     state: false,
   });
@@ -74,31 +87,18 @@ const SignalsAdmin: React.FC = () => {
       const formData = new FormData();
       formData.append("img", selectedImage || ""); // Append the image to FormData
       formData.append("crypto", formDataState.crypto);
-      // console.log("cyrpto:", formDataState.crypto);
-
       formData.append("desc1", formDataState.desc.desc1);
-      // console.log("desc1:", formDataState.desc.desc1);
-
       formData.append("desc2", formDataState.desc.desc2);
-      // console.log("desc2:", formDataState.desc.desc2);
-
       formData.append("desc3", formDataState.desc.desc3);
-      // console.log("desc3:", formDataState.desc.desc3);
-
       formData.append("tag1", formDataState.tags.tag1);
-      // console.log("tag1:", formDataState.tags.tag1);
-
       formData.append("tag2", formDataState.tags.tag2);
-      // console.log("tag2:", formDataState.tags.tag2);
-
-      console.log("formData:", formData);
-      const response = await fetch(
-        "http://localhost:4444/admin/dashboard/signals/create",
-        {
-          method: "POST",
-          body: formData, //sending the form data to the backend
-        }
-      );
+      formData.append("vip", String(formDataState.vip));
+      console.log(...formData);
+      const response = await fetch(`${BackendAddress()}/signals/create`, {
+        signal,
+        method: "POST",
+        body: formData, //sending the form data to the backend
+      });
 
       if (response.ok) {
         const data: SentForm = await response.json();
@@ -109,6 +109,7 @@ const SignalsAdmin: React.FC = () => {
     } catch (error) {
       console.error("Error creating new item:", error);
     }
+    abortController.abort();
   };
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -208,7 +209,7 @@ const SignalsAdmin: React.FC = () => {
   const handleDeleteButton = async (itemId: string) => {
     try {
       const response = await fetch(
-        `http://localhost:4444/admin/dashboard/signals/delete/${itemId}`,
+        `${BackendAddress()}/signals/delete/${itemId}`,
         {
           method: "DELETE",
           headers: {
@@ -216,7 +217,7 @@ const SignalsAdmin: React.FC = () => {
           },
         }
       );
-      console.log(`http://localhost:4444/admin/dashboard/${itemId}`);
+      console.log(`${BackendAddress()}/${itemId}`);
       if (response.ok) {
         const remainingItems = newSignalsList.filter(
           (item) => item._id !== itemId
@@ -233,12 +234,12 @@ const SignalsAdmin: React.FC = () => {
     }
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleChangeStateAndBlur = async (value: string, itemId: string) => {
+  const signalUpdate = async (value: string, itemId: string) => {
     const data = { state: value };
 
     try {
       const response = await fetch(
-        `http://localhost:4444/admin/dashboard/signals/stateUpdate/${itemId}`,
+        `${BackendAddress()}/signals/signalUpdate/${itemId}`,
         {
           method: "PUT",
           headers: {
@@ -260,7 +261,58 @@ const SignalsAdmin: React.FC = () => {
       console.error("Network error:", error);
     }
   };
+  const failedSignalsUpdate = async (value: string, itemId: string) => {
+    const data = { state: value };
 
+    try {
+      const response = await fetch(
+        `${BackendAddress()}/signals/failedSignalUpdate/${itemId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json", // Set the content type to JSON
+          },
+          body: JSON.stringify(data), // Send the data as JSON
+        }
+      );
+
+      if (response.ok) {
+        // Handle a successful response
+        // You may want to update your UI or display a success message.
+      } else {
+        // Handle errors
+        console.error("state update failed.");
+      }
+    } catch (error) {
+      // Handle network or request-related errors
+      console.error("Network error:", error);
+    }
+  };
+  const submitSignal = async (itemId: string) => {
+    try {
+      const response = await fetch(
+        `${BackendAddress()}/signals/submitSignal/${itemId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json", // Set the content type to JSON
+          },
+          // Send the data as JSON
+        }
+      );
+
+      if (response.ok) {
+        // Handle a successful response
+        // You may want to update your UI or display a success message.
+      } else {
+        // Handle errors
+        console.error("state update failed.");
+      }
+    } catch (error) {
+      // Handle network or request-related errors
+      console.error("Network error:", error);
+    }
+  };
   // const updateItem = async (itemId: string) => {
   //   try {
   //     const formData = new FormData();
@@ -290,35 +342,57 @@ const SignalsAdmin: React.FC = () => {
   //   }
   // };
 
-  useEffect(() => {
-    fetch("https://csrbackend.ir/admin/dashboard/signals")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((responseData: recievedSignals[]) => {
-        setIsLoaded(true);
-        const sortedData = [...responseData].sort((a, b) => {
-          return a.blur === b.blur ? 0 : a.blur ? 1 : -1;
-        });
-        console.log("sortedData:", sortedData);
-        setNewSignalsList(sortedData);
-      })
-      .catch((error) => {
-        setIsLoaded(true);
-        console.error("Error fetching data:", error);
-      });
-  }, [setNewSignalsList, handleChangeStateAndBlur]);
+  // useEffect(() => {
+  //   fetch(`${BackendAddress()}/signals`, {
+  //     signal: abortController.signal,
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((responseData: recievedSignals[]) => {
+  //       setIsLoaded(true);
+  //       const sortedData = [...responseData].sort((a, b) => {
+  //         return a.blur === b.blur ? 0 : a.blur ? 1 : -1;
+  //       });
+  //       console.log("sortedData:", sortedData);
+  //       setNewSignalsList(sortedData);
+  //     })
+  //     .catch((error) => {
+  //       setIsLoaded(true);
+  //       console.error("Error fetching data:", error);
+  //     });
+  //   return () => {
+  //     abortController.abort();
+  //   };
+  // });
 
+  useEffect(() => {
+    const eventSource = new EventSource(`${BackendAddress()}/signals`);
+
+    eventSource.addEventListener("message", (event) => {
+      const data = JSON.parse(event.data);
+      setIsLoaded(true);
+      setNewSignalsList(data);
+    });
+
+    return () => {
+      // Cleanup when the component unmounts
+      eventSource.close();
+    };
+  }, []);
   return (
-    <>
+    <Container
+      dir={`${isFa ? "rtl" : "ltr"}`}
+      style="grid grid-cols-5 w-[1000px]"
+    >
       {!isLoaded && <Loading />}
       {newSignalsList.map((component) => (
         <div key={component._id} className="flex flex-col">
           {inEdit && (
-            <div className="flex gap-3 justify-around p-2 mb-1 bg-gray-200 rounded-md">
+            <div className="flex gap-3 justify-around items-center px-3 mb-1 bg-gray-200 rounded-md">
               <div
                 onClick={() => {
                   handleDeleteButton(component._id);
@@ -360,17 +434,31 @@ const SignalsAdmin: React.FC = () => {
                 )}
               </div> */}
               <div
-                onClick={() =>
-                  handleChangeStateAndBlur("successfull", component._id)
-                }
-                className="text-2xl text-green-700 cursor-pointer hover:text-green-500 active:text-green-400"
+                onClick={() => signalUpdate("tp1", component._id)}
+                className="px-2 bg-green-700 rounded-md cursor-pointer text-base-100 hover:bg-green-500 active:bg-green-400"
               >
-                <IoMdCheckmarkCircle />
+                1
               </div>
               <div
-                onClick={() =>
-                  handleChangeStateAndBlur("failed", component._id)
-                }
+                onClick={() => signalUpdate("tp2", component._id)}
+                className="px-2 bg-green-700 rounded-md cursor-pointer text-base-100 hover:bg-green-500 active:bg-green-400"
+              >
+                2
+              </div>
+              <div
+                onClick={() => signalUpdate("tp3", component._id)}
+                className="px-2 bg-green-700 rounded-md cursor-pointer text-base-100 hover:bg-green-500 active:bg-green-400"
+              >
+                3
+              </div>
+              <div
+                onClick={() => submitSignal(component._id)}
+                className="text-2xl rounded-md cursor-pointer text-text-green-700 hover:text-green-500 active:text-green-400"
+              >
+                <AiOutlineSend />
+              </div>
+              <div
+                onClick={() => failedSignalsUpdate("stop", component._id)}
                 className="text-2xl text-red-700 cursor-pointer hover:text-red-500 active:text-red-400"
               >
                 <ImCross />
@@ -378,6 +466,7 @@ const SignalsAdmin: React.FC = () => {
             </div>
           )}
           <Card
+            tp={component.tp}
             img={component.img}
             type="signals"
             state={component.state}
@@ -455,6 +544,17 @@ const SignalsAdmin: React.FC = () => {
             className="border"
             onChange={handleFormChange}
           />
+          <div className="flex gap-10">
+            <label htmlFor="vip">VIP: </label>
+            <input
+              name="vip"
+              id="vip"
+              type="checkbox"
+              className="border"
+              onChange={handleFormChange}
+            />
+          </div>
+
           <div
             onClick={createNewItem}
             className="fixed right-0 bottom-0 p-5 text-7xl text-green-500 cursor-pointer hover:text-green-400 active:text-green-300"
@@ -468,12 +568,12 @@ const SignalsAdmin: React.FC = () => {
             dispatch(EditModeToggle());
             // setShowSendImage(false);
           }}
-          className="fixed bottom-[3%] text-6xl text-yellow-500 cursor-pointer hover:text-yellow-400 active:text-yellow-300"
+          className="fixed bottom-[3%] right-[5%] text-6xl text-yellow-500 cursor-pointer hover:text-yellow-400 active:text-yellow-300"
         >
           <BiSolidEdit />
         </div>
       </ExpandedSidePanel>
-    </>
+    </Container>
   );
 };
 

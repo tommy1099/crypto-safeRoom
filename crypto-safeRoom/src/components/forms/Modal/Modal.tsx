@@ -5,7 +5,11 @@ import { RootState } from "../../../Store/Store";
 import { fullScreenToggle } from "../../../Store/IsFullScreen";
 import { Button } from "../../ui";
 import { addItem } from "../../../Store/CartListReducer";
+import { Loading } from "..";
+import { useState } from "react";
+import { formatNumberToPersian } from "../../../utils/NumberToFarsi/NumberToFarsi";
 // const dispatch = useDispatch();
+import { useTranslation } from "react-i18next";
 
 interface Props extends PropsWithChildren {
   id: string;
@@ -40,6 +44,17 @@ const Modal = ({
   crypto,
   title,
 }: Props) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { t } = useTranslation();
+  const user = useSelector((state: RootState) => state.user);
+
+  const shouldFormatNumbers = type === "signals";
+  const isFa = useSelector((state: RootState) => state.lang.isFa);
+
+  const handleImageLoad = () => {
+    setIsLoaded(true);
+  };
+
   const dispatch = useDispatch();
   const isFullscreen = useSelector(
     (state: RootState) => state.FullScreenToggleReducer.fullScreen
@@ -50,7 +65,6 @@ const Modal = ({
   };
 
   useEffect(() => {
-    console.log("title:", title);
     const handleOuterClick = (event: MouseEvent) => {
       const outerElement = document.querySelector("#inner") as HTMLDivElement;
 
@@ -81,7 +95,7 @@ const Modal = ({
       document.removeEventListener("mousedown", handleOuterClick);
       document.removeEventListener("mousedown", handleCrossClick);
     };
-  }, [showModal, handleClose]);
+  }, [handleClose, showModal]);
   const handleAddToCart = () => {
     if (title && img && id && price)
       dispatch(addItem({ id, title, img, quantity: 0, price: price }));
@@ -92,7 +106,7 @@ const Modal = ({
         <div
           key={id}
           id={id}
-          className="flex fixed inset-0 justify-center items-center w-full h-full bg-black bg-opacity-50 z-[2]"
+          className="flex fixed inset-0 z-10 justify-center items-center w-full h-full bg-black bg-opacity-50"
         >
           <div
             id="inner"
@@ -133,27 +147,20 @@ const Modal = ({
               </div>
             </div>
             <div className="">
-              {type === "signals" && (
-                <p
-                  onClick={handleImageClick}
-                  className="flex absolute mt-[5%] right-[46%] justify-center items-center text-base-100 text-2xl rounded-full p-3 bg-gray-500  cursor-pointer opacity-60 z-[2]"
-                >
-                  Click to Open
-                </p>
-              )}
-
+              {!isLoaded ? <Loading /> : <></>}
               {type === "signals" && (
                 <img
-                  className={`w-full h-64 object-cover blur-custom mb-4 cursor-pointer ${
+                  className={`w-full h-64 object-cover mb-4 cursor-pointer ${
                     isFullscreen
-                      ? "fixed z-[20] lg:top-[9%] lg:left-[5%] w-full h-[30%] left-[0%] top-[35%] lg:w-[90%] lg:h-[90%] blur-none"
+                      ? "fixed z-[20] lg:top-[9%] lg:left-[5%] w-full h-[30%] left-[0%] top-[35%] lg:w-[90%] lg:h-[90%]"
                       : ""
                   }`}
                   src={img}
-                  alt={crypto}
                   onClick={handleImageClick}
+                  onLoad={handleImageLoad}
                 />
               )}
+
               {type === "news" && (
                 <img
                   className="w-full h-[200px] object-cover"
@@ -177,18 +184,39 @@ const Modal = ({
             <div className="my-5">
               {type === "news" && <p className="mb-4">{desc && desc.desc1}</p>}
               {type === "signals" && desc !== undefined && (
-                <div className="flex p-1">
+                <div className="flex justify-center items-center p-1">
                   <div className="shadow stats">
                     <div className="flex justify-center items-center stat">
-                      <p className="text-sm text-neutral">{desc.desc1}</p>
+                      <p className="text-sm text-neutral">
+                        {t("tp1")}%
+                        {shouldFormatNumbers
+                          ? isFa
+                            ? formatNumberToPersian(Number(desc.desc1))
+                            : desc.desc3
+                          : desc.desc3}
+                      </p>
                     </div>
 
                     <div className="flex justify-center items-center stat">
-                      <p className="text-sm text-neutral">{desc.desc2}</p>
+                      <p className="text-sm text-neutral">
+                        {t("tp2")}%
+                        {shouldFormatNumbers
+                          ? isFa
+                            ? formatNumberToPersian(Number(desc.desc2))
+                            : desc.desc3
+                          : desc.desc3}
+                      </p>
                     </div>
 
                     <div className="flex justify-center items-center stat">
-                      <p className="text-sm text-neutral">{desc.desc3}</p>
+                      <p className="text-sm text-neutral">
+                        {t("tp3")}%
+                        {shouldFormatNumbers
+                          ? isFa
+                            ? formatNumberToPersian(Number(desc.desc3))
+                            : desc.desc3
+                          : desc.desc3}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -200,8 +228,15 @@ const Modal = ({
                 <div className="flex text-xl">
                   <div className="shadow stats">
                     <div className="flex justify-center items-center text-sm stat">
-                      <div className="stat-title">Stop Loss:</div>
-                      <p className="text-neutral">{tags.tag1}%</p>
+                      <div className="stat-title">{t("stop")}%</div>
+                      <p className="text-neutral">
+                        {shouldFormatNumbers
+                          ? isFa
+                            ? formatNumberToPersian(Number(tags.tag1))
+                            : tags.tag1
+                          : tags.tag1}
+                        %
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -210,8 +245,14 @@ const Modal = ({
                 <div className="flex text-xl">
                   <div className="shadow stats">
                     <div className="flex justify-center items-center text-sm stat">
-                      <div className="stat-title">Short/Long:</div>
-                      <p className="text-neutral">{tags.tag2}</p>
+                      <div className="stat-title">{t("sl")}</div>
+                      <p className="text-neutral">
+                        {shouldFormatNumbers
+                          ? isFa
+                            ? formatNumberToPersian(Number(tags.tag2))
+                            : tags.tag2
+                          : tags.tag2}
+                      </p>
                     </div>
                   </div>
                 </div>

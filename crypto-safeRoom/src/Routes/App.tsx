@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import WelcomePage from "../pages/WelcomePage/WelcomePage";
 import {
   Contact,
@@ -11,7 +11,7 @@ import {
   Profile,
 } from "../pages";
 import { AdminApp, ProductApp, AuthApp } from ".";
-import { Loading, Exam } from "../components/forms";
+import { Exam } from "../components/forms";
 // import { BackgroundPattern } from "./components/ui";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../Store/Store";
@@ -21,6 +21,10 @@ function App() {
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
   const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
+  const isLoggedin = useSelector(
+    (state: RootState) => state.isLoggedin.isLoggedin
+  );
+
   return (
     <div
       className={`text-lg ${
@@ -34,9 +38,15 @@ function App() {
         <Route path="/product" element={<Products />} />
 
         <Route path="/product/*" element={<ProductApp />} />
-        <Route path="/auth/*" element={<AuthApp />} />
 
-        <Route path="/" element={<Loading />} />
+        <Route
+          path="/auth/*"
+          element={
+            isLoggedin ? <Navigate to="/signals?toggle=true" /> : <AuthApp />
+          }
+        />
+
+        <Route path="/" element={<Navigate to="/signals?toggle=true" />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
 
@@ -55,7 +65,7 @@ function App() {
         <Route path="/news" element={<News />} />
         <Route path="/tutorials" element={<Tutorials />} />
 
-        <Route path="/Signals" element={<Signals />} />
+        <Route path="/signals" element={<Signals />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/welcome" element={<WelcomePage />} />
 

@@ -21,7 +21,10 @@ const AdminPage = () => {
 
   return (
     <div className="flex justify-start">
-      <Container style="fixed font-semibold gap-10 items-center text-white justify-center w-[200px] h-[1000px] relative  bg-gray-800">
+      <Container
+        dir=""
+        style="fixed font-semibold gap-10 items-center text-white justify-center w-[200px] h-[1000px] relative  bg-gray-800"
+      >
         {tabData.map((tab) => (
           <label
             key={tab.id}
@@ -43,7 +46,10 @@ const AdminPage = () => {
           </label>
         ))}
       </Container>
-      <Container style="relative z-0 w-full grid grid-cols-2 xl:grid-cols-6 m-[5%]">
+      <Container
+        dir=""
+        style="relative z-0 grid grid-cols-2 xl:grid-cols-6 m-[5%]"
+      >
         {selectedTab === "signalsAdmin" ? (
           <SignalsAdmin />
         ) : selectedTab === "newsAdmin" ? (

@@ -6,12 +6,16 @@ import { ProfileDropdown, ShoppingCart } from "../../forms";
 import { setSelectedOption } from "../../../Store/DropDownReducer";
 import { setSelectedValue } from "../../../Store/RadioState";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Notification } from "..";
+import { RootState } from "../../../Store/Store";
 const Navbar = () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const signalIndicator = useSelector(
+    (state: RootState) => state.signalIndicator.signalIndicator
+  );
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const dispatch = useDispatch();
   const toggleDrawer = () => {
@@ -97,13 +101,20 @@ const Navbar = () => {
                 >
                   {t("news")}
                 </Link>
-                <Link
-                  onClick={handleDropDownValue}
-                  to="/signals?toggle=true"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
-                >
-                  {t("signals")}
-                </Link>
+                <div className="group">
+                  <Link
+                    onClick={handleDropDownValue}
+                    to="/signals?toggle=true"
+                    className="flex gap-1 items-center px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+                  >
+                    {signalIndicator && (
+                      <div className="relative badge badge-primary badge-xs group-hover:bg-white">
+                        <div className="absolute animate-ping badge badge-primary group-hover:bg-white badge-xs"></div>
+                      </div>
+                    )}
+                    {t("signals")}
+                  </Link>
+                </div>
                 <Link
                   to="/exam"
                   className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
@@ -124,6 +135,7 @@ const Navbar = () => {
                   {t("products")}
                 </Link>
                 <ShoppingCart />
+                <Notification />
                 <ProfileDropdown />
               </div>
             </div>

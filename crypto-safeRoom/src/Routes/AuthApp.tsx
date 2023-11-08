@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { NotFound, LoginPage, ForgotPage, SignupPage } from "../pages";
+
 function AuthApp() {
   return (
     <Routes>

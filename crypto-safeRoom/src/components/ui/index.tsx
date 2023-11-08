@@ -10,7 +10,11 @@ import Input from "./Input/Input";
 import Dropdown from "./DropDown/DropDown";
 import NarrowContainer from "./NarrowContainer/NarrowContainer";
 import { RadialProgressBar } from "./RadialProgressBar/RadialProgressBar";
+import Notification from "./Notification/Notification";
+import Slide from "./Slide/Slide";
 export {
+  Slide,
+  Notification,
   RadialProgressBar,
   NarrowContainer,
   Dropdown,

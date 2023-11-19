@@ -12,7 +12,13 @@ import NarrowContainer from "./NarrowContainer/NarrowContainer";
 import { RadialProgressBar } from "./RadialProgressBar/RadialProgressBar";
 import Notification from "./Notification/Notification";
 import Slide from "./Slide/Slide";
+import Accordion from "./Accordion/Accordion";
+import Hero from "./Hero/Hero";
+import LoadingCard from "./LoadingCard/LoadingCard";
 export {
+  LoadingCard,
+  Hero,
+  Accordion,
   Slide,
   Notification,
   RadialProgressBar,

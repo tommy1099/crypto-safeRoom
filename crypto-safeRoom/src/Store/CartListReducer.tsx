@@ -3,7 +3,7 @@ interface Div {
   id: string;
   title: string;
   // link: string;
-  img: string;
+  img?: string;
   quantity: number;
   price: number;
 }
@@ -16,7 +16,7 @@ const initialState: DivsState = {
   list: [],
 };
 
-const CartListSlice = createSlice({
+const shoppingCartListSlice = createSlice({
   name: "cartList",
   initialState,
   reducers: {
@@ -24,18 +24,26 @@ const CartListSlice = createSlice({
       const existingItem = state.list.find(
         (item) => item.id === action.payload.id
       );
+
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
-        state.list.push({
+        const newItem: Div = {
           id: action.payload.id,
           title: action.payload.title,
-          img: action.payload.img,
           price: action.payload.price,
           quantity: 1,
-        });
+        };
+
+        // Check if img property is present in action.payload
+        if (action.payload.img) {
+          newItem.img = action.payload.img;
+        }
+
+        state.list.push(newItem);
       }
     },
+
     removeItem: (state, action: PayloadAction<Div>) => {
       const existingItem = state.list.find(
         (item) => item.id === action.payload.id
@@ -63,6 +71,6 @@ const CartListSlice = createSlice({
 });
 
 export const { addItem, removeItem, decreaseOne, reset } =
-  CartListSlice.actions;
+  shoppingCartListSlice.actions;
 
-export default CartListSlice.reducer;
+export default shoppingCartListSlice.reducer;

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Container } from "../../..";
 import { BackendAddress } from "../../../../utils/BackendAddress/BackendAddress";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  toggleisLoggedinTrue,
-  toggleisLoggedinFalse,
-} from "../../../../Store/isLoggedInReducer";
+import { toggleisLoggedinTrue } from "../../../../Store/isLoggedInReducer";
 import { setUser } from "../../../../Store/UserReducer";
 import Cookies from "js-cookie";
 import RefreshToken from "../../../../utils/RefreshToken/RefreshToken";
@@ -15,7 +12,6 @@ interface IloginData {
   email: string;
   password: string;
 }
-import { resetUser } from "../../../../Store/UserReducer";
 
 // interface UserToken {
 //   id: string;
@@ -23,10 +19,10 @@ import { resetUser } from "../../../../Store/UserReducer";
 // }
 
 const LoginForm = () => {
-  RefreshToken();
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
   // const [token, setToken] = useState<string | null>(null);
   const [formDataState, setFormDataState] = useState<IloginData>({
     email: "",
@@ -63,24 +59,34 @@ const LoginForm = () => {
 
         //=====================
         const accessToken = Cookies.get("accessToken");
+
         if (!accessToken) {
           navigate("/auth/login");
         } else {
-          // If there's an access token, you can make an API request to fetch user data
-          // Replace 'your_api_endpoint' with the actual URL to fetch user data
-          const eventSource = new EventSource(
-            `${BackendAddress()}/user/profile?token=${accessToken}`
-          );
+          try {
+            const response = await fetch(`${BackendAddress()}/user/profile`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
 
-          eventSource.addEventListener("message", (event) => {
-            const data = JSON.parse(event.data);
-            // console.log("user:", data);
-            dispatch(setUser(data));
-            return () => {
-              // Cleanup when the component unmounts
-              eventSource.close();
-            };
-          });
+            if (!response.ok) {
+              // Handle non-successful responses here
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const contentType = response.headers.get("Content-Type");
+            if (contentType && contentType.includes("application/json")) {
+              const data = await response.json();
+              dispatch(setUser(data));
+            } else {
+              // Handle non-JSON responses here
+              throw new Error("Invalid response format: expected JSON");
+            }
+          } catch (error) {
+            console.error("Error during login request:", error);
+            // Handle the error appropriately (e.g., show an error message to the user)
+          }
         }
         //=====================
       } else {
@@ -101,11 +107,7 @@ const LoginForm = () => {
     }));
   };
   useEffect(() => {
-    const cookieToken = Cookies.get("accessToken");
-    if (!cookieToken) {
-      dispatch(toggleisLoggedinFalse());
-      dispatch(resetUser());
-    }
+    RefreshToken(navigate, location, dispatch);
   }, []);
   return (
     <Container
@@ -159,7 +161,10 @@ const LoginForm = () => {
             className="w-32 h-10 text-white rounded-md border-box bg-patternColors-green"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            <div className="flex gap-2 justify-center items-center">
+              {loading ? "Logging in" : "Login"}
+              {loading && <span className="loading loading-spinner"></span>}
+            </div>
           </button>
         </div>
       </div>

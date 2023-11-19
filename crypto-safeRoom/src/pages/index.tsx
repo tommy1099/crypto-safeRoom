@@ -23,7 +23,11 @@ import Profile from "./Profile/Profile";
 import AdminPage from "./Admin/AdminPage/AdminPage";
 import SignalsAdmin from "./Admin/SignalsAdmin.tsx/SignalsAdmin";
 import NewsAdmin from "./Admin/NewsAdmin/NewsAdmin";
+import Stats from "./Stats/Stats";
+import { Plans } from "./Plans/Plans";
 export {
+  Plans,
+  Stats,
   NewsAdmin,
   SignalsAdmin,
   AdminPage,

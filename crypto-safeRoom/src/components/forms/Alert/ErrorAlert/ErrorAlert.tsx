@@ -4,9 +4,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 interface Props {
   close: () => void;
+  type: string;
 }
 
-const ErrorAlert = ({ close }: Props) => {
+const ErrorAlert = ({ close, type }: Props) => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
@@ -22,12 +23,17 @@ const ErrorAlert = ({ close }: Props) => {
     >
       <div className="flex justify-center cursor-pointer alert alert-error">
         <span>
-          {t("errorAlertpart1")}.
+          {type === "signals"
+            ? t("errorAlertpart1Signals")
+            : t("errorAlertpart1Plans")}
+          .
           <span
             className="underline transition-all cursor-pointer hover:text-neutral"
             onClick={handleInnerLinkClick}
           >
-            {t("errorAlertpart2")}
+            {type === "signals"
+              ? t("errorAlertpart2Signals")
+              : t("errorAlertpart2Plans")}
           </span>
         </span>
       </div>

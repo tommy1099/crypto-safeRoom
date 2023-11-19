@@ -1,20 +1,27 @@
-import { PropsWithChildren } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { RadialProgressProps } from "../../../../Interfaces/Interfaces.ts";
 
-interface Props extends PropsWithChildren {
-  value: number;
-}
-const RadialProgressBar = ({ value }: Props) => {
+const RadialProgressBar = ({
+  value,
+  style,
+  formatNumberToPersian,
+  isFa,
+}: RadialProgressProps) => {
   return (
     <CircularProgressbar
       value={value}
       maxValue={31}
       minValue={0}
-      text={`${value}/31`}
+      text={`${isFa ? formatNumberToPersian(`${value}`) : value}`}
+      // styles={buildStyles({
+      //   textColor: "#374151",
+      //   pathColor: `#ee8f50`,
+      // })}
       styles={buildStyles({
-        textColor: "#374151",
-        pathColor: `#ee8f50`,
+        textColor: `${style.textColor}`,
+        pathColor: `${style.pathColor}`,
+        trailColor: `${style.trailColor}`,
       })}
     />
     // <div

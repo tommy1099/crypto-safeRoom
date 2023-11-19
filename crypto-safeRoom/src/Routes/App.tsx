@@ -9,6 +9,8 @@ import {
   Tutorials,
   Checkout,
   Profile,
+  Stats,
+  Plans,
 } from "../pages";
 import { AdminApp, ProductApp, AuthApp } from ".";
 import { Exam } from "../components/forms";
@@ -17,6 +19,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../Store/Store";
 import { useTranslation } from "react-i18next";
 import "../Locales/fonts.css";
+
 function App() {
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
@@ -30,10 +33,12 @@ function App() {
       className={`text-lg ${
         currentLanguage === "en" ? "font-english" : "font-farsi"
       }`}
-      data-theme={isDarkTheme ? "business" : "light"}
+      data-theme={isDarkTheme ? "dark" : "light"}
     >
       {/* <BackgroundPattern /> */}
       <Routes>
+        <Route path="/plans" element={<Plans />} />
+        <Route path="/stats" element={<Stats />} />
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/product" element={<Products />} />
 

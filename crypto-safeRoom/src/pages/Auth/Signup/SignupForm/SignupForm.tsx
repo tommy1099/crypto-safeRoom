@@ -23,6 +23,7 @@ type ISignupForm = {
 const SignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [formDataState, setFormDataState] = useState<ISignupForm>({
     username: "",
     email: "",
@@ -38,6 +39,7 @@ const SignupForm = () => {
     console.log(formDataState);
   }, [errors, formDataState]);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     setErrors({
       username: "",
@@ -51,6 +53,7 @@ const SignupForm = () => {
         ...prevErrors,
         username: "Invalid username",
       }));
+      setLoading(false);
     }
 
     try {
@@ -60,6 +63,7 @@ const SignupForm = () => {
         ...prevErrors,
         email: "Invalid email",
       }));
+      setLoading(false);
     }
 
     try {
@@ -69,6 +73,7 @@ const SignupForm = () => {
         ...prevErrors,
         password: "Invalid password",
       }));
+      setLoading(false);
     }
     const hasValidationErrors = Object.values(errors).some(
       (error) => error !== ""
@@ -96,11 +101,11 @@ const SignupForm = () => {
             const recievedToken = await response.json();
             Cookies.set("accessToken", recievedToken.accessToken, {
               expires: 1 / 24,
-              secure: true,
+              // secure: true,
             });
             Cookies.set("refreshToken", recievedToken.refreshToken, {
               expires: 7,
-              secure: true,
+              // secure: true,
             }); // Set cookie to expire in 7 days
             // setToken(recievedToken);
             dispatch(toggleisLoggedinTrue());
@@ -135,9 +140,11 @@ const SignupForm = () => {
           //=====================
         } else {
           console.error("Error creating new item");
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error creating new item:", error);
+        setLoading(false);
       }
     }
   };
@@ -154,7 +161,10 @@ const SignupForm = () => {
     }));
   };
   return (
-    <Container style=" absolute w-[400px] h-[550px] bg-white fixed left-[5px] sm:left-[15%] md:left-[20%] lg:left-[7%] shadow-2xl p-10 flex flex-col justify-center items-start rounded-lg">
+    <Container
+      dir="ltr"
+      style=" absolute w-[400px] h-[550px] bg-white fixed left-[5px] sm:left-[15%] md:left-[20%] lg:left-[7%] shadow-2xl p-10 flex flex-col justify-center items-start rounded-lg"
+    >
       <div className="ml-[11%] w-full h-24 flex items-center my-[10%]">
         <p className="text-3xl font-bold text-patternColors-green">
           Crypto Safe Room
@@ -209,9 +219,13 @@ const SignupForm = () => {
         <div className="flex justify-center items-center mt-10">
           <button
             type="submit"
-            className="w-24 h-10 text-white rounded-md border-box bg-patternColors-green"
+            className="w-32 h-10 text-white rounded-md border-box bg-patternColors-green"
+            disabled={loading}
           >
-            Signup
+            <div className="flex gap-2 justify-center items-center">
+              {loading ? "Signing up" : "Sign up"}
+              {loading && <span className="loading loading-spinner"></span>}
+            </div>
           </button>
         </div>
       </form>

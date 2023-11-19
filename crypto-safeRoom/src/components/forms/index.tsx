@@ -1,7 +1,5 @@
 import HelloHero from "./HelloHero/HelloHero";
 import ContactForm from "./ContactForm/ContactForm";
-import SignalCard from "./Cards/SignalCard/SignalCard";
-import NewsCard from "./Cards/NewsCard/NewsCard";
 import Filters from "./Filters/Filters";
 import SignalModal from "./Modal/SignalModal/SignalModal";
 import ProfileDropdown from "./ProfileDropdown/ProfileDropdown";
@@ -15,7 +13,11 @@ import Loading from "./Loading/Loading";
 import ScrollToTopIcon from "./ScrollToTopIcon/ScrollToTopIcon";
 import Avatar from "./Avatar/Avatar";
 import ErrorAlert from "./Alert/ErrorAlert/ErrorAlert";
+import HamSideBar from "./HamSideBar/HamSideBar";
+import { AskedQuestions } from "./AskedQuestions/AskedQuestions";
 export {
+  AskedQuestions,
+  HamSideBar,
   ErrorAlert,
   Avatar,
   ScrollToTopIcon,
@@ -29,8 +31,6 @@ export {
   ProfileDropdown,
   HelloHero,
   ContactForm,
-  SignalCard,
-  NewsCard,
   Filters,
   SignalModal,
 };

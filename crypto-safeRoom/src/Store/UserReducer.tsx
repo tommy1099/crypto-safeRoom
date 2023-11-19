@@ -1,36 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { userState } from "../../Interfaces/Interfaces";
 
-interface ToggleState {
-  pic?: string;
-  email: string;
-  username: string;
-  plan: string;
-  firstname?: string;
-  lastname?: string;
-  phone?: string;
-  sub?: number;
-  refcode: string;
-  isConfirmed: boolean;
-}
-
-const initialState: ToggleState = {
+const initialState: userState = {
   pic: "",
-  email: "",
+  email: {
+    email: "",
+    confirm: false,
+  },
   username: "?",
-  plan: "",
+  plan: {
+    remaining: 0,
+    maxDays: 0,
+    type: "",
+  },
   firstname: "",
   lastname: "",
   refcode: "",
   phone: "",
-  isConfirmed: false,
-  sub: 0,
+  orders: [],
 };
 
 const userProfile = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<Partial<ToggleState>>) => {
+    setUser: (state, action: PayloadAction<Partial<userState>>) => {
       // Merge action.payload into state, overwriting existing properties
       Object.assign(state, action.payload);
     },

@@ -59,7 +59,10 @@ const News = () => {
     <>
       <NavBar />
       {!isLoaded && <Loading />}
-      <Container style=" relative mb-[600px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%]">
+      <Container
+        dir="ltr"
+        style=" relative mb-[600px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%]"
+      >
         {signalsList.map((component) => (
           // <NewsCard
           //   src={component.src}
@@ -67,6 +70,7 @@ const News = () => {
           //   desc={component.desc.desc1}
           // />
           <Card
+            key={component.id}
             id={component.id}
             type="news"
             img={component.img}

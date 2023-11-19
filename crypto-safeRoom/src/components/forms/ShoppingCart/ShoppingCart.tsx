@@ -88,7 +88,7 @@ const ShoppingCart = () => {
         className="relative"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <FaShoppingCart className="text-neutral text-[20px] mr-2 mt-[9px] " />
+        <FaShoppingCart className="text-neutral text-[25px] mr-2 mt-[9px] " />
         {/* Display the number of items in the cart */}
         {total > 0 && (
           <span className="absolute bottom-3 left-3">

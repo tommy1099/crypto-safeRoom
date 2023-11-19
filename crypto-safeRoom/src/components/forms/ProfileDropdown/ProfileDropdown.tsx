@@ -61,7 +61,7 @@ const ProfileDropdown = () => {
       <div>
         <button
           type="button"
-          className="inline-flex justify-center items-center rounded-full bg-base-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary"
+          className="inline-flex justify-center items-center rounded-full bg-base-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-base-100 focus:ring-primary"
           onClick={handleToggle}
         >
           <Avatar where={"navbar"} />

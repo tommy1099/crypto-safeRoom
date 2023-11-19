@@ -1,52 +1,83 @@
-// import { useEffect, useState } from "react";
-// import { BackendAddress } from "../../../utils/BackendAddress/BackendAddress";
-import { useSelector } from "react-redux";
+import { Dispatch, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { BackendAddress } from "../../../utils/BackendAddress/BackendAddress";
+import { setUser } from "../../../Store/UserReducer";
+import RefreshToken from "../../../utils/RefreshToken/RefreshToken";
 import { RootState } from "../../../Store/Store";
-// import Cookies from "js-cookie";
+import { FaCrown } from "react-icons/fa6";
+import { useLocation, useNavigate } from "react-router-dom";
 interface Props {
   where: string;
 }
-const Avatar = ({ where }: Props) => {
-  const userData = useSelector((state: RootState) => state.user);
 
-  // useEffect(() => {
-  //   // RefreshToken();
-  //   const handleProfile = async () => {
-  //     // Check if the user has a valid access token
-  //     const accessToken = Cookies.get("accessToken");
-  //     if (accessToken) {
-  //       // If there's an access token, you can make an API request to fetch user data
-  //       // Replace 'your_api_endpoint' with the actual URL to fetch user data
-  //       await fetch(`${BackendAddress()}/user/profile`, {
-  //         method: "GET",
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       })
-  //         .then((response) => {
-  //           if (response.ok) {
-  //             return response.json();
-  //           } else {
-  //             throw Error("Failed to fetch user data");
-  //           }
-  //         })
-  //         .then((data) => {
-  //           console.log("data:", data);
-  //           setUserData(data);
-  //         })
-  //         .catch(() => {});
-  //     }
-  //   };
-  //   handleProfile();
-  // }, []);
-  // const handleNameCapital = (value: string) => {
-  //   return value.toUpperCase();
-  // };
+interface FetchDataParams {
+  accessToken: string;
+  dispatch: Dispatch<any>;
+}
+const Avatar = ({ where }: Props) => {
+  const accessToken = Cookies.get("accessToken");
+  const userData = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const fetchData = async ({
+    accessToken,
+    dispatch,
+  }: FetchDataParams): Promise<void> => {
+    try {
+      const response = await fetch(`${BackendAddress()}/user/profile`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const contentType = response.headers.get("Content-Type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+
+        dispatch(setUser(data));
+      } else {
+        throw new Error("Invalid response format: expected JSON");
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error during fetch request:", error.message);
+        // Handle the error appropriately (e.g., show an error message to the user)
+      } else {
+        console.error("Unknown error during fetch request:", error);
+        // Handle the error appropriately (e.g., show a generic error message to the user)
+      }
+    }
+  };
+  useEffect(() => {
+    if (!accessToken) {
+      RefreshToken(navigate, location, dispatch);
+    } else {
+      fetchData({ accessToken, dispatch });
+
+      // Use setInterval to fetch data every 10 seconds
+      const intervalId = setInterval(() => {
+        fetchData({ accessToken, dispatch });
+      }, 20000);
+
+      return () => {
+        // Cleanup when the component unmounts or when accessToken changes
+        clearInterval(intervalId);
+      };
+    }
+  }, []);
+
   return (
     <div className="avatar placeholder">
       <div
         className={`${
-          where === "navbar" ? "w-11" : "w-48"
+          where === "navbar" ? "w-11" : "w-32 md:w-48"
         } rounded-full bg-neutral-focus text-neutral-content`}
       >
         {userData !== undefined && userData.pic !== "" && userData.pic ? (
@@ -64,8 +95,14 @@ const Avatar = ({ where }: Props) => {
             {userData.username?.[0]}
           </span>
         )}
+        {userData.plan.type === "VIP" && (
+          <div className="absolute top-[-10px] text-2xl text-primary">
+            <FaCrown />
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
 export default Avatar;

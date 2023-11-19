@@ -43,9 +43,28 @@ export default {
 
           error: "#ef4444",
         },
+        dark: {
+          primary: "#ee8f50",
+
+          secondary: "#fef3c7",
+
+          accent: "#111827",
+
+          neutral: "#777",
+
+          "base-100": "#212121",
+
+          info: "#3b82f6",
+
+          success: "#4d7c0f",
+
+          warning: "#6366f1",
+
+          error: "#ef4444",
+        },
       },
     ], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-    // darkTheme: "business", // name of one of the included themes for dark mode
+    darkTheme: "dark", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes

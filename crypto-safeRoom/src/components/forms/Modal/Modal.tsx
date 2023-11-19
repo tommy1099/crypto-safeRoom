@@ -110,7 +110,7 @@ const Modal = ({
         >
           <div
             id="inner"
-            className={`bg-white p-6 rounded-lg shadow-lg${
+            className={`bg-base-100 p-6 rounded-lg shadow-lg${
               type === "products" &&
               "w-[90%] h-[85%] lg:mt-[8%] lg:w-[80%] lg:h-[80%] overflow-y-auto"
             } ${type === "signals" && "lg:w-[40%] lg:mt-[0%] mt-[8%]"}

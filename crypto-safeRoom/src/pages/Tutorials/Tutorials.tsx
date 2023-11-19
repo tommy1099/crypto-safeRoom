@@ -168,10 +168,15 @@ const Tutorials = () => {
       {/* <ExpandedSidePanel children={<Filters type="tutorials" />} />
       <ShrunkSidePanel children={<Filters type="tutorials" />} /> */}
       <NarrowContainer style="bg-neutral h-32 w-full fixed" />
-      <Container style=" bg-base-100 my-[10%] relative mt-[15%] lg:my-[8%] z-0 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4  xl:grid-cols-5 mx-[5%]">
+      <Container
+        dir=""
+        style=" bg-base-100 my-[10%] relative mt-[15%] lg:my-[8%] z-0 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4  xl:grid-cols-5 mx-[5%]"
+      >
         {selectedRadioValue === "All"
-          ? cardComponents.map((component) => (
+          ? cardComponents.map((component, index) => (
               <Card
+                inStock
+                key={index.toString()}
                 price={component.price}
                 id={component.id}
                 type="tutorials"
@@ -181,8 +186,10 @@ const Tutorials = () => {
                 tags={component.tags}
               />
             ))
-          : filteredCardComponents.map((component) => (
+          : filteredCardComponents.map((component, index) => (
               <Card
+                inStock
+                key={index.toString()}
                 price={component.price}
                 id={component.id}
                 type="tutorials"

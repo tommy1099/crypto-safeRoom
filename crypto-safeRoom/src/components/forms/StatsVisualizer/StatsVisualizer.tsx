@@ -107,10 +107,10 @@ const StatsVisualizer = ({ signals, type }: Props) => {
 
     handlePercents();
     handler();
-  }, [profit]);
+  }, [dispatch, loss, profit, signals]);
   return (
-    <div className="stats">
-      <div className="flex justify-center items-center stat">
+    <div className="stats stats-vertical md:stats-horizontal">
+      <div className="flex justify-between items-center stat">
         <div>
           <div className="stat-title">
             {type === "type1" ? t("total") : t("totalNumbers")}
@@ -124,7 +124,7 @@ const StatsVisualizer = ({ signals, type }: Props) => {
             {type === "type1" ? "" : "%"}
           </div>
           <div className="stat-desc">
-            {type === "type1" ? t("notIncludedSignals") : t("totalNumbersDesc")}
+            {type === "type1" ? t("underTotal") : t("underTotalNumbers")}
           </div>
         </div>
         <div className="mt-3 text-3xl stat-figure text-primary">
@@ -132,10 +132,10 @@ const StatsVisualizer = ({ signals, type }: Props) => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center stat">
+      <div className="flex justify-between items-center stat">
         <div>
           <div className="stat-title">
-            {type === "type1" ? t("successfull") : t("profit")}
+            {type === "type1" ? t("successful") : t("profit")}
           </div>
           <div className="stat-value text-neutral">
             {isFa
@@ -147,7 +147,9 @@ const StatsVisualizer = ({ signals, type }: Props) => {
               : profit}
             {type === "type1" ? "" : "%"}
           </div>
-          <div className="stat-desc">{"-"}</div>
+          <div className="stat-desc">{`${
+            type === "type1" ? t("undersuccessful") : t("underProfit")
+          }`}</div>
         </div>
 
         <div className="mt-3 text-3xl stat-figure text-primary">
@@ -155,7 +157,7 @@ const StatsVisualizer = ({ signals, type }: Props) => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center stat">
+      <div className="flex justify-between items-center stat">
         <div>
           <div className="stat-title">
             {type === "type1" ? t("failed") : t("loss")}
@@ -168,14 +170,16 @@ const StatsVisualizer = ({ signals, type }: Props) => {
               : loss}{" "}
             {type === "type1" ? "" : "%"}
           </div>
-          <div className="stat-desc">{"-"}</div>
+          <div className="stat-desc">{`${
+            type === "type1" ? t("underFailed") : t("underLoss")
+          }`}</div>
         </div>
 
         <div className="mt-3 text-2xl stat-figure text-primary">
           <ImCross />
         </div>
       </div>
-      <div className="flex justify-center items-center stat">
+      <div className="flex justify-between items-center stat">
         <div>
           <div className="stat-title">
             {type === "type1" ? t("successRate") : t("totalprofit")}
@@ -188,7 +192,9 @@ const StatsVisualizer = ({ signals, type }: Props) => {
               : totalProfit}
             %
           </div>
-          <div className="stat-desc">{"-"}</div>
+          <div className="stat-desc">{`${
+            type === "type1" ? t("underSuccessRate") : t("underTotalProfit")
+          }`}</div>
         </div>
 
         <div className="mt-3 text-3xl stat-figure text-primary">

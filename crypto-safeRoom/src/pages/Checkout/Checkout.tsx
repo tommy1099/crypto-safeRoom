@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
@@ -17,6 +17,8 @@ import ZarinPalPic from "../../assets/img/zarinPal.png";
 import PishtazPic from "../../assets/img/pishtaz.jpeg";
 import TipaxPic from "../../assets/img/tipax.jpeg";
 import EmptyCartPic from "../../assets/img/empty-cart.png";
+import { useTranslation } from "react-i18next";
+import { formatNumberToPersian } from "../../utils/NumberToFarsi/NumberToFarsi";
 
 const Checkout = () => {
   const myRef = useRef<HTMLInputElement>(null);
@@ -25,12 +27,15 @@ const Checkout = () => {
   const [selectedShipping, setSelectedShipping] = useState("");
   const [shippingMethod, setShippingMethod] = useState(0);
   const [count, setCount] = useState(0);
+  const { t } = useTranslation();
+  const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
 
+  const isFa = useSelector((state: RootState) => state.lang.isFa);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartList.list);
 
   const handleSelectPayment = (value: string) => setSelectedPayment(value);
-
+  const [includesPhysical, setIncludesPhysical] = useState(false);
   const handleSelectShipping = (value: string) => {
     setSelectedShipping(value);
     setShippingMethod(value === "tipax" ? 15 : 10);
@@ -46,49 +51,68 @@ const Checkout = () => {
   const handleRemoveItem = (
     id: string,
     title: string,
-    img: string,
-    quantity: number
+    img: string | undefined,
+    quantity: number,
+    physical: boolean
   ) => {
-    dispatch(removeItem({ id, title, img, quantity, price }));
+    dispatch(removeItem({ id, title, img, quantity, price, physical }));
   };
 
   const handleDecreaseOneItem = (
     id: string,
     title: string,
-    img: string,
-    quantity: number
+    img: string | undefined,
+    quantity: number,
+    physical: boolean
   ) => {
-    dispatch(decreaseOne({ id, title, img, quantity, price }));
+    dispatch(decreaseOne({ id, title, img, quantity, price, physical }));
   };
 
   const handleAddOneItem = (
     id: string,
     title: string,
-    img: string,
-    quantity: number
+    img: string | undefined,
+    quantity: number,
+    physical: boolean
   ) => {
-    dispatch(addItem({ id, title, img, quantity, price }));
+    dispatch(addItem({ id, title, img, quantity, price, physical }));
   };
+  useEffect(() => {
+    const includesPhysical = cartItems.some((item) => item.physical === true);
+    setIncludesPhysical(includesPhysical);
+  }, [cartItems]);
 
   return (
     <>
       <NavBar />
       <div className="flex flex-col lg:flex-row z-10 mb-[-10%]">
-        <Container style="relative ml-[2%] mt-[20%] md:mt-[5%] rounded-md lg:w-[30%] lg:h-[90%] p-10 shadow-2xl">
-          <p className="text-2xl font-bold">Order Summary</p>
+        <Container
+          dir="ltr"
+          style={`relative ml-[2%] mt-[20%] md:mt-[5%] rounded-md lg:w-[30%] lg:h-[90%] p-10 shadow-2xl ${
+            isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
+          } text-neutral `}
+        >
+          <p
+            dir={isFa ? "rtl" : "ltr"}
+            className={`text-2xl font-bold text-neutral`}
+          >
+            {t("orderSummary")}
+          </p>
           {cartItems.length ? (
             <ul className="my-5 h-[400px] overflow-y-auto">
               {cartItems.map((item, index) => (
                 <li
                   key={index}
-                  className="flex justify-between p-5 border-b-2 border-b-gray-100"
+                  className="flex justify-between p-5 border-b-2 border-b-neutral"
                 >
-                  <img className="w-20 rounded-md" src={pic} alt="Cart" />
+                  <img className="w-20 rounded-md" src={pic || ""} alt="Cart" />
                   <div className="flex flex-col ml-2 w-[40%] items-start justify-start">
-                    <p className="flex justify-start items-center max-w-[70%] truncate">
+                    <p className="flex justify-start text-neutral items-center max-w-[70%] truncate">
                       {item.title}
                     </p>
-                    <p>${item.price}</p>
+                    <p className="text-neutral">
+                      ${isFa ? formatNumberToPersian(item.price) : item.price}
+                    </p>
                   </div>
                   <div className="flex items-center">
                     <div
@@ -98,13 +122,19 @@ const Checkout = () => {
                           item.id,
                           item.title,
                           item.img,
-                          item.quantity
+                          item.quantity,
+                          item.physical
                         )
                       }
                     >
                       <BiSolidDownArrow />
                     </div>
-                    <p className="flex p-1 text-red-500">{item.quantity}x</p>
+                    <p className="flex p-1 text-red-500">
+                      {isFa
+                        ? formatNumberToPersian(item.quantity)
+                        : item.quantity}
+                      x
+                    </p>
                     <div
                       className="mr-5 text-gray-600"
                       onClick={() =>
@@ -112,7 +142,8 @@ const Checkout = () => {
                           item.id,
                           item.title,
                           item.img,
-                          item.quantity
+                          item.quantity,
+                          item.physical
                         )
                       }
                     >
@@ -125,7 +156,8 @@ const Checkout = () => {
                           item.id,
                           item.title,
                           item.img,
-                          item.quantity
+                          item.quantity,
+                          item.physical
                         )
                       }
                     >
@@ -143,47 +175,69 @@ const Checkout = () => {
 
           <div className="mt-[5%]">
             <div className="flex justify-between items-center">
-              <p>Code</p>
+              <p>{t("code")}</p>
               <div className="flex">
-                <div className="mt-2 mr-3" onClick={() => setCount(count + 1)}>
+                <div
+                  className="mt-2 mr-3 text-primary"
+                  onClick={() => setCount(count + 1)}
+                >
                   <FaArrowsRotate />
                 </div>
                 <Input
                   ref={myRef}
                   type="text"
-                  style="border p-2 rounded-md w-[125px] h-8"
-                  placeHolder="Coupon Code"
+                  style={`border ${
+                    isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
+                  } p-2 rounded-md w-[130px] h-8 focus:border-primary border-neutral focus:border-2 focus:outline-none placeholder:text-neutral text-neutral`}
+                  placeHolder={t("code")}
+                  required={false}
                 />
               </div>
             </div>
             <div className="flex justify-between items-center">
-              <p>Subtotal</p>
-              <p>${price}</p>
+              <p>{t("subTotal")}</p>
+              <p>${isFa ? formatNumberToPersian(price) : price}</p>
             </div>
-            <div className="flex justify-between items-center">
-              <p>Shipping</p>
-              <p>${shippingMethod}</p>
-            </div>
-            <div className="flex justify-between items-center mt-5 text-xl font-bold">
-              <p>Order Total</p>
+
+            {includesPhysical && (
+              <div className="flex justify-between items-center">
+                <p>{t("shipping")}</p>
+                <p>
+                  $
+                  {isFa
+                    ? formatNumberToPersian(shippingMethod)
+                    : shippingMethod}
+                </p>
+              </div>
+            )}
+            <div className="flex justify-between items-center pt-2 mt-5 text-xl font-bold border-t-2 border-primary">
+              <p>{t("orderTotal")}</p>
               <p>
                 $
                 {myRef.current && myRef.current.value === "off"
-                  ? shippingMethod +
-                    price -
-                    (shippingMethod + price) * (10 / 100)
+                  ? isFa
+                    ? formatNumberToPersian(
+                        shippingMethod +
+                          price -
+                          (shippingMethod + price) * (10 / 100)
+                      )
+                    : shippingMethod +
+                      price -
+                      (shippingMethod + price) * (10 / 100)
+                  : isFa
+                  ? formatNumberToPersian(shippingMethod + price)
                   : shippingMethod + price}
               </p>
             </div>
           </div>
         </Container>
-        <Container style="relative lg:ml-[5%] mt-[5%] rounded-md lg:w-[55%] lg:h-[45%] p-10">
+        <Container
+          dir="ltr"
+          style="relative lg:ml-[5%] mt-[5%] rounded-md lg:w-[55%] lg:h-[45%] p-10 text-neutral"
+        >
           <div className="flex flex-col">
-            <p className="text-3xl font-bold">Billing Info</p>
-            <p className="mt-5">
-              Choose a payment method option below and fill out the appropriate
-              information
-            </p>
+            <p className="text-3xl font-bold">{t("billingInfo")}</p>
+            <p className="mt-5">{t("underBillingInfo")}</p>
           </div>
           <form action="" className="flex flex-col mt-10 w-full">
             <div className="flex flex-col md:flex-row gap-[20px] md:gap-[50px] mt-5">
@@ -192,8 +246,8 @@ const Checkout = () => {
                   htmlFor="cryptoTrans"
                   className={`relative rounded-md ${
                     selectedPayment === "cryptoTrans"
-                      ? "border-2 border-patternColors-red shadow-lg"
-                      : "border-2 border-gray-200"
+                      ? "border-2 border-primary shadow-lg"
+                      : "border-2 border-neutral"
                   }`}
                 >
                   <Input
@@ -203,6 +257,7 @@ const Checkout = () => {
                     style="hidden"
                     defaultChecked={selectedPayment === "cryptoTrans"}
                     onChange={() => handleSelectPayment("cryptoTrans")}
+                    required
                   />
                   <img
                     src={BTCPic}
@@ -215,8 +270,8 @@ const Checkout = () => {
                   htmlFor="BMTrans"
                   className={`relative rounded-md ${
                     selectedPayment === "BMTrans"
-                      ? "border-2 border-patternColors-red shadow-lg"
-                      : "border-2 border-gray-200"
+                      ? "border-2 border-primary shadow-lg"
+                      : "border-2 border-neutral"
                   }`}
                 >
                   <Input
@@ -226,6 +281,7 @@ const Checkout = () => {
                     style="hidden"
                     defaultChecked={selectedPayment === "BMTrans"}
                     onChange={() => handleSelectPayment("BMTrans")}
+                    required
                   />
                   <img
                     src={MellatPic}
@@ -240,8 +296,8 @@ const Checkout = () => {
                   htmlFor="zarinPalTrans"
                   className={`relative rounded-md ${
                     selectedPayment === "zarinPalTrans"
-                      ? "border-2 border-patternColors-red shadow-lg"
-                      : "border-2 border-gray-200"
+                      ? "border-2 border-primary shadow-lg"
+                      : "border-2 border-neutral"
                   }`}
                 >
                   <Input
@@ -251,6 +307,7 @@ const Checkout = () => {
                     style="hidden"
                     defaultChecked={selectedPayment === "zarinPalTrans"}
                     onChange={() => handleSelectPayment("zarinPalTrans")}
+                    required
                   />
                   <img
                     src={ZarinPalPic}
@@ -263,8 +320,8 @@ const Checkout = () => {
                   htmlFor="paypalTrans"
                   className={`relative rounded-md ${
                     selectedPayment === "paypalTrans"
-                      ? "border-2 border-patternColors-red shadow-lg"
-                      : "border-2 border-gray-200"
+                      ? "border-2 border-primary shadow-lg"
+                      : "border-2 border-neutral"
                   }`}
                 >
                   <Input
@@ -274,6 +331,7 @@ const Checkout = () => {
                     style="hidden"
                     defaultChecked={selectedPayment === "paypalTrans"}
                     onChange={() => handleSelectPayment("paypalTrans")}
+                    required
                   />
                   <img
                     src={PaypalPic}
@@ -288,157 +346,194 @@ const Checkout = () => {
               <div className="flex flex-col w-[350px]">
                 <div className="flex flex-col gap-20 md:flex-row">
                   <div>
-                    <p className="mb-5 text-xl font-bold">Billing Address</p>
+                    <p
+                      dir={isFa ? "rtl" : "ltr"}
+                      className="mb-5 text-xl font-bold"
+                    >
+                      {t("billingAddress")}
+                    </p>
                     <div className="flex gap-5">
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="lastName">
-                          LAST NAME
+                          {t("lastname")}
                         </label>
                         <Input
                           id="lastName"
-                          style="border w-[165px] h-10 rounded-md mb-1"
+                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
+                          placeHolder={t("lastname")}
+                          required
                         />
                       </div>
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="firstName">
-                          FIRST NAME
+                          {t("firstname")}
                         </label>
                         <Input
                           id="firstName"
-                          style="border w-[165px] h-10 rounded-md mb-1"
+                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
+                          placeHolder={t("firstname")}
+                          required
                         />
                       </div>
                     </div>
                     <div className="flex flex-col">
                       <label className="mb-2 text-sm" htmlFor="address">
-                        ADDRESS
+                        {t("address")}
                       </label>
                       <Input
                         id="address"
-                        style="border w-[350px] h-10 rounded-md mb-1"
+                        style="border pl-2 w-[350px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                         type="text"
+                        placeHolder={t("address")}
+                        required
                       />
                     </div>
                     <div className="flex gap-5">
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="city">
-                          CITY
+                          {t("city")}
                         </label>
                         <Input
                           id="city"
-                          style="border w-[165px] h-10 rounded-md mb-1"
+                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
+                          placeHolder={t("city")}
+                          required
                         />
                       </div>
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="town">
-                          TOWN
+                          {t("town")}
                         </label>
                         <Input
                           id="town"
-                          style="border w-[165px] h-10 rounded-md mb-1"
+                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
+                          placeHolder={t("town")}
+                          required
                         />
                       </div>
                     </div>
                     <div className="flex gap-5">
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="zipCode">
-                          ZIP CODE
+                          {t("zipcode")}
                         </label>
                         <Input
                           id="zipCode"
-                          style="border w-[165px] h-10 rounded-md mb-1"
+                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
+                          placeHolder={t("zipcode")}
+                          required
                         />
                       </div>
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="phone">
-                          PHONE NUMBER
+                          {t("phone")}
                         </label>
                         <Input
                           id="phone"
-                          style="border w-[165px] h-10 rounded-md mb-1"
+                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
+                          placeHolder={t("phone")}
+                          required
                         />
                       </div>
                     </div>
                   </div>
-                  <Container style="">
-                    <p className="text-xl font-bold">Shipping Method</p>
+                  <Container dir="ltr" style="">
                     <div className="flex flex-col mt-[5%] gap-2">
-                      <div className="flex gap-2">
-                        <div className="flex gap-[20px]">
-                          <label
-                            htmlFor="pishtaz"
-                            className={`relative rounded-md ${
-                              selectedShipping === "pishtaz"
-                                ? "border-2 border-patternColors-red shadow-lg"
-                                : "border-2 border-gray-200"
-                            }`}
+                      {includesPhysical && (
+                        <>
+                          <p
+                            dir={isFa ? "rtl" : "ltr"}
+                            className="text-xl font-bold"
                           >
-                            <Input
-                              id="pishtaz"
-                              type="radio"
-                              name="shipping"
-                              style="hidden"
-                              defaultChecked={selectedShipping === "pishtaz"}
-                              onChange={() => handleSelectShipping("pishtaz")}
-                            />
-                            <img
-                              src={PishtazPic}
-                              alt="Pishtaz"
-                              className="w-[120px] h-[100px] cursor-pointer rounded-md"
-                              onClick={() => handleSelectShipping("pishtaz")}
-                            />
-                          </label>
-                        </div>
-                        <div className="flex gap-[20px]">
-                          <label
-                            htmlFor="tipax"
-                            className={`relative rounded-md ${
-                              selectedShipping === "tipax"
-                                ? "border-2 border-patternColors-red shadow-lg"
-                                : "border-2 border-gray-200"
-                            }`}
-                          >
-                            <Input
-                              id="tipax"
-                              type="radio"
-                              name="shipping"
-                              style="hidden"
-                              defaultChecked={selectedShipping === "tipax"}
-                              onChange={() => handleSelectShipping("tipax")}
-                            />
-                            <img
-                              src={TipaxPic}
-                              alt="Tipax"
-                              className="w-[120px] h-[100px] cursor-pointer rounded-md"
-                              onClick={() => handleSelectShipping("tipax")}
-                            />
-                          </label>
-                        </div>
-                      </div>
-                      <div className="relative">
-                        <label htmlFor="textArea">Leave us a note</label>
-                        <textarea
-                          className="rounded-md border"
-                          name="text"
-                          id="textArea"
-                          cols={30}
-                          rows={5}
-                        ></textarea>
-                      </div>
+                            {t("shippingMethod")}
+                          </p>
+                          <div className="flex gap-2">
+                            <div className="flex flex-grow">
+                              <label
+                                htmlFor="pishtaz"
+                                className={`relative rounded-md ${
+                                  selectedShipping === "pishtaz"
+                                    ? "border-2 border-primary shadow-lg"
+                                    : "border-2 border-neutral"
+                                }`}
+                              >
+                                <Input
+                                  id="pishtaz"
+                                  type="radio"
+                                  name="shipping"
+                                  style="hidden"
+                                  defaultChecked={
+                                    selectedShipping === "pishtaz"
+                                  }
+                                  onChange={() =>
+                                    handleSelectShipping("pishtaz")
+                                  }
+                                  required={false}
+                                />
+                                <img
+                                  src={PishtazPic}
+                                  alt="Pishtaz"
+                                  className="w-[170px] h-[100px] cursor-pointer rounded-md"
+                                  onClick={() =>
+                                    handleSelectShipping("pishtaz")
+                                  }
+                                />
+                              </label>
+                            </div>
+                            <div className="flex flex-grow">
+                              <label
+                                htmlFor="tipax"
+                                className={`relative rounded-md ${
+                                  selectedShipping === "tipax"
+                                    ? "border-2 border-primary shadow-lg"
+                                    : "border-2 border-neutral"
+                                }`}
+                              >
+                                <Input
+                                  id="tipax"
+                                  type="radio"
+                                  name="shipping"
+                                  style="hidden"
+                                  defaultChecked={selectedShipping === "tipax"}
+                                  onChange={() => handleSelectShipping("tipax")}
+                                  required={false}
+                                />
+                                <img
+                                  src={TipaxPic}
+                                  alt="Tipax"
+                                  className="w-[170px] h-[100px] cursor-pointer rounded-md"
+                                  onClick={() => handleSelectShipping("tipax")}
+                                />
+                              </label>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <div dir={isFa ? "rtl" : "ltr"} className="relative mt-5">
+                      <label htmlFor="textArea">{t("note")}</label>
+                      <textarea
+                        className="pl-2 mt-2 rounded-md border bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                        name="text"
+                        id="textArea"
+                        cols={30}
+                        rows={5}
+                        placeholder={t("note")}
+                      ></textarea>
                     </div>
                   </Container>
                 </div>
                 <Button
                   onClick={() => {}}
-                  style="p-2 text-white bg-gray-800 w-52 rounded-md mt-[5%] ml-[30%] w-[30%] h-[20%]"
+                  style="p-2 text-sm rounded-md bg-primary text-secondary hover:opacity-[0.9]"
                 >
-                  {"CHECKOUT"}
+                  {t("checkout")}
                 </Button>
               </div>
             </div>

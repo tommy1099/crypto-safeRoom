@@ -1,7 +1,10 @@
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { ImCross } from "react-icons/im";
-import { DescProps } from "../../../../../Interfaces/Interfaces.ts";
+import { DescProps } from "../../../../Interfaces/Interfaces.ts";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../Store/Store.tsx";
 const DescriptionsComponent = ({
+  vip,
   id,
   type,
   desc,
@@ -12,9 +15,16 @@ const DescriptionsComponent = ({
   isFa,
 }: DescProps) => {
   const shouldFormatNumbers = type === "signals";
+  const user = useSelector((state: RootState) => state.user);
 
   return (
-    <div dir={isFa ? "rtl" : "ltr"} id={id} className="my-[5%] p-1">
+    <div
+      dir={isFa ? "rtl" : "ltr"}
+      id={id}
+      className={`my-[5%] p-1 ${
+        vip && user.plan.remaining <= 0 && !blur ? "opacity-0" : ""
+      }`}
+    >
       {desc?.desc1 && (
         <div className="flex gap-1 items-center">
           {type === "signals" && (

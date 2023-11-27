@@ -12,6 +12,7 @@ import {
   addItem,
 } from "../../../Store/CartListReducer";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
+import { formatNumberToPersian } from "../../../utils/NumberToFarsi/NumberToFarsi";
 
 import { RootState } from "../../../Store/Store";
 import {
@@ -19,7 +20,12 @@ import {
   increaseQuantity,
   reset,
 } from "../../../Store/ShoppingCartBadge";
+import { useTranslation } from "react-i18next";
+
 const ShoppingCart = () => {
+  const { t } = useTranslation();
+  const isFa = useSelector((state: RootState) => state.lang.isFa);
+
   const total = useSelector(
     (state: RootState) => state.wholeQuantity.totalQuantity
   );
@@ -30,32 +36,53 @@ const ShoppingCart = () => {
   const handlerRemoveItem = (
     id: string,
     title: string,
-    img: string,
+    img: string | undefined,
     quantity: number,
     price: number
   ) => {
-    dispatch(removeItem({ id, title, img, quantity, price: price }));
+    dispatch(
+      removeItem({ id, title, img, quantity, price: price, physical: false })
+    );
   };
   const handlerDecreaseOneItem = (
     id: string,
     title: string,
-    img: string,
+    img: string | undefined,
     quantity: number,
     price: number
   ) => {
-    dispatch(decreaseOne({ id, title, img, quantity: quantity, price: price }));
+    dispatch(
+      decreaseOne({
+        id,
+        title,
+        img,
+        quantity: quantity,
+        price: price,
+        physical: false,
+      })
+    );
   };
   const handlerAddOneItem = (
     id: string,
     title: string,
-    img: string,
+    img: string | undefined,
     quantity: number,
     price: number
   ) => {
-    dispatch(addItem({ id, title, img, quantity: quantity, price: price }));
+    dispatch(
+      addItem({
+        id,
+        title,
+        img,
+        quantity: quantity,
+        price: price,
+        physical: false,
+      })
+    );
   };
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
 
   useEffect(() => {
     dispatch(reset());
@@ -93,21 +120,29 @@ const ShoppingCart = () => {
         {total > 0 && (
           <span className="absolute bottom-3 left-3">
             <span className="inline-block relative px-2 py-1 text-xs rounded-full text-secondary bg-primary">
-              {total}
+              {isFa ? formatNumberToPersian(total) : total}
             </span>
           </span>
         )}
       </button>
       {/* Cart dropdown */}
       {isDropdownOpen && (
-        <div className="absolute max-h-[500px] right-[-50px] lg:right-0 mt-4 w-[350px] text-neutral bg-base-100 rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right overflow-y-auto">
-          <div className="fixed w-[335px] h-[7%] bg-base-100">
+        <div
+          className={`absolute max-h-[500px] right-[-50px] lg:right-0 mt-4 w-[350px] text-neutral ${
+            isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
+          }  rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right overflow-y-auto`}
+        >
+          <div
+            className={`fixed w-[335px] h-[7%] ${
+              isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
+            } `}
+          >
             <div className="flex justify-between items-center p-5">
-              <p className="text-start">Shopping Cart</p>
+              <p className="text-start">{t("shoppingCart")}</p>
               <div className="z-10 bg-base-100">
                 <Link to="/checkout">
-                  <button className="p-2 rounded text-base-100 bg-primary w-22 hover:bg-orange-300">
-                    Checkout
+                  <button className="p-2 text-sm rounded-md bg-primary text-secondary hover:opacity-[0.9]">
+                    {t("checkout")}
                   </button>
                 </Link>
               </div>
@@ -117,14 +152,16 @@ const ShoppingCart = () => {
             {cartItems.map((item, index) => (
               <li
                 key={index}
-                className="flex justify-between p-5 border-b-2 border-b-gray-100"
+                className={`flex justify-between p-5 border-b-2 border-neutral`}
               >
-                <img className="w-20" src={pic} alt="Cart" />
+                <img className="w-20" src={pic || ""} alt="Cart" />
                 <div className="flex flex-col ml-2 w-[40%] items-start justify-start">
                   <p className="flex justify-start items-center max-w-[70%] truncate">
                     {item.title}
                   </p>
-                  <p>${item.price}</p>
+                  <p>
+                    ${isFa ? formatNumberToPersian(item.price) : item.price}
+                  </p>
                 </div>
 
                 <div className="flex items-center">
@@ -146,7 +183,12 @@ const ShoppingCart = () => {
                     </div>
                   </div>
 
-                  <p className="flex p-1 text-accent">{item.quantity}x</p>
+                  <p className="flex p-1 text-neutral">
+                    {isFa
+                      ? formatNumberToPersian(item.quantity)
+                      : item.quantity}
+                    x
+                  </p>
                   <div
                     className="mr-5 text-gray-700 active:text-gray-400"
                     onClick={() => {
@@ -214,7 +256,7 @@ export default ShoppingCart;
 //   const handlerRemoveItem = (
 //     id: string,
 //     title: string,
-//     img: string,
+//     img: string | undefined,
 //     quantity: number
 //   ) => {
 //     dispatch(removeItem({ id, title, img, quantity }));

@@ -1,7 +1,16 @@
 import { TFunction } from "i18next";
 import { PropsWithChildren } from "react";
 type ItemType = "signals" | "news" | "plans" | "products" | "tutorials";
-export interface CardProps {
+export interface CardProps extends PropsWithChildren {
+  handleAddToCart?: () => void;
+  shouldFormatNumbers?: boolean;
+  t?: TFunction<"translation", undefined>;
+  formatNumberToPersian?(input: number | string): string;
+  isFa?: boolean,
+  isFullscreen?: boolean;
+  handleImageClick?: () => void;
+    showModal?: boolean;
+  handleClose: () => void;
     key: string;
     type: ItemType;
     state?: boolean;
@@ -11,6 +20,8 @@ export interface CardProps {
     vip?: boolean;
     crypto?: string;
     title?: string;
+    entryPoint?: string;
+    alertDesc?: string;
     desc?: {
       desc1: string;
       desc2?: string;
@@ -29,8 +40,15 @@ export interface CardProps {
       tp2: boolean;
       tp3: boolean;
     };
+    tpPrices?: {
+      tp1Price: string;
+      tp2Price: string;
+      tp3Price: string;
+  };
+    physical: boolean
   }
   export interface DescProps {
+    vip?:boolean,
     desc?: {
       desc1: string;
       desc2?: string;

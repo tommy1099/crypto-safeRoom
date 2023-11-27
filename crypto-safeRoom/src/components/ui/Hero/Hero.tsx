@@ -1,4 +1,4 @@
-import { HeroProps } from "../../../../Interfaces/Interfaces";
+import { HeroProps } from "../../../Interfaces/Interfaces";
 const Hero = ({ section1, section2, isFa }: HeroProps) => {
   return (
     <div

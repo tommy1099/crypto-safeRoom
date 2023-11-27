@@ -90,6 +90,7 @@ const Filters: React.FC<Props> = ({ type }) => {
                 name="filter"
                 value={option}
                 onChange={() => handleRadioChange(option)}
+                required
               />
             ))}
           </div>

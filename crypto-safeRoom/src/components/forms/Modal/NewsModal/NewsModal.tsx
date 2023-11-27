@@ -11,7 +11,7 @@ interface Props {
   title: string;
 }
 
-const NewsModal = ({ showModal, handleClose, img, desc, title }: Props) => {
+const NewsModal = ({ showModal, handleClose, img, title }: Props) => {
   const dispatch = useDispatch();
 
   const handleImageClick = () => {
@@ -50,13 +50,13 @@ const NewsModal = ({ showModal, handleClose, img, desc, title }: Props) => {
     <>
       {console.log("showModal:", showModal)}
       {showModal && (
-        <div className="  fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="flex fixed inset-0 z-20 justify-center items-center bg-black bg-opacity-50">
           <div
             id="inner"
             className="overflow-y-auto bg-white lg:w-[80%] mt-[5%] h-[80%] p-6 rounded-lg shadow-lg"
           >
             <div className="flex justify-between mb-5">
-              <h2 className="text-3xl   w-full p-3 font-bold border-l-8 rounded-lg border-patternColors-red">
+              <h2 className="p-3 w-full text-3xl font-bold rounded-lg border-l-8 border-patternColors-red">
                 {title}
               </h2>
               <div

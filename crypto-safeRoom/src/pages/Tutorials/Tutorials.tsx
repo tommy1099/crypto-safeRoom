@@ -1,12 +1,6 @@
 import { Container } from "..";
-import { Card, Filters, ScrollToTopIcon } from "../../components/forms";
-import {
-  ExpandedSidePanel,
-  Footer,
-  NarrowContainer,
-  NavBar,
-  ShrunkSidePanel,
-} from "../../components/ui";
+import { Card, ScrollToTopIcon } from "../../components/forms";
+import { Footer, NarrowContainer, NavBar } from "../../components/ui";
 import img from "../../assets/img/bearandbull.png";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/Store";
@@ -175,6 +169,7 @@ const Tutorials = () => {
         {selectedRadioValue === "All"
           ? cardComponents.map((component, index) => (
               <Card
+                physical
                 inStock
                 key={index.toString()}
                 price={component.price}
@@ -188,6 +183,7 @@ const Tutorials = () => {
             ))
           : filteredCardComponents.map((component, index) => (
               <Card
+                physical
                 inStock
                 key={index.toString()}
                 price={component.price}

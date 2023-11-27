@@ -3,7 +3,7 @@ import { NavBar, Footer } from "../../components/ui";
 import Card from "../../components/forms/Cards/Card"; //change
 import { ScrollToTopIcon } from "../../components/forms";
 import { useDispatch } from "react-redux";
-import { setSignals } from "../../Store/SignalsReducer";
+import { resetSignals, setSignals } from "../../Store/SignalsReducer";
 import { Slide } from "../../components/ui";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Store/Store";
@@ -17,6 +17,7 @@ import {
   togglesignalIndicatorTrue,
 } from "../../Store/signalIndicator";
 import { useLocation, useNavigate } from "react-router-dom";
+import { LiveChat } from "../../components/Features";
 // import StatsVisualizer from "../../components/forms/StatsVisualizer/StatsVisualizer";
 
 const Signals = () => {
@@ -41,12 +42,18 @@ const Signals = () => {
     }
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BackendAddress()}/signals`);
+        const response = await fetch(`${BackendAddress()}/signals`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
+        dispatch(resetSignals());
         dispatch(setSignals(data));
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -99,6 +106,11 @@ const Signals = () => {
           .filter((component) => !component.blur)
           .map((component, index) => (
             <Card
+              handleClose={() => {}}
+              alertDesc={component.alertDesc}
+              entryPoint={component.entryPoint}
+              tpPrices={component.tpPrices}
+              physical={false}
               key={index.toString()} // Add a unique key prop
               type="signals"
               tp={component.tp}
@@ -127,6 +139,8 @@ const Signals = () => {
           .filter((component) => component.blur)
           .map((component, index) => (
             <Card
+              handleClose={() => {}}
+              physical={false}
               key={index.toString()} // Add a unique key prop
               type="signals"
               tp={component.tp}
@@ -141,7 +155,9 @@ const Signals = () => {
             />
           ))}
       </Container>
-
+      <div>
+        <LiveChat />
+      </div>
       <div className="">
         <Footer />
       </div>

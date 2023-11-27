@@ -4,7 +4,10 @@ import notfoundPic from "../../../assets/img/404-error-with-landscape-concept-il
 
 const NotFound = () => {
   return (
-    <Container style="rounded-lg shadow-2xl absolute inset-10 box-border z-10 bg-white max-w-screen max-h-screen overflow-x-auto">
+    <Container
+      dir="ltr"
+      style="rounded-lg shadow-2xl absolute inset-10 box-border z-10 bg-white max-w-screen max-h-screen overflow-x-auto"
+    >
       {
         <>
           <img
@@ -14,7 +17,7 @@ const NotFound = () => {
             alt=""
           />
           <Link className="flex flex-col mt-[35%] ml-[40%]" to="/welcome">
-            <button className="h-10 rounded-md flex items-center justify-center w-64 bg-patternColors-green text-white">
+            <button className="flex justify-center items-center w-64 h-10 text-white rounded-md bg-patternColors-green">
               Home Page
             </button>
           </Link>

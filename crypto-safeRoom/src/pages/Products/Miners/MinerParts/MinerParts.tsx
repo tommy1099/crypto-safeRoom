@@ -36,7 +36,10 @@ const MinerParts = () => {
     <>
       <NavBar />
       <Catagories />
-      <Container style="  relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mx-[5%]">
+      <Container
+        dir="ltr"
+        style="  relative mb-[416px] mt-[130px] z-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mx-[5%]"
+      >
         {cardComponents.map((component) => (
           <Card
             price={component.price}
@@ -46,6 +49,8 @@ const MinerParts = () => {
             title={component.title}
             desc={component.desc}
             tags={component.tags}
+            key=""
+            physical
           />
         ))}
       </Container>

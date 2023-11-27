@@ -69,6 +69,7 @@ export const Plans = () => {
                   desc3: t("planDesc3"),
                 }}
                 type="plans"
+                physical={false}
               />
             </div>
             <div id="item2" className="w-full carousel-item">
@@ -84,6 +85,7 @@ export const Plans = () => {
                   desc3: t("planDesc3"),
                 }}
                 type="plans"
+                physical={false}
               />
             </div>
             <div id="item3" className="w-full carousel-item">
@@ -99,6 +101,7 @@ export const Plans = () => {
                   desc3: t("planDesc3"),
                 }}
                 type="plans"
+                physical={false}
               />
             </div>
             <div id="item4" className="w-full carousel-item">
@@ -114,6 +117,7 @@ export const Plans = () => {
                   desc3: t("planDesc3"),
                 }}
                 type="plans"
+                physical={false}
               />
             </div>
           </div>
@@ -150,6 +154,7 @@ export const Plans = () => {
             desc3: t("planDesc3"),
           }}
           type="plans"
+          physical={false}
         />
         <Card
           id="2"
@@ -163,6 +168,7 @@ export const Plans = () => {
             desc3: t("planDesc3"),
           }}
           type="plans"
+          physical={false}
         />
         <Card
           id="3"
@@ -176,6 +182,7 @@ export const Plans = () => {
             desc3: t("planDesc3"),
           }}
           type="plans"
+          physical={false}
         />
         <Card
           id="4"
@@ -189,6 +196,7 @@ export const Plans = () => {
             desc3: t("planDesc3"),
           }}
           type="plans"
+          physical={false}
         />
       </Container>
       <Container

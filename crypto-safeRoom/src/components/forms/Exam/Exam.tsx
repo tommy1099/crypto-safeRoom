@@ -12,7 +12,10 @@ const Exam: React.FC<GoogleFormProps> = ({ src, width, height }) => {
   return (
     <>
       <NavBar />
-      <Container style="bg-white flex justify-center mt-[130px] mb-[100px] z-0 ">
+      <Container
+        dir="ltr"
+        style="bg-white flex justify-center mt-[130px] mb-[100px] z-0 "
+      >
         <iframe
           src={src}
           width={width}

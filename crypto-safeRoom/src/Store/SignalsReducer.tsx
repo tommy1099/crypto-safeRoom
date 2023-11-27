@@ -4,11 +4,13 @@ interface NewItem {
   id: string;
   img: string;
   crypto: string;
+  entryPoint: string;
   desc: {
     desc1: string;
     desc2: string;
     desc3: string;
   };
+  alertDesc: string;
   tags: {
     tag1: string;
     tag2: string;
@@ -20,6 +22,11 @@ interface NewItem {
     tp1: boolean;
     tp2: boolean;
     tp3: boolean;
+  };
+  tpPrices: {
+    tp1Price: string;
+    tp2Price: string;
+    tp3Price: string;
   };
 }
 
@@ -38,8 +45,11 @@ const signalsSlice = createSlice({
     setSignals: (state, action: PayloadAction<NewItem[]>) => {
       state.signals = action.payload;
     },
+    resetSignals: (state) => {
+      state.signals = [];
+    },
   },
 });
 
-export const { setSignals } = signalsSlice.actions;
+export const { setSignals, resetSignals } = signalsSlice.actions;
 export default signalsSlice.reducer;

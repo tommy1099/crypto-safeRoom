@@ -1,64 +1,92 @@
-import { Container, NewsAdmin, SignalsAdmin } from "../..";
+import { NewsAdmin, SignalsAdmin } from "../..";
 import { useState } from "react";
-import { Input } from "../../../components/ui";
+import {
+  Sidebar,
+  Menu,
+  MenuItem,
+  SubMenu,
+  sidebarClasses,
+  menuClasses,
+} from "react-pro-sidebar";
 
-const tabData = [
-  { id: "homeAdmin", label: "Home" },
+const pagesMenu = [
   { id: "signalsAdmin", label: "Signals" },
   { id: "newsAdmin", label: "News" },
   { id: "productsAdmin", label: "Products" },
   { id: "tutorialsAdmin", label: "Tutorials" },
+];
+const othersMenu = [
+  { id: "homeAdmin", label: "Home" },
   { id: "usersAdmin", label: "Users" },
+  { id: "AllOrders", label: "Orders" },
   { id: "logsAdmin", label: "Logs" },
 ];
-
 const AdminPage = () => {
   const [selectedTab, setSelectedTab] = useState("");
 
   const handleSelectTab = (value: string) => {
     setSelectedTab(value);
   };
+  const renderSelectedComponent = () => {
+    switch (selectedTab) {
+      case "signalsAdmin":
+        return <SignalsAdmin />;
+      case "newsAdmin":
+        return <NewsAdmin />;
+      // Add other cases for each tab
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="flex justify-start">
-      <Container
-        dir=""
-        style="fixed font-semibold gap-10 items-center text-white justify-center w-[200px] h-[1000px] relative  bg-gray-800"
-      >
-        {tabData.map((tab) => (
-          <label
-            key={tab.id}
-            className={`transition-all flex p-2 justify-center items-center w-full hover:bg-white hover:text-black cursor-pointer${
-              selectedTab === tab.id
-                ? " bg-white text-black"
-                : " bg-gray-800 text-white"
-            }`}
+    <>
+      <div className="bg-[#222] min-h-screen ">
+        <div className="h-full fixed top-0 bg-[#2c2c2c] text-[#777]">
+          <Sidebar
+            rootStyles={{
+              [`.${sidebarClasses.container}`]: {
+                backgroundColor: "#2c2c2c",
+              },
+              [`.${sidebarClasses.toggled}`]: {
+                backgroundColor: "#ee8f50",
+              },
+              [`.${menuClasses.subMenuContent}`]: {
+                backgroundColor: "#212121",
+                textColor: "#ee8f50",
+              },
+            }}
           >
-            <Input
-              id={tab.id}
-              type="radio"
-              name="adminNav"
-              style="hidden"
-              defaultChecked={selectedTab === tab.id}
-              onChange={() => handleSelectTab(tab.id)}
-            />
-            <p className="">{tab.label}</p>
-          </label>
-        ))}
-      </Container>
-      <Container
-        dir=""
-        style="relative z-0 grid grid-cols-2 xl:grid-cols-6 m-[5%]"
-      >
-        {selectedTab === "signalsAdmin" ? (
-          <SignalsAdmin />
-        ) : selectedTab === "newsAdmin" ? (
-          <NewsAdmin />
-        ) : (
-          ""
-        )}
-      </Container>
-    </div>
+            <Menu>
+              <SubMenu label="Pages">
+                {pagesMenu.map((tab) => (
+                  <MenuItem
+                    key={tab.id}
+                    onClick={() => handleSelectTab(tab.id)}
+                    className={selectedTab === tab.id ? "active" : ""}
+                  >
+                    {tab.label}
+                  </MenuItem>
+                ))}
+              </SubMenu>
+              <SubMenu label="Others">
+                {othersMenu.map((tab) => (
+                  <MenuItem
+                    key={tab.id}
+                    onClick={() => handleSelectTab(tab.id)}
+                    className={selectedTab === tab.id ? "active" : ""}
+                  >
+                    {tab.label}
+                  </MenuItem>
+                ))}
+              </SubMenu>
+            </Menu>
+          </Sidebar>
+        </div>
+
+        {renderSelectedComponent()}
+      </div>
+    </>
   );
 };
 

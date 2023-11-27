@@ -1,6 +1,6 @@
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { ImCross } from "react-icons/im";
-import { StateProps } from "../../../../../Interfaces/Interfaces.ts";
+import { StateProps } from "../../../../Interfaces/Interfaces.ts";
 
 const StateComponent = ({ blur, state, t }: StateProps) => {
   if (blur) {

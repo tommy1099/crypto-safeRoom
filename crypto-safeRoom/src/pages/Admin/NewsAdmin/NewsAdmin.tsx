@@ -296,6 +296,8 @@ const NewsAdmin = () => {
             id={component._id}
             title={component.title}
             desc={component.desc}
+            physical={false}
+            key=""
           />
           <span className="mt-10" />
         </div>

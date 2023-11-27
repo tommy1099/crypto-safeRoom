@@ -1,6 +1,6 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { RadialProgressProps } from "../../../../Interfaces/Interfaces.ts";
+import { RadialProgressProps } from "../../../Interfaces/Interfaces.ts";
 
 const RadialProgressBar = ({
   value,

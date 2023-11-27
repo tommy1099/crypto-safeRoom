@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "../../../pages";
 import { Input, Button } from "../../ui";
@@ -9,7 +9,10 @@ const ContactForm = () => {
     event.preventDefault();
   };
   return (
-    <Container style=" relative w-[400px] h-[550px] fixed left-[10%] sm:left-[15%] md:left-[20%] lg:left-[10%] lg:top-[10%] shadow-2xl p-10 flex flex-col justify-center items-start rounded-lg">
+    <Container
+      dir="ltr"
+      style=" relative w-[400px] h-[550px] fixed left-[10%] sm:left-[15%] md:left-[20%] lg:left-[10%] lg:top-[10%] shadow-2xl p-10 flex flex-col justify-center items-start rounded-lg"
+    >
       <div className="ml-[11%] w-full h-24 flex items-center my-[10%]">
         <p className="text-3xl font-bold text-patternColors-green">
           Crypto Safe Room
@@ -28,6 +31,7 @@ const ContactForm = () => {
             id="title"
             style="w-full h-10 border-2 border-gra-300 rounded-md"
             placeHolder="title"
+            required
           />
         </div>
         <div className="">
@@ -37,6 +41,7 @@ const ContactForm = () => {
             id="subject"
             style="w-full h-10 border-2 border-gra-300 rounded-md"
             placeHolder="subject"
+            required
           />
         </div>
         <div>
@@ -45,12 +50,15 @@ const ContactForm = () => {
           </label>
           <textarea
             id="textarea"
-            className="w-full h-10 border-2 border-gra-300 rounded-md"
+            className="w-full h-10 rounded-md border-2 border-gra-300"
           />
           {/* <PasswordInput /> */}
         </div>
-        <Link to="/home" className="flex items-center justify-center mt-5">
-          <Button style=" w-24 h-10 border-box bg-patternColors-green text-white rounded-md">
+        <Link to="/home" className="flex justify-center items-center mt-5">
+          <Button
+            onClick={() => {}}
+            style=" w-24 h-10 border-box bg-patternColors-green text-white rounded-md"
+          >
             Submit
           </Button>
         </Link>

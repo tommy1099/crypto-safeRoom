@@ -13,11 +13,22 @@ interface Props {
   value?: string;
   myRef?: LegacyRef<HTMLInputElement>;
   onChange?: (value: string) => void;
+  required: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
   (
-    { defaultChecked, id, style, placeHolder, type, onChange, name, value },
+    {
+      defaultChecked,
+      id,
+      style,
+      placeHolder,
+      type,
+      onChange,
+      name,
+      value,
+      required,
+    },
     ref
   ) => {
     // const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -48,6 +59,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           name={name}
           value={value}
           onChange={handleOnChange}
+          required={required}
         />
         {value}
       </label>

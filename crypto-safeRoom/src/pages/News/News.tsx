@@ -76,6 +76,7 @@ const News = () => {
             img={component.img}
             title={component.title}
             desc={component.desc}
+            physical={false}
           />
         ))}
       </Container>

@@ -11,10 +11,10 @@
     "oldSignals": "Previous Signals",
     "result": "Result: ",
     "new": "NEW",
-    "tp1": "Target Price 1: ",
-    "tp2": "Target Price 2: ",
-    "tp3": "Target Price 3: ",
-    "stop": "Stop Loss: ",
+    "tp1": "TP1: ",
+    "tp2": "TP2: ",
+    "tp3": "TP3: ",
+    "stop": "SL: ",
     "sl": "Short/Long: ",
 
     "profile": "Profile",
@@ -26,7 +26,9 @@
     "logout": "Logout",
     "login": "Login",
 
-
+    "shoppingCart": "Shopping Cart",
+    "checkout": "Checkout",
+    
     "total": "Total",
     "underTotal": "New Signals NOT included",
 
@@ -125,7 +127,28 @@
     "question7": "How do you ensure the security of my personal and financial information",
     "answer7": "We take the security and privacy of your information seriously. Our website uses industry-standard encryption protocols, and we follow strict security measures to safeguard your data.",
     "question8": "Is there a guarantee of profit with your signals",
-    "answer8": "While we strive to provide accurate signals, there is no guarantee of profit in the volatile cryptocurrency market. Always conduct your own research and consider your risk tolerance."
+    "answer8": "While we strive to provide accurate signals, there is no guarantee of profit in the volatile cryptocurrency market. Always conduct your own research and consider your risk tolerance.",
 
+    "orderSummary": "Order Summary",
+    "code": "Code",
+    "subTotal": "Subtotal",
+    "shipping": "Shipping", 
+    "orderTotal": "Order Total", 
+    "billingInfo": "Billing Info",
+    "underBillingInfo" : "Choose a payment method option below and fill out the appropriate information",
+    "billingAddress": "Billing Address",
+    "address": "Address",
+    "city": "City",
+    "town": "Town",
+    "zipcode": "Zip Code",
+    "shippingMethod": "Shipping Method", 
+    "note": "Leave us a note",
+
+    "entryPoint": "Entry Point",
+    "now": " Now ",
+    "alertDesc": "Descriptions",
+    "tp1Price": "TP1 Price",
+    "tp2Price": "TP2 Price",
+    "tp3Price": "TP3 Price"
 
 }

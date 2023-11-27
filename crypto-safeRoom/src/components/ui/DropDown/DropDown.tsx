@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useRef } from "react";
 import { RootState } from "../../../Store/Store";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
@@ -9,9 +8,7 @@ interface DropdownProps {
   onSelect: (selectedOption: string) => void;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
+const Dropdown: React.FC<DropdownProps> = ({ options, onSelect }) => {
   const dispatch = useDispatch();
   const selectedOption = useSelector(
     (state: RootState) => state.dropDown.selectedOption

@@ -1,4 +1,4 @@
-import { TagsProps } from "../../../../../Interfaces/Interfaces.ts";
+import { TagsProps } from "../../../../Interfaces/Interfaces.ts";
 import { BiLineChartDown } from "react-icons/bi";
 import { BsSignStop } from "react-icons/bs";
 
@@ -20,7 +20,9 @@ const TagsComponent = ({
         <div className="flex gap-1 items-center">
           <div
             className={`${
-              user.plan !== "VIP" && vip && !blur ? "opacity-0" : "text-red-700"
+              user.plan.type !== "VIP" && vip && !blur
+                ? "opacity-0"
+                : "text-red-700"
             }`}
           >
             <BsSignStop />
@@ -38,7 +40,7 @@ const TagsComponent = ({
         <div className="flex gap-1 items-center">
           <div
             className={`${
-              user.plan !== "VIP" && vip && !blur
+              user.plan.type !== "VIP" && vip && !blur
                 ? "opacity-0"
                 : "text-blue-700"
             }`}

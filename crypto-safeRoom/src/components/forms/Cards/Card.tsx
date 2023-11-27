@@ -11,9 +11,12 @@ import { ErrorAlert } from "..";
 import { AiFillLock, AiFillStar } from "react-icons/ai";
 
 import { StateComponent, TagsComponent, DescriptionsComponent } from ".";
-import { CardProps } from "../../../../Interfaces/Interfaces.ts";
+import { CardProps } from "../../../Interfaces/Interfaces.ts";
 
 const Card = ({
+  tpPrices,
+  entryPoint,
+  alertDesc,
   state,
   price,
   id,
@@ -27,6 +30,7 @@ const Card = ({
   inStock,
   vip,
   tp,
+  physical,
 }: CardProps) => {
   const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
 
@@ -60,33 +64,37 @@ const Card = ({
   ): void => {
     event.stopPropagation();
     if (title && id && price) {
-      if (
-        title === "1 Month VIP" ||
-        title === "3 Months VIP" ||
-        title === "6 Months VIP" ||
-        (title === "1 Year VIP" &&
-          !user.email.confirm &&
-          window.location.pathname === "/plans")
-      ) {
+      if (!user.email.confirm && window.location.pathname === "/plans") {
         setErrorAlert(true);
       } else {
-        dispatch(addItem({ id, title, img, quantity: 0, price: price }));
+        dispatch(
+          addItem({
+            id,
+            title,
+            img,
+            quantity: 0,
+            price: price,
+            physical: physical,
+          })
+        );
       }
     }
   };
   const handleAddToCart = (): void => {
     if (title && id && price) {
-      if (
-        title === "1 Month VIP" ||
-        title === "3 Months VIP" ||
-        title === "6 Months VIP" ||
-        (title === "1 Year VIP" &&
-          !user.email.confirm &&
-          window.location.pathname === "/plans")
-      ) {
+      if (!user.email.confirm && window.location.pathname === "/plans") {
         setErrorAlert(true);
       } else {
-        dispatch(addItem({ id, title, img, quantity: 0, price: price }));
+        dispatch(
+          addItem({
+            id,
+            title,
+            img,
+            quantity: 0,
+            price: price,
+            physical: physical,
+          })
+        );
       }
     }
   };
@@ -161,6 +169,7 @@ const Card = ({
             )}
             {desc && (
               <DescriptionsComponent
+                vip={vip}
                 id={id}
                 type={type}
                 desc={desc}
@@ -217,7 +226,12 @@ const Card = ({
           <></>
         ) : (
           <Modal
-            children={<StateComponent blur state t={t} />}
+            key=""
+            physical={false}
+            tpPrices={tpPrices}
+            entryPoint={entryPoint}
+            alertDesc={alertDesc}
+            children={<StateComponent blur={blur} state={state} t={t} />}
             price={price}
             id={id}
             type={type}

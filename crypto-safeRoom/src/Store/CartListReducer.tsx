@@ -6,6 +6,7 @@ interface Div {
   img?: string;
   quantity: number;
   price: number;
+  physical: boolean;
 }
 
 interface DivsState {
@@ -32,6 +33,7 @@ const shoppingCartListSlice = createSlice({
           id: action.payload.id,
           title: action.payload.title,
           price: action.payload.price,
+          physical: action.payload.physical,
           quantity: 1,
         };
 

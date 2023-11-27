@@ -15,7 +15,10 @@ const HelloHero = () => {
             className="flex justify-center items-center lg:mt-[25%]"
             to="/auth/login"
           >
-            <Button style="rounded-md bg-patternColors-green text-white h-10 w-26 p-5 items-center justify-center flex">
+            <Button
+              onClick={() => {}}
+              style="rounded-md bg-patternColors-green text-white h-10 w-26 p-5 items-center justify-center flex"
+            >
               Get Started
             </Button>
           </Link>

@@ -14,9 +14,7 @@ import ScrollToTopIcon from "./ScrollToTopIcon/ScrollToTopIcon";
 import Avatar from "./Avatar/Avatar";
 import ErrorAlert from "./Alert/ErrorAlert/ErrorAlert";
 import HamSideBar from "./HamSideBar/HamSideBar";
-import { AskedQuestions } from "./AskedQuestions/AskedQuestions";
 export {
-  AskedQuestions,
   HamSideBar,
   ErrorAlert,
   Avatar,

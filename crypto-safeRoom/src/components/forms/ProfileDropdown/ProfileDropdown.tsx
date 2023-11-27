@@ -22,6 +22,8 @@ const ProfileDropdown = () => {
   const isFa = useSelector((state: RootState) => state.lang.isFa);
   const [isOpen, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
+
   const handleLangChange = () => {
     if (isFa) {
       dispatch(toggleLangToEn());
@@ -68,7 +70,11 @@ const ProfileDropdown = () => {
         </button>
       </div>
       {isOpen && (
-        <div className="absolute right-0 z-10 mt-4 w-48 rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right text-neutral bg-base-100">
+        <div
+          className={`absolute right-0 z-10 mt-4 w-48 rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right text-neutral ${
+            isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
+          }`}
+        >
           <div
             className="py-1"
             role="menu"

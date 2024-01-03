@@ -30,17 +30,17 @@ const DescriptionsComponent = ({
           {type === "signals" && (
             <div className={`flex`}>
               {!blur && tp && tp.tp1 ? (
-                <div className="text-xl text-green-700">
+                <div className="text-xl text-[#3f9345]">
                   <IoMdCheckmarkCircle />
                 </div>
               ) : !blur && tp && !tp.tp1 ? (
                 <span className="loading loading-ring loading-md"></span>
               ) : blur && tp && tp.tp1 ? (
-                <div className="text-xl text-green-700">
+                <div className="text-xl text-[#3f9345]">
                   <IoMdCheckmarkCircle />
                 </div>
               ) : (
-                <div className="text-red-700">
+                <div className="text-[#b71c1c]">
                   <ImCross />
                 </div>
               )}
@@ -49,7 +49,11 @@ const DescriptionsComponent = ({
 
           <p
             className={`text-${
-              shouldFormatNumbers ? "" : "neutral"
+              shouldFormatNumbers
+                ? ""
+                : window.location.pathname === "/"
+                ? "[#2c2c2c]"
+                : ""
             } text-[11px] md:text-[12px]`}
           >
             {type === "signals" && `${t("tp1")}%`}
@@ -57,6 +61,8 @@ const DescriptionsComponent = ({
               ? isFa
                 ? formatNumberToPersian(Number(desc.desc1))
                 : desc.desc1
+              : desc.desc1 && desc.desc1.length > 50 // Set your desired character limit
+              ? `${desc.desc1.slice(0, 50)}...` // Display first 50 characters and ellipsis
               : desc.desc1}
           </p>
         </div>
@@ -66,17 +72,17 @@ const DescriptionsComponent = ({
           {type === "signals" && (
             <div className={`flex`}>
               {!blur && tp && tp.tp2 ? (
-                <div className="text-xl text-green-700">
+                <div className="text-xl text-[#3f9345]">
                   <IoMdCheckmarkCircle />
                 </div>
               ) : !blur && tp && !tp.tp2 ? (
                 <span className="loading loading-ring loading-md"></span>
               ) : blur && tp && tp.tp2 ? (
-                <div className="text-xl text-green-700">
+                <div className="text-xl text-[#3f9345]">
                   <IoMdCheckmarkCircle />
                 </div>
               ) : (
-                <div className="text-red-700">
+                <div className="text-[#b71c1c]">
                   <ImCross />
                 </div>
               )}
@@ -102,17 +108,17 @@ const DescriptionsComponent = ({
           {type === "signals" && (
             <div className={"flex"}>
               {!blur && tp && tp.tp3 ? (
-                <div className="text-xl text-green-700">
+                <div className="text-xl text-[#3f9345]">
                   <IoMdCheckmarkCircle />
                 </div>
               ) : !blur && tp && !tp.tp3 ? (
                 <span className="loading loading-ring loading-md"></span>
               ) : blur && tp && tp.tp3 ? (
-                <div className="text-xl text-green-700">
+                <div className="text-xl text-[#3f9345]">
                   <IoMdCheckmarkCircle />
                 </div>
               ) : (
-                <div className="text-red-700">
+                <div className="text-[#b71c1c]">
                   <ImCross />
                 </div>
               )}

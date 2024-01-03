@@ -4,21 +4,26 @@ import StatsVisualizer from "../../components/forms/StatsVisualizer/StatsVisuali
 import { Footer, NavBar } from "../../components/ui";
 import { ScrollToTopIcon } from "../../components/forms";
 import { useTranslation } from "react-i18next";
+// import { useEffect } from "react";
 
 const Stats = () => {
-  const signalsList = useSelector((state: RootState) => state.signals.signals);
+  const allSignalsList = useSelector(
+    (state: RootState) => state.allSignals.allSignals
+  );
   const { t } = useTranslation();
-
+  // useEffect(() => {
+  //   console.log("signals for stats:", allSignalsList);
+  // }, []);
   return (
     <div className="overflow-y-auto">
       <NavBar />
       <span className="flex lg:flex-row flex-col justify-center items-center bg-primary mb-[270px] rounded-b-[50px]">
         <span className="flex my-[15%] flex-col gap-10 p-8 ">
           <div>
-            <StatsVisualizer type="type1" signals={signalsList} />
+            <StatsVisualizer type="type1" signals={allSignalsList} />
           </div>
           <div>
-            <StatsVisualizer type="type2" signals={signalsList} />
+            <StatsVisualizer type="type2" signals={allSignalsList} />
           </div>
         </span>
         <div className="text-3xl md:text-5xl p-10 text-[#212121]">

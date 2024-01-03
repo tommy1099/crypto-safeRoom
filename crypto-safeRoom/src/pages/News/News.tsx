@@ -5,27 +5,20 @@ import Card from "../../components/forms/Cards/Card";
 import { useEffect, useState } from "react";
 import { Loading } from "../../components/forms";
 import { BackendAddress } from "../../utils/BackendAddress/BackendAddress";
+import { NewsItem } from "../../Interfaces/Interfaces";
 
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../Store/Store";
-type NewItem = {
-  id: string;
-  //   key: string;
-  img: string;
-  title: string;
-  desc: {
-    desc1: string;
-  };
-};
+
 const News = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const [signalsList, setSignalsList] = useState<NewItem[]>([]);
+  const [newsList, setNewsList] = useState<NewsItem[]>([]);
 
   useEffect(() => {
     // console.log("signal list:", signalsList);
 
-    fetch(`${BackendAddress()}/admin/dashboard/news`) // Replace with your API endpoint.
+    fetch(`${BackendAddress()}/news/`) // Replace with your API endpoint.
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -34,7 +27,7 @@ const News = () => {
       })
       .then((responseData) => {
         setIsLoaded(true);
-        setSignalsList(responseData); // Update the state with the data.
+        setNewsList(responseData); // Update the state with the data.
       })
       .catch((error) => {
         setIsLoaded(true);
@@ -42,7 +35,7 @@ const News = () => {
       });
   });
   // const cardComponents = [{}];
-  signalsList.sort((a, b) => {
+  newsList.sort((a, b) => {
     if (a.id === b.id) {
       return 0;
     } else if (a.id) {
@@ -61,9 +54,9 @@ const News = () => {
       {!isLoaded && <Loading />}
       <Container
         dir="ltr"
-        style=" relative mb-[600px] mt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%]"
+        style=" relative mb-[600px] pt-[130px] z-0 grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mx-[5%]"
       >
-        {signalsList.map((component) => (
+        {newsList.map((component) => (
           // <NewsCard
           //   src={component.src}
           //   title={component.title}
@@ -77,6 +70,7 @@ const News = () => {
             title={component.title}
             desc={component.desc}
             physical={false}
+            handleClose={() => {}}
           />
         ))}
       </Container>

@@ -15,7 +15,11 @@ import Slide from "./Slide/Slide";
 import Accordion from "./Accordion/Accordion";
 import Hero from "./Hero/Hero";
 import LoadingCard from "./LoadingCard/LoadingCard";
+import Table from "./Table/Table";
+import PaginationButtons from "./PaginationButtons/PaginationButtons";
 export {
+  PaginationButtons,
+  Table,
   LoadingCard,
   Hero,
   Accordion,

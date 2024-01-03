@@ -17,36 +17,37 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 // import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 // import RefreshToken from "../../utils/RefreshToken/RefreshToken";
 // import Pic from "../../assets/img/test.jpeg";
-type orders = {
-  userInfo: {
-    username: string;
-    shippingAddress: {
-      firstname: string;
-      lastname: string;
-      country: string;
-      city: string;
-      zipCode: string;
-      address: string;
-    };
-  };
-  orderDate: Date;
-  paymentMethod: {
-    state: boolean;
-    method: string;
-  };
-  productName: [
-    {
-      productId: string;
-      productName: string;
-      quantity: number;
-      price: number;
-    }
-  ];
-  totalPrice: number;
-  userNote: string;
-  done: boolean;
-  _id: string;
-};
+// type orders = {
+//   userInfo: {
+//     username: string;
+//     shippingAddress: {
+//       firstname: string;
+//       lastname: string;
+//       country: string;
+//       city: string;
+//       zipCode: string;
+//       address: string;
+//     };
+//   };
+//   orderDate: Date;
+//   paymentMethod: {
+//     paid: boolean;
+//     method: string;
+//     timer?: number;
+//   };
+//   productName: [
+//     {
+//       productId: string;
+//       productName: string;
+//       quantity: number;
+//       price: number;
+//     }
+//   ];
+//   totalPrice: number;
+//   userNote: string;
+//   done: boolean;
+//   _id: string;
+// };
 type SentForm = {
   img: File | null;
   email: string;
@@ -61,11 +62,21 @@ type SentRefCode = {
 };
 import { useTranslation } from "react-i18next";
 import { formatNumberToPersian } from "../../utils/NumberToFarsi/NumberToFarsi";
+import Modal from "../../components/forms/Modal/Modal";
+import { orders } from "../../Interfaces/Interfaces";
 
 const Profile = () => {
   // RefreshToken();
   const { t } = useTranslation();
-
+  const [showModal, setShowModal] = useState(false);
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const [selectedOrder, setSelectedOrder] = useState<orders>();
+  const handleOrderClick = (order: orders) => {
+    setShowModal(true);
+    setSelectedOrder(order);
+  };
   // const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.user);
   const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
@@ -84,6 +95,20 @@ const Profile = () => {
     newPass: "",
     confirmPassword: "",
   });
+  const desc = {
+    desc1: "alksdjlkajsdajwdlkasjdasidoqw",
+    desc2: "aisudhasdasd54asdasdaiusdhasd",
+    desc3: "asdhjahsdjahsdiqwuhdpwdhhambn",
+  };
+  const tags = {
+    tag1: "you can see this page again by clicking on the order in your profile",
+    tag2: "after your time ran out your order will be dismissed",
+  };
+  const tpPrices = {
+    tp1Price: "",
+    tp2Price: "",
+    tp3Price: "",
+  };
   const [codeRefFormData, setCodeRefFormData] = useState<SentRefCode>({
     refcode: "",
   });
@@ -301,6 +326,9 @@ const Profile = () => {
                         <div className="flex flex-col justify-center items-center text-neutral">
                           <div className="w-[50%] md:w-[60%] text-primary ">
                             <RadialProgressBar
+                              type="subscribtion"
+                              textSize="30px"
+                              maxValue={userData.plan.maxDays}
                               value={userData.plan.remaining}
                               style={{
                                 textColor: `${
@@ -341,8 +369,8 @@ const Profile = () => {
                           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         ></path>
                       </svg>
-                      <span className="text-[17px] text-neutral">
-                        {userData.refcode}
+                      <span className="text-[16px] text-neutral">
+                        {userData.refcode.userCode}
                       </span>
                     </div>
                   </div>
@@ -382,38 +410,42 @@ const Profile = () => {
                     {t("allOrders")}
                   </p>
                   {userData.orders &&
-                    userData.orders.map((elm: orders, index: number) => (
-                      <div
-                        className="flex flex-col gap-4 p-4 text-xl mt-[1%] "
-                        key={elm._id}
-                      >
-                        <div className="flex gap-5 justify-between items-center">
-                          <p className="text-md text-neutral">
-                            {isFa
-                              ? formatNumberToPersian(index + 1)
-                              : index + 1}
-                          </p>
-                          <p className="text-neutral">
-                            {new Date(elm.orderDate).toLocaleString(
-                              `${isFa ? "fa" : "en"}`,
-                              {
-                                year: "numeric",
-                                month: "2-digit",
-                                day: "2-digit",
-                              }
-                            )}
-                          </p>
-                          <p className="text-sm text-neutral">
-                            {new Date(elm.orderDate).toLocaleString(
-                              `${isFa ? "fa" : "en"}`,
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                second: "2-digit",
-                                hour12: false,
-                              }
-                            )}
-                            {/* {new Date(elm.orderDate).toLocaleString(undefined, {
+                    [...userData.orders]
+                      .reverse()
+                      .map((elm: orders, index: number) => (
+                        <>
+                          <div
+                            className="flex hover:border-t hover:border-b hover:border-primary hover:rounded cursor-pointer flex-col gap-4 p-4 text-xl mt-[1%] "
+                            key={elm._id}
+                            onClick={() => handleOrderClick(elm)}
+                          >
+                            <div className="flex gap-5 justify-between items-center">
+                              <p className="text-md text-neutral">
+                                {isFa
+                                  ? formatNumberToPersian(index + 1)
+                                  : index + 1}
+                              </p>
+                              <p className="text-neutral">
+                                {new Date(elm.orderDate).toLocaleString(
+                                  `${isFa ? "fa" : "en"}`,
+                                  {
+                                    year: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                  }
+                                )}
+                              </p>
+                              <p className="text-sm text-neutral">
+                                {new Date(elm.orderDate).toLocaleString(
+                                  `${isFa ? "fa" : "en"}`,
+                                  {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    hour12: false,
+                                  }
+                                )}
+                                {/* {new Date(elm.orderDate).toLocaleString(undefined, {
                             year: "numeric",
                             month: "2-digit",
                             day: "2-digit",
@@ -422,39 +454,55 @@ const Profile = () => {
                             second: "2-digit",
                             hour12: false,
                           })} */}
-                          </p>
-                          <div className="flex gap-1">
-                            <p className="text-neutral">
-                              {isFa
-                                ? formatNumberToPersian(
-                                    elm.productName.reduce(
-                                      (total, product) =>
-                                        total + product.quantity,
-                                      0
-                                    )
-                                  )
-                                : elm.productName.reduce(
-                                    (total, product) =>
-                                      total + product.quantity,
-                                    0
-                                  )}
-                            </p>
-                          </div>
+                              </p>
+                              {elm.paymentMethod.method === "cryptoTrans" &&
+                                !elm.paymentMethod.paid &&
+                                elm.paymentMethod.timer !== undefined &&
+                                elm.paymentMethod.timer > 0 && (
+                                  <div className="flex w-10">
+                                    <RadialProgressBar
+                                      type="paymentTimeout"
+                                      textSize="35px"
+                                      maxValue={3600}
+                                      value={elm.paymentMethod.timer ?? 0}
+                                      style={{
+                                        textColor: `${
+                                          isDarkTheme ? "#777" : "#374151"
+                                        }`,
+                                        pathColor: `${
+                                          isDarkTheme ? "#ee8f50" : "#ee8f50"
+                                        }`,
+                                        trailColor: `${
+                                          isDarkTheme ? "#374151" : "#777"
+                                        }`,
+                                      }}
+                                      formatNumberToPersian={
+                                        formatNumberToPersian
+                                      }
+                                      isFa={isFa}
+                                    />
+                                  </div>
+                                )}
 
-                          <p className="text-neutral">
-                            $
-                            {isFa
-                              ? formatNumberToPersian(elm.totalPrice)
-                              : elm.totalPrice}
-                          </p>
-                          {elm.paymentMethod.state ? (
-                            <p className="text-green-700">{t("done")}</p>
-                          ) : (
-                            <p className="text-primary">{t("pending")}</p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
+                              <p className="text-neutral">
+                                $
+                                {isFa
+                                  ? formatNumberToPersian(elm.totalPrice)
+                                  : elm.totalPrice}
+                              </p>
+                              {elm.done ? (
+                                <p className="text-green-700">{t("done")}</p>
+                              ) : elm.paymentMethod.timer !== undefined &&
+                                elm.paymentMethod.timer <= 0 &&
+                                !elm.paymentMethod.paid ? (
+                                <p className="text-error">{t("failed")}</p>
+                              ) : (
+                                <p className="text-primary">{t("pending")}</p>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      ))}
                 </Container>
               </div>
               <div dir={`${isFa ? "rtl" : "ltr"}`} className="mt-[2%]">
@@ -571,6 +619,25 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Modal
+        key={selectedOrder?._id || ""}
+        physical={false} //doest matter
+        tpPrices={tpPrices} //doest matter
+        entryPoint={""} //doest matter
+        alertDesc={""} //doest matter
+        children={<></>} //doest matter
+        price={selectedOrder?.totalPrice || 0}
+        id={selectedOrder?._id || ""}
+        type={"checkout"}
+        showModal={showModal}
+        handleClose={handleCloseModal}
+        img={""}
+        desc={desc}
+        tags={tags}
+        crypto={""} //doest matter
+        title={selectedOrder?._id || ""}
+        order={selectedOrder}
+      />
     </div>
   );
 };

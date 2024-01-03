@@ -151,6 +151,7 @@ const SignalsAdmin: React.FC = () => {
     const { name, value } = event.target;
 
     setFormDataState((prevData: SentForm) => {
+      console.log("name:", name, "value:", value); // Add this line
       if (name === "img") {
         return {
           ...prevData,
@@ -373,7 +374,7 @@ const SignalsAdmin: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BackendAddress()}/signals`, {
+        const response = await fetch(`${BackendAddress()}/signals/all`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -566,10 +567,10 @@ const SignalsAdmin: React.FC = () => {
             className="pl-5 mt-2 w-full rounded-md border border-neutral bg-base-100 focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
             onChange={handleFormChange}
           />
-          <label htmlFor="desc1">Entry Point</label>
+          <label htmlFor="entryPoint">Entry Point</label>
           <input
-            name="ep"
-            id="ep"
+            name="entryPoint"
+            id="entryPoint"
             type="text"
             className="pl-5 mt-2 w-full rounded-md border border-neutral bg-base-100 focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
             onChange={handleFormChange}

@@ -3,18 +3,18 @@ import { Container } from "../..";
 import { Table } from "../../../components/ui";
 import { BackendAddress } from "../../../utils/BackendAddress/BackendAddress";
 import Cookies from "js-cookie";
-import { userState } from "../../../Interfaces/Interfaces";
+import { orders } from "../../../Interfaces/Interfaces";
 
-const UserAdmin = () => {
+const OrderAdmin = () => {
   const accessToken = Cookies.get("accessToken");
-  const [allUsers, setAllUsers] = useState();
-  const [user, setUser] = useState<userState>();
-  const handleUserDelete = async (itemId: string) => {
+  const [allOrders, setAllOrders] = useState<orders[]>();
+  //   const [user, setUser] = useState<userState>();
+  const handleOrderDone = async (itemId: string) => {
     try {
       const response = await fetch(
-        `${BackendAddress()}/user/delete/${itemId}`,
+        `${BackendAddress()}/orders/done/${itemId}`,
         {
-          method: "DELETE",
+          method: "POST",
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -22,40 +22,20 @@ const UserAdmin = () => {
       );
       console.log(`${BackendAddress()}/${itemId}`);
       if (response.ok) {
-        console.log("User deleted:", itemId);
+        console.log("order Done:", itemId);
       } else {
-        console.error("Error deleting User");
+        console.error("Error order Done");
         // Add code to handle the error, such as showing an error message to the user.
       }
     } catch (error) {
-      console.error("Error deleting User:", error);
-      // Add code to handle network-related errors, e.g., network is down.
-    }
-  };
-  const handleBanUser = async (itemId: string) => {
-    try {
-      const response = await fetch(`${BackendAddress()}/user/ban/${itemId}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(`${BackendAddress()}/${itemId}`);
-      if (response.ok) {
-        console.log("User banned:", itemId);
-      } else {
-        console.error("Error banning User");
-        // Add code to handle the error, such as showing an error message to the user.
-      }
-    } catch (error) {
-      console.error("Error banning User:", error);
+      console.error("Error order Done:", error);
       // Add code to handle network-related errors, e.g., network is down.
     }
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BackendAddress()}/user/all`, {
+        const response = await fetch(`${BackendAddress()}/orders/allOrders`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -66,7 +46,7 @@ const UserAdmin = () => {
         }
 
         const data = await response.json();
-        setAllUsers(data);
+        setAllOrders(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.error("Error during fetch request:", error.message);
@@ -85,21 +65,14 @@ const UserAdmin = () => {
       clearInterval(intervalId);
     };
   }, []);
-  const userFromTheChildren = (user: userState) => {
-    console.log("user:", user);
-    setUser(user);
-  };
+  //   const userFromTheChildren = (user: userState) => {
+  //     console.log("user:", user);
+  //     setUser(user);
+  //   };
   return (
     <Container dir="" style="flex justify-end gap-5">
-      <Table type="orders" orders={user?.orders} />
-      <Table
-        type="allUsersData"
-        allUsersData={allUsers}
-        userFromTheChildren={userFromTheChildren}
-        deleteUser={handleUserDelete}
-        banUser={handleBanUser}
-      />
+      <Table type="allOrders" orders={allOrders} orderDone={handleOrderDone} />
     </Container>
   );
 };
-export default UserAdmin;
+export default OrderAdmin;

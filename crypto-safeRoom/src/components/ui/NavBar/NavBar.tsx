@@ -6,7 +6,7 @@ import { setSelectedOption } from "../../../Store/DropDownReducer";
 import { setSelectedValue } from "../../../Store/RadioState";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Notification } from "..";
+// import { Notification } from "..";
 import { RootState } from "../../../Store/Store";
 const Navbar = () => {
   const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
@@ -45,7 +45,7 @@ const Navbar = () => {
 
           {isMobile ? (
             <div ref={dropdownRef} className="flex gap-3 items-center">
-              <Notification />
+              {/* <Notification /> */}
               <ShoppingCart />
               <ProfileDropdown />
               <HamSideBar />
@@ -55,26 +55,26 @@ const Navbar = () => {
               <div className="flex justify-center items-center space-x-4">
                 <Link
                   to="/plans"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+                  className="px-3 py-2 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
                 >
                   {t("plans")}
                 </Link>
                 <Link
                   to="/"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+                  className="px-3 py-2 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
                 >
                   {t("home")}
                 </Link>
                 <Link
                   to="/news"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+                  className="px-3 py-2 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
                 >
                   {t("news")}
                 </Link>
                 <div className="group">
                   <Link
                     onClick={handleDropDownValue}
-                    to="/signals?toggle=true"
+                    to="/signals"
                     className="flex gap-1 items-center px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
                   >
                     {signalIndicator && (
@@ -87,24 +87,24 @@ const Navbar = () => {
                 </div>
                 <Link
                   to="/exam"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+                  className="px-3 py-2 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
                 >
                   {t("exam")}
                 </Link>
                 <Link
                   onClick={handleRadioValue}
                   to="/tutorials?cat=All"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+                  className="px-3 py-2 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
                 >
                   {t("tutorials")}
                 </Link>
                 <Link
                   to="/product"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+                  className="px-3 py-2 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
                 >
                   {t("products")}
                 </Link>
-                <Notification />
+                {/* <Notification /> */}
                 <ShoppingCart />
                 <ProfileDropdown />
               </div>

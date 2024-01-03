@@ -15,19 +15,26 @@ const TagsComponent = ({
   const tagClassName =
     type === "signals" ? "flex flex-col" : "text-xs text-black min-h-[20px]";
   return (
-    <div className={`flex gap-0 p-1 card-actions ${tagClassName}`}>
+    <div
+      dir={`${isFa ? "rtl" : "ltr"}`}
+      className={`flex gap-0 p-1 card-actions ${tagClassName}`}
+    >
       {tags && tags.tag1 && (
         <div className="flex gap-1 items-center">
           <div
             className={`${
               user.plan.type !== "VIP" && vip && !blur
                 ? "opacity-0"
-                : "text-red-700"
+                : "text-[#b71c1c]"
             }`}
           >
             <BsSignStop />
           </div>
-          <div className="text-[14px]">
+          <div
+            className={`text-[14px] ${
+              user.plan.type !== "VIP" && vip && !blur && "opacity-0"
+            }`}
+          >
             {type === "signals"
               ? `${t("stop")}%${
                   isFa ? formatNumberToPersian(Number(tags.tag1)) : tags.tag1
@@ -42,12 +49,16 @@ const TagsComponent = ({
             className={`${
               user.plan.type !== "VIP" && vip && !blur
                 ? "opacity-0"
-                : "text-blue-700"
+                : "text-[#2e60ac]"
             }`}
           >
             <BiLineChartDown />
           </div>
-          <div className="text-[14px]">
+          <div
+            className={`text-[14px] ${
+              user.plan.type !== "VIP" && vip && !blur && "opacity-0"
+            }`}
+          >
             {t("sl")} {tags.tag2}
           </div>
         </div>

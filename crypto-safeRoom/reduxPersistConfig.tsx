@@ -13,6 +13,7 @@ const persistConfig = {
     "signals",
     "lang",
     "signalIndicator",
+    "allSignals",
   ], // An array of reducers to persist (only 'dropDown' in this example)
 };
 

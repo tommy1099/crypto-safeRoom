@@ -12,6 +12,7 @@ const RefreshToken = async (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch: Dispatch<any>
 ) => {
+
   const debouncedNavigate = _.debounce((navigate, path) => navigate(path), 1000);
 
   try {
@@ -41,21 +42,18 @@ const RefreshToken = async (
           location.pathname === "/auth/signup"
         ) {
 
-          await debouncedNavigate(navigate, "/signals?toggle=true");
+          await debouncedNavigate(navigate, "/signals");
         }
       } else {
-        await debouncedNavigate(navigate, "/auth/login");
         console.log("couldnt get the new access token")
       }
     }else{
-      await debouncedNavigate(navigate, "/auth/login");
         dispatch(resetUser());
         dispatch(toggleisLoggedinFalse());
         Cookies.remove("refreshToken");
         Cookies.remove("accessToken");
     }
   } catch (error) {
-    console.log("refresher fucked up!")
     console.error("Token refresh failed:", error);
 
     // if (axios.isAxiosError(error) && error.response) {

@@ -1,8 +1,9 @@
 import { TFunction } from "i18next";
 import { PropsWithChildren } from "react";
-type ItemType = "signals" | "news" | "plans" | "products" | "tutorials";
+type ItemType = "signals" | "news" | "plans" | "products" | "tutorials" | "checkout" | "userData" | "plan" | "login";
 export interface CardProps extends PropsWithChildren {
-  handleAddToCart?: () => void;
+  onChildValue?: (value: string)=> void;
+    handleAddToCart?: () => void;
   shouldFormatNumbers?: boolean;
   t?: TFunction<"translation", undefined>;
   formatNumberToPersian?(input: number | string): string;
@@ -11,7 +12,10 @@ export interface CardProps extends PropsWithChildren {
   handleImageClick?: () => void;
     showModal?: boolean;
   handleClose: () => void;
-    key: string;
+    order?: orders;
+    orders?: orders[];
+    user?: userState;
+    key?: string;
     type: ItemType;
     state?: boolean;
     blur?: boolean;
@@ -45,7 +49,7 @@ export interface CardProps extends PropsWithChildren {
       tp2Price: string;
       tp3Price: string;
   };
-    physical: boolean
+    physical?: boolean
   }
   export interface DescProps {
     vip?:boolean,
@@ -89,7 +93,7 @@ export interface CardProps extends PropsWithChildren {
       
       
   }
-  type orders = {
+  export type orders = {
     userInfo: {
       username: string;
       shippingAddress: {
@@ -103,15 +107,18 @@ export interface CardProps extends PropsWithChildren {
     };
     orderDate: Date;
     paymentMethod: {
-      state: boolean;
+      paid: boolean;
       method: string;
+      timer?: number;
     };
     productName: [
       {
-        productId: string;
-        productName: string;
-        quantity: number;
-        price: number;
+        id: string
+      title: string
+      price: number
+      physical: number
+      quantity: number
+      img?: string,
       }
     ];
     totalPrice: number;
@@ -119,6 +126,7 @@ export interface CardProps extends PropsWithChildren {
     done: boolean;
     _id: string;
   };
+
   export interface userState {
     pic?: string;
     email: {email: string; confirm: boolean;};
@@ -130,18 +138,132 @@ export interface CardProps extends PropsWithChildren {
     };
     firstname?: string;
     lastname?: string;
-    refcode: string;
+    refcode: {userCode: string; enteredCodes: string[]};
     phone?: string;
     orders: orders[];
+    role: string;
+    ban: boolean;
   }
+
   export interface RadialProgressProps extends PropsWithChildren {
     value: number;
     style: { textColor: string; pathColor: string; trailColor: string };
     formatNumberToPersian(input: number | string): string,
     isFa: boolean,
+    maxValue: number,
+    textSize: string,
+    type: string
   }
   export interface HeroProps {
     section1: string;
     section2: string;
     isFa: boolean;
   }
+
+  export interface ISignalsProps {
+    id: string;
+    img: string;
+    crypto: string;
+    entryPoint: string;
+    desc: {
+      desc1: string;
+      desc2: string;
+      desc3: string;
+    };
+    alertDesc: string;
+    tags: {
+      tag1: string;
+      tag2: string;
+    };
+    vip: boolean;
+    blur: boolean;
+    state: boolean;
+    tp: {
+      tp1: boolean;
+      tp2: boolean;
+      tp3: boolean;
+    };
+    tpPrices: {
+      tp1Price: string;
+      tp2Price: string;
+      tp3Price: string;
+    };
+  }
+  //============order
+
+// interface Address {
+//   firstname: string;
+//   lastname: string;
+//   country: string;
+//   city: string;
+//   town: string;
+//   zipCode: string;
+//   address: string;
+//   phone: string;
+// }
+
+// interface User {
+//   username: string;
+//   userID: string;
+//   shippingAddress: Address;
+// }
+
+
+// interface Product {
+//   id: string;
+//   title: string;
+//   price: number;
+//   physical: number;
+//   quantity: number;
+//   img?: string;
+// }
+
+// export interface Order extends Document {
+//   userInfo: User;
+//   orderDate: Date;
+//   paymentMethod: {
+//     state: boolean;
+//     method: string;
+//   };
+//   productName: Product[];
+//   totalPrice: number;
+//   userNote?: string;
+//   done: boolean;
+// }
+  //============order
+
+ export interface ModalFooterProps {
+    type: string;
+    tpPrices?: {
+      tp1Price: string;
+      tp2Price: string;
+      tp3Price: string;
+    };
+    tags?: {
+      tag1: string;
+      tag2?: string;
+    };
+    price?: number;
+    handleAddToCart?: () => void;
+    handleSubmitPaid?: () => void;
+    handleSubmitPlan?: () => void;
+    order?: orders;
+    orders?: orders[];
+  }
+
+  export interface IloginData {
+    email: string;
+    password: string;
+  }
+  export interface IProfileDropDownProps {
+    isModalOpen: boolean;
+  }
+  export type NewsItem = {
+    id: string;
+    //   key: string;
+    img: string;
+    title: string;
+    desc: {
+      desc1: string;
+    };
+  };

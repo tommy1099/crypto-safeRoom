@@ -7,7 +7,7 @@ const initialState: userState = {
     email: "",
     confirm: false,
   },
-  username: "?",
+  username: "₿",
   plan: {
     remaining: 0,
     maxDays: 0,
@@ -15,9 +15,14 @@ const initialState: userState = {
   },
   firstname: "",
   lastname: "",
-  refcode: "",
+  refcode: {
+    userCode: "",
+    enteredCodes: [],
+  },
   phone: "",
   orders: [],
+  role: "",
+  ban: false,
 };
 
 const userProfile = createSlice({

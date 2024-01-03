@@ -11,6 +11,7 @@ import {
   Profile,
   Stats,
   Plans,
+  Home,
 } from "../pages";
 import { AdminApp, ProductApp, AuthApp } from ".";
 import { Exam } from "../components/forms";
@@ -46,12 +47,10 @@ function App() {
 
         <Route
           path="/auth/*"
-          element={
-            isLoggedin ? <Navigate to="/signals?toggle=true" /> : <AuthApp />
-          }
+          element={isLoggedin ? <Navigate to="/signals" /> : <AuthApp />}
         />
 
-        <Route path="/" element={<Navigate to="/signals?toggle=true" />} />
+        <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
 

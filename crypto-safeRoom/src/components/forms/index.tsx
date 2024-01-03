@@ -14,7 +14,9 @@ import ScrollToTopIcon from "./ScrollToTopIcon/ScrollToTopIcon";
 import Avatar from "./Avatar/Avatar";
 import ErrorAlert from "./Alert/ErrorAlert/ErrorAlert";
 import HamSideBar from "./HamSideBar/HamSideBar";
+import HomeCarousel from "./HomeCarousel/HomeCarousel";
 export {
+  HomeCarousel,
   HamSideBar,
   ErrorAlert,
   Avatar,

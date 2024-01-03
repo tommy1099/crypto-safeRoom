@@ -18,7 +18,6 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({
   children,
 }) => {
   const handleCloseModal = () => {
-    console.log("clicked!");
     handleClose();
   };
   return (
@@ -40,15 +39,26 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({
             <div className="text-xl">{children}</div>
           </div>
         )}
-        {type !== "signals" && <p className="text-3xl text-neutral">{title}</p>}
+        {(type !== "signals" && type == "userData") ||
+          (type !== "signals" && type === "plan" && (
+            <p className="pl-4 text-2xl text-neutral">User: {title}</p>
+          ))}
+        {type !== "signals" &&
+          type !== "userData" &&
+          type !== "plan" &&
+          type !== "login" && (
+            <p className="pl-4 text-2xl text-neutral">Order: {title}</p>
+          )}
       </h2>
-      <div
-        onClick={handleCloseModal}
-        id="cross"
-        className="flex w-[40px] mt-1 h-[40px] text-2xl p-2 bg-primary text-secondary rounded-full cursor-pointer"
-      >
-        <RxCross2 />
-      </div>
+      {type !== "login" && (
+        <div
+          onClick={handleCloseModal}
+          id="cross"
+          className="flex w-[40px] mt-1 h-[40px] text-2xl p-2 bg-primary text-secondary rounded-full cursor-pointer"
+        >
+          <RxCross2 />
+        </div>
+      )}
     </div>
   );
 };

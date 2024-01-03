@@ -32,23 +32,23 @@ const HamSideBar = () => {
           dir={`${isFa ? "rtl" : "ltr"}`}
           className="flex flex-col gap-5 justify-center items-center space-x-4 min-h-full bg-base-100"
         >
-          <span className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"></span>
+          <span className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"></span>
           <Link
             to="/"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("home")}
           </Link>
           <Link
             to="/news"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("news")}
           </Link>
           <div className="group">
             <Link
-              to="/signals?toggle=true"
-              className="flex gap-1 items-center px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+              to="/signals"
+              className="flex gap-1 items-center px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
             >
               {signalIndicator && (
                 <div className="relative badge badge-primary badge-xs group-hover:bg-white">
@@ -60,31 +60,31 @@ const HamSideBar = () => {
           </div>
           <Link
             to="/exam"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("exam")}
           </Link>
           <Link
             to="/tutorials?cat=All"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("tutorials")}
           </Link>
           <Link
             to="/product"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("products")}
           </Link>
           <Link
             to="/stats"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("stats")}
           </Link>
           <Link
             to="/plans"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all hover:bg-primary hover:text-secondary"
+            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("plans")}
           </Link>

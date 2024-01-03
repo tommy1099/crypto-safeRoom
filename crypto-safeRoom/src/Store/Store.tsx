@@ -30,6 +30,8 @@ import setUser from "./UserReducer";
 import SignalsReducer from "./SignalsReducer";
 import LanguageReducer from "./LanguageReducer";
 import signalIndicator from "./signalIndicator";
+import AllSignalsReducer from "./AlltheSignals";
+import IsModalOpen from "./IsModalOpen";
 const rootReducer = combineReducers({
   SignalDivs: divs,
   toggleReducer: Filtertoggle,
@@ -47,6 +49,8 @@ const rootReducer = combineReducers({
   signals: SignalsReducer,
   lang: LanguageReducer,
   signalIndicator: signalIndicator,
+  allSignals: AllSignalsReducer,
+  isModalOpen: IsModalOpen,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

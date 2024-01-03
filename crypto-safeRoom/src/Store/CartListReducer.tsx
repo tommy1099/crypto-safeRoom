@@ -66,13 +66,13 @@ const shoppingCartListSlice = createSlice({
         state.list = state.list.filter((item) => item.id !== action.payload.id);
       }
     },
-    reset: (state) => {
+    resetShippingCart: (state) => {
       state.list = [];
     },
   },
 });
 
-export const { addItem, removeItem, decreaseOne, reset } =
+export const { addItem, removeItem, decreaseOne, resetShippingCart } =
   shoppingCartListSlice.actions;
 
 export default shoppingCartListSlice.reducer;

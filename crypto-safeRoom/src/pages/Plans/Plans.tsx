@@ -58,6 +58,7 @@ export const Plans = () => {
           <div className="w-full carousel">
             <div id="item1" className="w-full carousel-item">
               <Card
+                handleClose={() => {}}
                 id="1"
                 inStock={true}
                 key="1"
@@ -74,6 +75,7 @@ export const Plans = () => {
             </div>
             <div id="item2" className="w-full carousel-item">
               <Card
+                handleClose={() => {}}
                 id="2"
                 inStock={true}
                 key="2"
@@ -90,6 +92,7 @@ export const Plans = () => {
             </div>
             <div id="item3" className="w-full carousel-item">
               <Card
+                handleClose={() => {}}
                 id="3"
                 inStock={true}
                 key="3"
@@ -106,6 +109,7 @@ export const Plans = () => {
             </div>
             <div id="item4" className="w-full carousel-item">
               <Card
+                handleClose={() => {}}
                 id="4"
                 inStock={true}
                 key="4"
@@ -143,6 +147,7 @@ export const Plans = () => {
         style=" mb-[10%]  mx-[5%] hidden sm:grid gap-10 grid-cols-1 sm:grid-cols-2  xl:grid-cols-4"
       >
         <Card
+          handleClose={() => {}}
           id="1"
           inStock={true}
           key="1"
@@ -157,6 +162,7 @@ export const Plans = () => {
           physical={false}
         />
         <Card
+          handleClose={() => {}}
           id="2"
           inStock={true}
           key="2"
@@ -171,6 +177,7 @@ export const Plans = () => {
           physical={false}
         />
         <Card
+          handleClose={() => {}}
           id="3"
           inStock={true}
           key="3"
@@ -185,6 +192,7 @@ export const Plans = () => {
           physical={false}
         />
         <Card
+          handleClose={() => {}}
           id="4"
           inStock={true}
           key="4"

@@ -1,12 +1,16 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { RootState } from "../../Store/Store";
 import { removeItem, decreaseOne, addItem } from "../../Store/CartListReducer";
-import { priceCalculator, reset } from "../../Store/priceReducer";
-import { Button, Input, NavBar, Footer } from "../../components/ui";
+import {
+  discountPriceCalculator,
+  priceCalculator,
+  reset,
+} from "../../Store/priceReducer";
+import { Button, NavBar, Footer } from "../../components/ui";
 import { Container } from "..";
 import { ScrollToTopIcon } from "../../components/forms";
 import pic from "../../assets/img/bearandbull.png";
@@ -19,34 +23,85 @@ import TipaxPic from "../../assets/img/tipax.jpeg";
 import EmptyCartPic from "../../assets/img/empty-cart.png";
 import { useTranslation } from "react-i18next";
 import { formatNumberToPersian } from "../../utils/NumberToFarsi/NumberToFarsi";
-
+import { BackendAddress } from "../../utils/BackendAddress/BackendAddress";
+import { resetShippingCart } from "../../Store/CartListReducer";
+import Cookies from "js-cookie";
+import Modal from "../../components/forms/Modal/Modal";
+import { orders } from "../../Interfaces/Interfaces";
 const Checkout = () => {
   const myRef = useRef<HTMLInputElement>(null);
-  const price = useSelector((state: RootState) => state.Price.price);
+  const { price, discount } = useSelector((state: RootState) => state.Price);
   const [selectedPayment, setSelectedPayment] = useState("");
   const [selectedShipping, setSelectedShipping] = useState("");
-  const [shippingMethod, setShippingMethod] = useState(0);
   const [count, setCount] = useState(0);
   const { t } = useTranslation();
   const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
-
+  const accessToken = Cookies.get("accessToken");
+  const abortController = new AbortController();
+  const { signal } = abortController;
   const isFa = useSelector((state: RootState) => state.lang.isFa);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartList.list);
-
+  const userData = useSelector((state: RootState) => state.user);
   const handleSelectPayment = (value: string) => setSelectedPayment(value);
   const [includesPhysical, setIncludesPhysical] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [newOrder, setNewOrder] = useState<orders>();
+  const [shippingPrice, setShippingPrice] = useState(0);
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   const handleSelectShipping = (value: string) => {
     setSelectedShipping(value);
-    setShippingMethod(value === "tipax" ? 15 : 10);
+
+    setShippingPrice(value === "tipax" ? 15 : 10);
   };
+  const desc = {
+    desc1: "alksdjlkajsdajwdlkasjdasidoqw",
+    desc2: "aisudhasdasd54asdasdaiusdhasd",
+    desc3: "asdhjahsdjahsdiqwuhdpwdhhambn",
+  };
+  const tags = {
+    tag1: "you can see this page again by clicking on the order in your profile",
+    tag2: "after your time ran out your order will be dismissed",
+  };
+  const tpPrices = {
+    tp1Price: "",
+    tp2Price: "",
+    tp3Price: "",
+  };
+  const [formDataState, setFormDataState] = useState({
+    firstname: "",
+    lastname: "",
+    country: "ایران/Iran",
+    city: "",
+    town: "",
+    zipCode: "",
+    address: "",
+    phone: "",
+    username: userData.username,
+    // userId: "",
+    // orderDate: null,
+    // state: false,
+    method: "",
+    products: "",
+    totalPrice: "",
+    userNote: "",
+  });
 
   useEffect(() => {
     dispatch(reset());
+    console.log("price:", price);
+    console.log("discount:", discount);
+    console.log("shipping:", shippingPrice);
+    dispatch(discountPriceCalculator((shippingPrice + price) * (10 / 100)));
+
     cartItems.forEach((item) =>
       dispatch(priceCalculator(item.quantity * item.price))
     );
-  }, [dispatch, cartItems, price]);
+
+    // Move setPriceForForm here to ensure it runs after other updates
+  }, [cartItems, discount, dispatch, price, shippingPrice]);
 
   const handleRemoveItem = (
     id: string,
@@ -68,6 +123,51 @@ const Checkout = () => {
     dispatch(decreaseOne({ id, title, img, quantity, price, physical }));
   };
 
+  const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (cartItems.length <= 0) return;
+
+    try {
+      const formData = new FormData();
+      const productsJson = formDataState.products;
+      formData.append("method", selectedPayment);
+      formData.append("selectedShipping", selectedShipping);
+      formData.append("firstname", formDataState.firstname);
+      formData.append("lastname", formDataState.lastname);
+      formData.append("country", formDataState.country);
+      formData.append("city", formDataState.city);
+      formData.append("zipCode", formDataState.zipCode);
+      formData.append("address", formDataState.address);
+      formData.append("phone", formDataState.phone);
+      formData.append("username", formDataState.username);
+      formData.append("products", productsJson);
+      formData.append("totalPrice", formDataState.totalPrice);
+      formData.append("userNote", formDataState.userNote);
+      console.log("FormData:", formData);
+      const response = await fetch(`${BackendAddress()}/orders/new`, {
+        signal,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData, //sending the form data to the backend
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("New order created:", data);
+        setNewOrder(data.order);
+        dispatch(resetShippingCart());
+        setShowModal(true);
+      } else {
+        console.error("Error creating new order");
+      }
+    } catch (error) {
+      console.error("Error creating new order:", error);
+    }
+
+    abortController.abort();
+  };
   const handleAddOneItem = (
     id: string,
     title: string,
@@ -77,11 +177,26 @@ const Checkout = () => {
   ) => {
     dispatch(addItem({ id, title, img, quantity, price, physical }));
   };
+  //if cart includes physical item enable shipping methods
   useEffect(() => {
     const includesPhysical = cartItems.some((item) => item.physical === true);
     setIncludesPhysical(includesPhysical);
   }, [cartItems]);
-
+  const handleOnChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormDataState((prevData) => {
+      return {
+        ...prevData,
+        products: JSON.stringify(cartItems),
+        totalPrice: String(price - discount + shippingPrice),
+        [name]: value,
+      };
+    });
+  };
   return (
     <>
       <NavBar />
@@ -183,13 +298,13 @@ const Checkout = () => {
                 >
                   <FaArrowsRotate />
                 </div>
-                <Input
+                <input
                   ref={myRef}
                   type="text"
-                  style={`border ${
+                  className={`border ${
                     isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
                   } p-2 rounded-md w-[130px] h-8 focus:border-primary border-neutral focus:border-2 focus:outline-none placeholder:text-neutral text-neutral`}
-                  placeHolder={t("code")}
+                  placeholder={t("code")}
                   required={false}
                 />
               </div>
@@ -203,10 +318,7 @@ const Checkout = () => {
               <div className="flex justify-between items-center">
                 <p>{t("shipping")}</p>
                 <p>
-                  $
-                  {isFa
-                    ? formatNumberToPersian(shippingMethod)
-                    : shippingMethod}
+                  ${isFa ? formatNumberToPersian(shippingPrice) : shippingPrice}
                 </p>
               </div>
             )}
@@ -217,16 +329,16 @@ const Checkout = () => {
                 {myRef.current && myRef.current.value === "off"
                   ? isFa
                     ? formatNumberToPersian(
-                        shippingMethod +
+                        shippingPrice +
                           price -
-                          (shippingMethod + price) * (10 / 100)
+                          (shippingPrice + price) * (10 / 100)
                       )
-                    : shippingMethod +
+                    : shippingPrice +
                       price -
-                      (shippingMethod + price) * (10 / 100)
+                      (shippingPrice + price) * (10 / 100)
                   : isFa
-                  ? formatNumberToPersian(shippingMethod + price)
-                  : shippingMethod + price}
+                  ? formatNumberToPersian(shippingPrice + price)
+                  : shippingPrice + price}
               </p>
             </div>
           </div>
@@ -239,7 +351,11 @@ const Checkout = () => {
             <p className="text-3xl font-bold">{t("billingInfo")}</p>
             <p className="mt-5">{t("underBillingInfo")}</p>
           </div>
-          <form action="" className="flex flex-col mt-10 w-full">
+          <form
+            onSubmit={handleCheckout}
+            action=""
+            className="flex flex-col mt-10 w-full"
+          >
             <div className="flex flex-col md:flex-row gap-[20px] md:gap-[50px] mt-5">
               <div className="flex gap-[20px]">
                 <label
@@ -250,11 +366,11 @@ const Checkout = () => {
                       : "border-2 border-neutral"
                   }`}
                 >
-                  <Input
+                  <input
                     id="cryptoTrans"
                     type="radio"
                     name="trans"
-                    style="hidden"
+                    className="hidden"
                     defaultChecked={selectedPayment === "cryptoTrans"}
                     onChange={() => handleSelectPayment("cryptoTrans")}
                     required
@@ -274,11 +390,11 @@ const Checkout = () => {
                       : "border-2 border-neutral"
                   }`}
                 >
-                  <Input
+                  <input
                     id="BMTrans"
                     type="radio"
                     name="trans"
-                    style="hidden"
+                    className="hidden"
                     defaultChecked={selectedPayment === "BMTrans"}
                     onChange={() => handleSelectPayment("BMTrans")}
                     required
@@ -300,11 +416,11 @@ const Checkout = () => {
                       : "border-2 border-neutral"
                   }`}
                 >
-                  <Input
+                  <input
                     id="zarinPalTrans"
                     type="radio"
                     name="trans"
-                    style="hidden"
+                    className="hidden"
                     defaultChecked={selectedPayment === "zarinPalTrans"}
                     onChange={() => handleSelectPayment("zarinPalTrans")}
                     required
@@ -324,11 +440,11 @@ const Checkout = () => {
                       : "border-2 border-neutral"
                   }`}
                 >
-                  <Input
+                  <input
                     id="paypalTrans"
                     type="radio"
                     name="trans"
-                    style="hidden"
+                    className="hidden"
                     defaultChecked={selectedPayment === "paypalTrans"}
                     onChange={() => handleSelectPayment("paypalTrans")}
                     required
@@ -354,27 +470,31 @@ const Checkout = () => {
                     </p>
                     <div className="flex gap-5">
                       <div className="flex flex-col">
-                        <label className="mb-2 text-sm" htmlFor="lastName">
+                        <label className="mb-2 text-sm" htmlFor="lastname">
                           {t("lastname")}
                         </label>
-                        <Input
-                          id="lastName"
-                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                        <input
+                          id="lastname"
+                          name="lastname"
+                          className="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
-                          placeHolder={t("lastname")}
+                          placeholder={t("lastname")}
                           required
+                          onChange={handleOnChange}
                         />
                       </div>
                       <div className="flex flex-col">
-                        <label className="mb-2 text-sm" htmlFor="firstName">
+                        <label className="mb-2 text-sm" htmlFor="firstname">
                           {t("firstname")}
                         </label>
-                        <Input
-                          id="firstName"
-                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                        <input
+                          id="firstname"
+                          name="firstname"
+                          className="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
-                          placeHolder={t("firstname")}
+                          placeholder={t("firstname")}
                           required
+                          onChange={handleOnChange}
                         />
                       </div>
                     </div>
@@ -382,12 +502,14 @@ const Checkout = () => {
                       <label className="mb-2 text-sm" htmlFor="address">
                         {t("address")}
                       </label>
-                      <Input
+                      <input
                         id="address"
-                        style="border pl-2 w-[350px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                        name="address"
+                        className="border pl-2 w-[350px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                         type="text"
-                        placeHolder={t("address")}
+                        placeholder={t("address")}
                         required
+                        onChange={handleOnChange}
                       />
                     </div>
                     <div className="flex gap-5">
@@ -395,24 +517,28 @@ const Checkout = () => {
                         <label className="mb-2 text-sm" htmlFor="city">
                           {t("city")}
                         </label>
-                        <Input
+                        <input
                           id="city"
-                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                          name="city"
+                          className="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
-                          placeHolder={t("city")}
+                          placeholder={t("city")}
                           required
+                          onChange={handleOnChange}
                         />
                       </div>
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="town">
                           {t("town")}
                         </label>
-                        <Input
+                        <input
                           id="town"
-                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                          name="town"
+                          className="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
-                          placeHolder={t("town")}
+                          placeholder={t("town")}
                           required
+                          onChange={handleOnChange}
                         />
                       </div>
                     </div>
@@ -421,24 +547,28 @@ const Checkout = () => {
                         <label className="mb-2 text-sm" htmlFor="zipCode">
                           {t("zipcode")}
                         </label>
-                        <Input
+                        <input
                           id="zipCode"
-                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                          name="zipCode"
+                          className="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
-                          placeHolder={t("zipcode")}
+                          placeholder={t("zipcode")}
                           required
+                          onChange={handleOnChange}
                         />
                       </div>
                       <div className="flex flex-col">
                         <label className="mb-2 text-sm" htmlFor="phone">
                           {t("phone")}
                         </label>
-                        <Input
+                        <input
                           id="phone"
-                          style="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                          name="phone"
+                          className="border pl-2 w-[165px] h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
                           type="text"
-                          placeHolder={t("phone")}
+                          placeholder={t("phone")}
                           required
+                          onChange={handleOnChange}
                         />
                       </div>
                     </div>
@@ -463,11 +593,11 @@ const Checkout = () => {
                                     : "border-2 border-neutral"
                                 }`}
                               >
-                                <Input
+                                <input
                                   id="pishtaz"
                                   type="radio"
                                   name="shipping"
-                                  style="hidden"
+                                  className="hidden"
                                   defaultChecked={
                                     selectedShipping === "pishtaz"
                                   }
@@ -495,11 +625,11 @@ const Checkout = () => {
                                     : "border-2 border-neutral"
                                 }`}
                               >
-                                <Input
+                                <input
                                   id="tipax"
                                   type="radio"
                                   name="shipping"
-                                  style="hidden"
+                                  className="hidden"
                                   defaultChecked={selectedShipping === "tipax"}
                                   onChange={() => handleSelectShipping("tipax")}
                                   required={false}
@@ -517,24 +647,25 @@ const Checkout = () => {
                       )}
                     </div>
                     <div dir={isFa ? "rtl" : "ltr"} className="relative mt-5">
-                      <label htmlFor="textArea">{t("note")}</label>
+                      <label htmlFor="userNote">{t("note")}</label>
                       <textarea
                         className="pl-2 mt-2 rounded-md border bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                        name="text"
-                        id="textArea"
+                        name="userNote"
+                        id="userNote"
                         cols={30}
                         rows={5}
                         placeholder={t("note")}
+                        onChange={handleOnChange}
                       ></textarea>
                     </div>
                   </Container>
                 </div>
-                <Button
-                  onClick={() => {}}
-                  style="p-2 text-sm rounded-md bg-primary text-secondary hover:opacity-[0.9]"
+                <button
+                  type="submit"
+                  className="p-2 text-sm rounded-md bg-primary text-secondary hover:opacity-[0.9]"
                 >
                   {t("checkout")}
-                </Button>
+                </button>
               </div>
             </div>
           </form>
@@ -546,6 +677,24 @@ const Checkout = () => {
       <div className="fixed left-0 top-[90%] m-5 ">
         <ScrollToTopIcon />
       </div>
+      <Modal
+        key=""
+        physical={false} //doest matter
+        tpPrices={tpPrices} //doest matter
+        entryPoint={""} //doest matter
+        alertDesc={""} //doest matter
+        children={<></>} //doest matter
+        price={newOrder?.totalPrice}
+        id={newOrder?._id || ""}
+        type={"checkout"}
+        showModal={showModal}
+        handleClose={handleCloseModal}
+        img={""}
+        desc={desc}
+        tags={tags}
+        crypto={""} //doest matter
+        title={newOrder?._id}
+      />
     </>
   );
 };

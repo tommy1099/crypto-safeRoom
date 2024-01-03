@@ -11,12 +11,17 @@ import { useTranslation } from "react-i18next";
 import { toggleLangToEn, toggleLangToFa } from "../../../Store/LanguageReducer";
 import Cookies from "js-cookie";
 import { resetUser } from "../../../Store/UserReducer";
+import { resetAllSignals } from "../../../Store/AlltheSignals";
+import { resetSignals } from "../../../Store/SignalsReducer";
 
 const ProfileDropdown = () => {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const isLoggedin = useSelector(
     (state: RootState) => state.isLoggedin.isLoggedin
+  );
+  const isModalOpen = useSelector(
+    (state: RootState) => state.isModalOpen.isModalopen
   );
   const isDark = useSelector((state: RootState) => state.themeToggle.Dark);
   const isFa = useSelector((state: RootState) => state.lang.isFa);
@@ -120,10 +125,12 @@ const ProfileDropdown = () => {
                   dispatch(toggleisLoggedinFalse());
                   dispatch(toggleLangToEn());
                   dispatch(resetUser());
+                  dispatch(resetAllSignals());
+                  dispatch(resetSignals());
                 }}
                 className="block px-4 py-2 text-sm hover:text-secondary hover:bg-primary"
                 role="menuitem"
-                href="/signals?toggle=true"
+                href="#"
               >
                 {t("logout")}
               </a>

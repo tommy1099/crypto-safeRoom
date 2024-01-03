@@ -13,7 +13,8 @@ const ErrorAlert = ({ close, type }: Props) => {
   const navigate = useNavigate();
   const handleInnerLinkClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate("/profile");
+    if (window.location.pathname === "/plans") navigate("/profile");
+    else if (window.location.pathname === "/signals") navigate("/plans");
   };
 
   return (

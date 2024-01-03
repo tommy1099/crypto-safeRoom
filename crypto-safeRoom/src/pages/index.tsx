@@ -25,7 +25,9 @@ import SignalsAdmin from "./Admin/SignalsAdmin.tsx/SignalsAdmin";
 import NewsAdmin from "./Admin/NewsAdmin/NewsAdmin";
 import Stats from "./Stats/Stats";
 import { Plans } from "./Plans/Plans";
+import Home from "./Home/Home";
 export {
+  Home,
   Plans,
   Stats,
   NewsAdmin,

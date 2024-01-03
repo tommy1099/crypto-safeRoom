@@ -20,12 +20,12 @@
     "profile": "Profile",
     "light": "Light",
     "theme": "Theme",
-    "lang": "Language",
+    "lang": "Lang",
     "fa": "Fa",
     "en": "En",
     "logout": "Logout",
     "login": "Login",
-
+    "logginIn": "Loggin In",
     "shoppingCart": "Shopping Cart",
     "checkout": "Checkout",
     
@@ -91,6 +91,9 @@
     "newPassPlaceHolder": "new password",
     "newEmail": "New Email",
     "newEmailPlaceHolder": "new email",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
     "confirmPass": "Confirm Password",
     "confirmPassPlaceHolder": "confirm password",
     "firstname": "First Name",
@@ -149,6 +152,31 @@
     "alertDesc": "Descriptions",
     "tp1Price": "TP1 Price",
     "tp2Price": "TP2 Price",
-    "tp3Price": "TP3 Price"
+    "tp3Price": "TP3 Price",
+
+
+    "loginMessage": "Your Security is Our Priority at Crypto Safe Rom, we understand the importance of keeping your information safe and secure. Rest assured, your login credentials are in good hands.",
+    "loginNow": "Login Now!",
+    "signupNow":"Signup Now!",
+    "signupMessage" : "Join our community for exclusive insights, precision signals, real-time news, innovative products, and expert-led courses. Don't miss out on the future of finance. Sign up today to embark on your crypto journey with Crypto Safe Room!",
+    "forgotPass": "Forgot your Password?",
+    "donthaveAcc": "Don't have an account?",
+    "signUp": "Signup",
+    "signingUp": "Signing up",
+    "reset": "Rest",
+    "resetting": "Resetting",
+    "resetNow": "Reset Your Password Now!",
+    "resetMessage": "Resetting your password is a simple and secure process. Follow the instructions sent to your registered email address to regain access to your account and ensure the continued security of your information.",
+    "welcomeMessage1": "Welcome to the Oficial Crypto Safe Room website",
+    "welcomeMessage2": "Precision signals. Real-time news. Innovative products. Mastery courses. Your passport to the crypto universe awaits! Join the excitement at Crypto Safe Room!",
+    "getStarted": "Get Started",
+
+
+    "haveAnAcc": "Have an account already?",
+
+    "homeSignalsMessage": " jump on the deck and make profit with us with the latest Signals",
+    "homeSignalsButton": "Go to Signals",
+    "homeNewsMessage": "Find out about the latest news and wonders in the world of crypto",
+    "homeNewsButton": "Go to News"
 
 }

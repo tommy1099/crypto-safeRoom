@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../Store/Store";
 import { EditModeToggle } from "../../../Store/EditModeReducer";
 import { BackendAddress } from "../../../utils/BackendAddress/BackendAddress";
+import { Container } from "../..";
 // import { AiOutlineSend } from "react-icons/ai";
 
 type SentForm = {
@@ -28,6 +29,7 @@ type recievedNews = {
 };
 const NewsAdmin = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const isFa = useSelector((state: RootState) => state.lang.isFa);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   // const [showSendImage, setShowSendImage] = useState(false);
@@ -39,7 +41,6 @@ const NewsAdmin = () => {
       desc1: "",
     },
   });
-  const dispatch = useDispatch();
   const inEdit = useSelector((state: RootState) => state.editMode.Edit);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -57,7 +58,7 @@ const NewsAdmin = () => {
 
       console.log("formData:", formData);
       const response = await fetch(
-        `${BackendAddress()}/admin/dashboard/news/create`,
+        `${BackendAddress()}/news/admin/dashboard/news/create`,
         {
           method: "POST",
           body: formData, //sending the form data to the backend
@@ -165,7 +166,7 @@ const NewsAdmin = () => {
   const handleDeleteButton = async (itemId: string) => {
     try {
       const response = await fetch(
-        `${BackendAddress()}/admin/dashboard/news/delete/${itemId}`,
+        `${BackendAddress()}/news/admin/dashboard/news/delete/${itemId}`,
         {
           method: "DELETE",
           headers: {
@@ -220,7 +221,7 @@ const NewsAdmin = () => {
   // };
 
   useEffect(() => {
-    fetch(`${BackendAddress()}/admin/dashboard/news`)
+    fetch(`${BackendAddress()}/news`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -242,8 +243,120 @@ const NewsAdmin = () => {
   }, [setNewNewsList]);
 
   return (
-    <>
-      {!isLoaded && <Loading />}
+    // <>
+    //   {!isLoaded && <Loading />}
+    //   {newNewsList.map((component) => (
+    //     <Container
+    //       key={component._id}
+    //       dir={`${isFa ? "rtl" : "ltr"}`}
+    //       style="grid grid-cols-4 mx-[20%]"
+    //     >
+    //       {inEdit && (
+    //         <div className="flex gap-3 justify-around p-2 mb-1 bg-gray-200 rounded-md">
+    //           <div
+    //             onClick={() => {
+    //               handleDeleteButton(component._id);
+    //               // console.log(component._id);
+    //             }}
+    //             className="text-2xl text-red-500 cursor-pointer hover:text-red-400 active:text-red-300"
+    //           >
+    //             <BsFillTrashFill />
+    //           </div>
+
+    //           {/* <div className="flex">
+    //               <label
+    //                 onClick={() => {
+    //                   setShowSendImage(true);
+    //                 }}
+    //                 className="mr-5 text-2xl cursor-pointer"
+    //                 htmlFor="img"
+    //               >
+    //                 <FcEditImage />
+    //               </label>
+    //               <input
+    //                 name="img"
+    //                 accept="image/*"
+    //                 id="img"
+    //                 type="file"
+    //                 className="hidden"
+    //                 onChange={handleImageChange}
+    //               />
+
+    //               {showSendImage && (
+    //                 <div
+    //                   onClick={() => {
+    //                     handleEditButton(component._id);
+    //                   }}
+    //                   className="text-2xl text-green-500 hover:text-green-400 active:text-green-300"
+    //                 >
+    //                   <AiOutlineSend />
+    //                 </div>
+    //               )}
+    //             </div> */}
+    //         </div>
+    //       )}
+    //       <Card
+    //         img={component.img}
+    //         type="news"
+    //         id={component._id}
+    //         title={component.title}
+    //         desc={component.desc}
+    //         physical={false}
+    //         key=""
+    //         handleClose={() => {}}
+    //       />
+    //       <span className="mt-10" />
+    //     </Container>
+    //   ))}
+    //   <ExpandedSidePanel>
+    //     <form className="flex flex-col gap-2 w-[230px] text-[#777] justify-between">
+    //       <label htmlFor="img">Choose your image:</label>
+    //       <input
+    //         name="img"
+    //         accept="image/*"
+    //         id="img"
+    //         type="file"
+    //         className=""
+    //         onChange={handleImageChange}
+    //       />
+    //       <label htmlFor="title">title:</label>
+    //       <input
+    //         name="title"
+    //         id="title"
+    //         type="text"
+    //         className="border"
+    //         onChange={handleFormChange}
+    //       />
+    //       <label htmlFor="desc1">Desc</label>
+    //       <textarea
+    //         name="desc1"
+    //         id="desc1"
+    //         className="border"
+    //         onChange={handleFormChange}
+    //       />
+    //       <div
+    //         onClick={createNewItem}
+    //         className="fixed right-0 bottom-0 p-5 text-7xl text-green-500 cursor-pointer hover:text-green-400 active:text-green-300"
+    //       >
+    //         <AiFillPlusCircle />
+    //       </div>
+    //     </form>
+
+    //     <div
+    //       onClick={() => {
+    //         dispatch(EditModeToggle());
+    //         // setShowSendImage(false);
+    //       }}
+    //       className="fixed bottom-[3%] text-6xl text-yellow-500 cursor-pointer hover:text-yellow-400 active:text-yellow-300"
+    //     >
+    //       <BiSolidEdit />
+    //     </div>
+    //   </ExpandedSidePanel>
+    // </>
+    <Container
+      dir={`${isFa ? "rtl" : "ltr"}`}
+      style="grid grid-cols-4 mx-[20%]"
+    >
       {newNewsList.map((component) => (
         <div key={component._id} className="flex flex-col">
           {inEdit && (
@@ -276,7 +389,7 @@ const NewsAdmin = () => {
                     className="hidden"
                     onChange={handleImageChange}
                   />
-  
+
                   {showSendImage && (
                     <div
                       onClick={() => {
@@ -298,12 +411,14 @@ const NewsAdmin = () => {
             desc={component.desc}
             physical={false}
             key=""
+            handleClose={() => {}}
           />
           <span className="mt-10" />
         </div>
       ))}
+
       <ExpandedSidePanel>
-        <form className="flex flex-col gap-2 w-[230px]">
+        <form className="flex flex-col gap-2 w-[230px] text-[#777] justify-between">
           <label htmlFor="img">Choose your image:</label>
           <input
             name="img"
@@ -335,18 +450,8 @@ const NewsAdmin = () => {
             <AiFillPlusCircle />
           </div>
         </form>
-
-        <div
-          onClick={() => {
-            dispatch(EditModeToggle());
-            // setShowSendImage(false);
-          }}
-          className="fixed bottom-[3%] text-6xl text-yellow-500 cursor-pointer hover:text-yellow-400 active:text-yellow-300"
-        >
-          <BiSolidEdit />
-        </div>
       </ExpandedSidePanel>
-    </>
+    </Container>
   );
 };
 export default NewsAdmin;

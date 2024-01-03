@@ -1,12 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Container } from "../../..";
 import { BackendAddress } from "../../../../utils/BackendAddress/BackendAddress";
 import React, { useState, FormEvent, useEffect } from "react";
 // import { z } from "zod";
 import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { setUser } from "../../../../Store/UserReducer";
+import { resetUser, setUser } from "../../../../Store/UserReducer";
 
 import {
   usernameSchema,
@@ -14,6 +13,8 @@ import {
   passwordSchema,
 } from "../../../../utils/ZOD/Schemas";
 import { toggleisLoggedinTrue } from "../../../../Store/isLoggedInReducer";
+import { RootState } from "../../../../Store/Store";
+import { useTranslation } from "react-i18next";
 // import { Passwordinput } from "../../../../components/forms"; //hide and show password
 type ISignupForm = {
   username: string;
@@ -21,9 +22,15 @@ type ISignupForm = {
   password: string;
 };
 const SignupForm = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error, setError] = useState<string>("");
+
   const [loading, setLoading] = useState(false);
+  const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
+  const isFa = useSelector((state: RootState) => state.lang.isFa);
   const [formDataState, setFormDataState] = useState<ISignupForm>({
     username: "",
     email: "",
@@ -35,9 +42,12 @@ const SignupForm = () => {
     password: "",
   });
   useEffect(() => {
+    setError("");
+    dispatch(resetUser());
+
     console.log(errors);
     console.log(formDataState);
-  }, [errors, formDataState]);
+  }, [dispatch, errors, formDataState]);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
@@ -139,11 +149,12 @@ const SignupForm = () => {
           }
           //=====================
         } else {
-          console.error("Error creating new item");
+          setError("Email or Username Already exist");
+
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error creating new item:", error);
+        setError(`Error creating user item: ${error}`);
         setLoading(false);
       }
     }
@@ -161,82 +172,105 @@ const SignupForm = () => {
     }));
   };
   return (
-    <Container
-      dir="ltr"
-      style=" absolute w-[400px] h-[550px] bg-white fixed left-[5px] sm:left-[15%] md:left-[20%] lg:left-[7%] shadow-2xl p-10 flex flex-col justify-center items-start rounded-lg"
+    <div
+      dir={`${isFa ? "rtl" : "ltr"}`}
+      className="min-h-screen hero bg-base-200"
     >
-      <div className="ml-[11%] w-full h-24 flex items-center my-[10%]">
-        <p className="text-3xl font-bold text-patternColors-green">
-          Crypto Safe Room
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full">
-        <div className="">
-          <label htmlFor="username">Username</label>
-          <input
-            name="username"
-            type="text"
-            id="username"
-            className={`w-full h-10 rounded-md border-2 border-gra-300 ${
-              errors.username ? "border-red-500" : ""
-            }`}
-            placeholder="username"
-            onChange={handleFormChange}
-          />
-          {errors.username && <p className="text-red-500">{errors.username}</p>}
+      <div className="flex-col hero-content lg:flex-row-reverse">
+        <div
+          className={`text-center mt-10 ${
+            isFa ? "lg:text-right" : "lg:text-left"
+          }`}
+        >
+          <h1 className="text-5xl font-bold text-neutral">{t("signupNow")}</h1>
+          <p className="py-6 text-neutral">{t("signupMessage")}</p>
         </div>
-        <div className="">
-          <label htmlFor="email">Email</label>
-          <input
-            name="email"
-            type="email"
-            id="email"
-            className={`w-full h-10 rounded-md border-2 border-gra-300 ${
-              errors.email ? "border-red-500" : ""
-            }`}
-            placeholder="email"
-            onChange={handleFormChange}
-          />
-          {errors.email && <p className="text-red-500">{errors.email}</p>}
-        </div>
-        <div>
-          <label className="left-0" htmlFor="password">
-            Password
-          </label>
-          <input
-            name="password"
-            type="password"
-            id="password"
-            className={`w-full h-10 rounded-md border-2 border-gra-300 ${
-              errors.password ? "border-red-500" : ""
-            }`}
-            placeholder="password"
-            onChange={handleFormChange}
-          />
-          {errors.password && <p className="text-red-500">{errors.password}</p>}
-        </div>
-        <div className="flex justify-center items-center mt-10">
-          <button
-            type="submit"
-            className="w-32 h-10 text-white rounded-md border-box bg-patternColors-green"
-            disabled={loading}
-          >
-            <div className="flex gap-2 justify-center items-center">
-              {loading ? "Signing up" : "Sign up"}
-              {loading && <span className="loading loading-spinner"></span>}
+        <div className="w-full max-w-sm shadow-2xl card shrink-0 bg-base-100">
+          <div className="flex justify-center items-center mt-5">
+            <Link to="/" className="flex w-[190px] items-center justify-center">
+              <img
+                src={`${
+                  isDarkTheme
+                    ? "../../../src/assets/img/logoDark212121.png"
+                    : "../../../src/assets/img/logo.png"
+                }`}
+                alt="LOGO"
+              />
+            </Link>
+          </div>
+          <form onSubmit={handleSubmit} className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text text-neutral">{t("username")}</span>
+              </label>
+              <input
+                required
+                name="username"
+                type="username"
+                id="email"
+                className="pl-5 mt-2 w-full h-12 rounded-md border border-neutral bg-base-100 focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                placeholder={t("username")}
+                onChange={handleFormChange}
+              />
             </div>
-          </button>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text text-neutral">{t("email")}</span>
+              </label>
+              <input
+                required
+                name="email"
+                type="email"
+                id="email"
+                className="pl-5 mt-2 w-full h-12 rounded-md border border-neutral bg-base-100 focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                placeholder={t("email")}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text text-neutral">{t("password")}</span>
+              </label>
+              <input
+                required
+                name="password"
+                type="password"
+                id="password"
+                className="pl-5 mt-2 w-full h-12 rounded-md border border-neutral bg-base-100 focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                placeholder={t("password")}
+                onChange={handleFormChange}
+              />
+            </div>
+            <div className="mt-6 form-control">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading}
+              >
+                <div className="flex gap-2 justify-center items-center text-base-100">
+                  {loading ? t("signingUp") : t("signUp")}
+                  {loading && <span className="loading loading-spinner"></span>}
+                </div>
+              </button>
+            </div>
+          </form>
+          {error && (
+            <div className="flex justify-center items-center mt-5 text-sm bg-gray-200 text-primary">
+              <p>{error}</p>
+            </div>
+          )}
+          <div className="flex gap-1 justify-center items-center mb-5 text-sm text-neutral">
+            <p>{t("haveAnAcc")}</p>
+            <Link
+              className="cursor-pointer hover:underline text-neutral"
+              to="/auth/login"
+            >
+              <p className="text-primary">{t("login")}</p>
+            </Link>
+          </div>
         </div>
-      </form>
-
-      <div className="flex text-sm gap-1 my-[5%] ml-[17%]">
-        <p>Already have an account?</p>
-        <Link className="cursor-pointer hover:underline" to="/auth/login">
-          <p className="text-patternColors-red">Login</p>
-        </Link>
       </div>
-    </Container>
+    </div>
   );
 };
 

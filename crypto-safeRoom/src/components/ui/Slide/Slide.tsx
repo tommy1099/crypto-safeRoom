@@ -8,7 +8,9 @@ interface Props {
 }
 
 const Carousel: React.FC<Props> = ({ type }) => {
-  const signalsList = useSelector((state: RootState) => state.signals.signals);
+  const allSignals = useSelector(
+    (state: RootState) => state.allSignals.allSignals
+  );
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -29,7 +31,7 @@ const Carousel: React.FC<Props> = ({ type }) => {
     };
   }, []);
   return (
-    <div className="p-4 ml-[5%] w-[900px]">
+    <div className="p-4 ml-[5%] w-[1000px]">
       <div className="overflow-hidden relative rounded-lg">
         <div
           className="flex w-full transition-transform duration-300 ease-in-out transform"
@@ -37,12 +39,12 @@ const Carousel: React.FC<Props> = ({ type }) => {
         >
           <div id="item1" className="flex-shrink-0 w-full">
             {type === "signals" && (
-              <StatsVisualizer type="type1" signals={signalsList} />
+              <StatsVisualizer type="type1" signals={allSignals} />
             )}
           </div>
           <div id="item2" className="flex-shrink-0 w-full">
             {type === "signals" && (
-              <StatsVisualizer type="type2" signals={signalsList} />
+              <StatsVisualizer type="type2" signals={allSignals} />
             )}
           </div>
         </div>

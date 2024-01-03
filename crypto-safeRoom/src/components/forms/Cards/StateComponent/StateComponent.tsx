@@ -1,11 +1,17 @@
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { ImCross } from "react-icons/im";
 import { StateProps } from "../../../../Interfaces/Interfaces.ts";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../Store/Store.tsx";
 
 const StateComponent = ({ blur, state, t }: StateProps) => {
+  const isFa = useSelector((state: RootState) => state.lang.isFa);
   if (blur) {
     return state ? (
-      <div className="flex gap-2 text-green-500">
+      <div
+        dir={`${isFa ? "rtl" : "ltr"}`}
+        className="flex gap-2 text-[#3f9345]"
+      >
         <p>{t("result")}</p>
         <div className="mt-1">
           {" "}
@@ -13,7 +19,10 @@ const StateComponent = ({ blur, state, t }: StateProps) => {
         </div>
       </div>
     ) : (
-      <div className="flex gap-2 text-red-500">
+      <div
+        dir={`${isFa ? "rtl" : "ltr"}`}
+        className="flex gap-2 text-[#b71c1c]"
+      >
         <p>{t("result")}</p>
         <div className="mt-1">
           {" "}
@@ -24,6 +33,7 @@ const StateComponent = ({ blur, state, t }: StateProps) => {
   } else {
     return (
       <div
+        dir={`${isFa ? "rtl" : "ltr"}`}
         className={`flex gap-2 text-primary ${
           !blur ? "w-[60px] border-primary" : ""
         }`}

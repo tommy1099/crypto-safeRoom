@@ -8,6 +8,8 @@ import {
   sidebarClasses,
   menuClasses,
 } from "react-pro-sidebar";
+import UserAdmin from "../UsersAdmin/UsersAdmin";
+import OrderAdmin from "../OrdersAdmin/OrdersAdmin";
 
 const pagesMenu = [
   { id: "signalsAdmin", label: "Signals" },
@@ -33,7 +35,10 @@ const AdminPage = () => {
         return <SignalsAdmin />;
       case "newsAdmin":
         return <NewsAdmin />;
-      // Add other cases for each tab
+      case "usersAdmin":
+        return <UserAdmin />;
+      case "AllOrders":
+        return <OrderAdmin />;
       default:
         return null;
     }

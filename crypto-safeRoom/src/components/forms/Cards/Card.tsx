@@ -41,6 +41,7 @@ const Card = ({
 
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const isHomePath = window.location.pathname === "/";
 
   const handleShowModal = () => {
     if (
@@ -74,7 +75,7 @@ const Card = ({
             img,
             quantity: 0,
             price: price,
-            physical: physical,
+            physical: physical || false,
           })
         );
       }
@@ -92,17 +93,25 @@ const Card = ({
             img,
             quantity: 0,
             price: price,
-            physical: physical,
+            physical: physical || false,
           })
         );
       }
     }
   };
 
-  const blurClass =
-    user.plan.type !== "VIP" && vip && !blur
-      ? "bg-gradient-to-b from-base-100 via-neutral to-neutral"
-      : "";
+  // const blurClass =
+  //   user.plan.type !== "VIP" && vip && !blur
+  //     ? "bg-gradient-to-b from-base-100 via-neutral to-neutral"
+  //     : "";
+
+  const isVipUser = user.plan.type === "VIP";
+  const shouldBlur = !isVipUser && vip && !blur;
+
+  const cardClass = `card min-w-[150px] transition-all flex text-neutral hover:shadow-xl p-2 border-neutral hover:border-primary border-4 rounded-3xl m-3s m-2 shadow-sm bg-base-100 overflow-hidden ${
+    shouldBlur ? "blur" : ""
+  }`;
+
   const handleCloseAlert = () => {
     setErrorAlert(false);
   };
@@ -120,9 +129,9 @@ const Card = ({
         onClick={handleShowModal}
         className={`card ${
           type === "signals"
-            ? `transition-all  flex  text-neutral hover:shadow-xl p-2 border-neutral hover:border-primary border-4 rounded-3xl m-3s m-2 shadow-sm bg-base-100 overflow-hidden  ${blurClass}`
+            ? `${cardClass}`
             : type === "news"
-            ? "hover:shadow-2xl transition-all rounded-sm m-2 shadow-md"
+            ? "hover:shadow-2xl h-[300px] w-[200px] transition-all rounded-sm m-2 shadow-md"
             : type === "products" || type === "tutorials"
             ? `transition-all hover:border-primary hover:shadow-xl p-4 border-neutral border-4 rounded-3xl m-3s m-2 bg-base-100 shadow-sm overflow-hidden `
             : ` transition-all rounded-xl border-primary border-2 m-2 ${
@@ -144,12 +153,29 @@ const Card = ({
         >
           {type !== "signals" && type !== "plans" && (
             <figure>
-              <img className="rounded-md" src={img} alt="img" />
+              <img
+                className="object-cover w-full h-32 rounded-md"
+                src={img}
+                alt={title}
+              />
             </figure>
           )}
           <div className="flex flex-col justify-between">
-            <h2 className={`block p-1 text-xl font-bold text-neutral`}>
+            <h2
+              className={`block p-1 text-xl font-bold ${
+                window.location.pathname === "/" && type === "news"
+                  ? "text-[#2c2c2c]"
+                  : window.location.pathname === "/news"
+                  ? "text-neutral"
+                  : window.location.pathname !== "/" &&
+                    window.location.pathname !== "/signals" &&
+                    window.location.pathname !== "/plans"
+                  ? "text-white"
+                  : "text-neutral"
+              }`}
+            >
               <div
+                dir={`${isFa ? "rtl" : "ltr"}`}
                 className={`flex gap-1 ${
                   type === "plans"
                     ? "items-center justify-center mb-[40px]"
@@ -235,7 +261,7 @@ const Card = ({
             price={price}
             id={id}
             type={type}
-            showModal={showModal}
+            showModal={!isHomePath && showModal}
             handleClose={handleCloseModal}
             img={img}
             desc={desc}

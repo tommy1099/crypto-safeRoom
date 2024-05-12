@@ -44,23 +44,18 @@ const ModalFooter: React.FC<ModalFooterProps> = ({
           </div>
         )
       )}
-      {type !== "signals" &&
-        type !== "news" &&
-        type !== "checkout" &&
-        type !== "userData" &&
-        type !== "plan" &&
-        type !== "login" && (
-          <div>
-            {price && <div className="mt-10 text-xl font-bold">{price}$</div>}
+      {type !== "checkout" && type !== "userData" && type !== "login" && (
+        <div>
+          {price && <div className="mt-10 text-xl font-bold">{price}$</div>}
 
-            <Button
-              onClick={handleAddToCart}
-              style="p-3 bg-neutral rounded-md my-10 text-white"
-            >
-              Add to cart
-            </Button>
-          </div>
-        )}
+          <Button
+            onClick={handleAddToCart}
+            style="p-3 bg-neutral rounded-md my-10 text-white"
+          >
+            Add to cart
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

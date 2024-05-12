@@ -15,8 +15,6 @@ import { Container } from "..";
 import { ScrollToTopIcon } from "../../components/forms";
 import pic from "../../assets/img/bearandbull.png";
 import MellatPic from "../../assets/img/Mellat.jpg";
-import BTCPic from "../../assets/img/bitcoin-logo-vector-26870963.jpg";
-import PaypalPic from "../../assets/img/paypal-logo-paypal-logo-free-free-vector.jpg";
 import ZarinPalPic from "../../assets/img/zarinPal.png";
 import PishtazPic from "../../assets/img/pishtaz.jpeg";
 import TipaxPic from "../../assets/img/tipax.jpeg";
@@ -38,7 +36,6 @@ const Checkout = () => {
   const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
   const accessToken = Cookies.get("accessToken");
   const abortController = new AbortController();
-  const { signal } = abortController;
   const isFa = useSelector((state: RootState) => state.lang.isFa);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartList.list);
@@ -145,7 +142,6 @@ const Checkout = () => {
       formData.append("userNote", formDataState.userNote);
       console.log("FormData:", formData);
       const response = await fetch(`${BackendAddress()}/orders/new`, {
-        signal,
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -356,32 +352,8 @@ const Checkout = () => {
             action=""
             className="flex flex-col mt-10 w-full"
           >
-            <div className="flex flex-col md:flex-row gap-[20px] md:gap-[50px] mt-5">
+            <div className="flex flex-row gap-[80px] md:gap-[50px] mt-5">
               <div className="flex gap-[20px]">
-                <label
-                  htmlFor="cryptoTrans"
-                  className={`relative rounded-md ${
-                    selectedPayment === "cryptoTrans"
-                      ? "border-2 border-primary shadow-lg"
-                      : "border-2 border-neutral"
-                  }`}
-                >
-                  <input
-                    id="cryptoTrans"
-                    type="radio"
-                    name="trans"
-                    className="hidden"
-                    defaultChecked={selectedPayment === "cryptoTrans"}
-                    onChange={() => handleSelectPayment("cryptoTrans")}
-                    required
-                  />
-                  <img
-                    src={BTCPic}
-                    alt="cryptoTrans"
-                    className="w-[120px] h-[100px] cursor-pointer rounded-md object-cover"
-                    onClick={() => handleSelectPayment("cryptoTrans")}
-                  />
-                </label>
                 <label
                   htmlFor="BMTrans"
                   className={`relative rounded-md ${
@@ -430,30 +402,6 @@ const Checkout = () => {
                     alt="ZarinPal"
                     className="w-[120px] h-[100px] cursor-pointer rounded-md"
                     onClick={() => handleSelectPayment("zarinPalTrans")}
-                  />
-                </label>
-                <label
-                  htmlFor="paypalTrans"
-                  className={`relative rounded-md ${
-                    selectedPayment === "paypalTrans"
-                      ? "border-2 border-primary shadow-lg"
-                      : "border-2 border-neutral"
-                  }`}
-                >
-                  <input
-                    id="paypalTrans"
-                    type="radio"
-                    name="trans"
-                    className="hidden"
-                    defaultChecked={selectedPayment === "paypalTrans"}
-                    onChange={() => handleSelectPayment("paypalTrans")}
-                    required
-                  />
-                  <img
-                    src={PaypalPic}
-                    alt="PayPal"
-                    className="w-[120px] h-[100px] cursor-pointer rounded-md object-cover"
-                    onClick={() => handleSelectPayment("paypalTrans")}
                   />
                 </label>
               </div>

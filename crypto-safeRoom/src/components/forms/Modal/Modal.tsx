@@ -94,9 +94,7 @@ const Modal: React.FC<CardProps> = ({
       } else {
         // Click is outside the outer element
         if (!isLoggedIn && handleClose !== undefined) {
-          const shouldCloseModal =
-            window.location.pathname !== "/signals" &&
-            window.location.pathname !== "/checkout";
+          const shouldCloseModal = window.location.pathname !== "/checkout";
 
           if (shouldCloseModal) {
             handleClose();
@@ -112,9 +110,7 @@ const Modal: React.FC<CardProps> = ({
 
       if (outerElement.contains(event.target as Node)) {
         if (!isLoggedIn && handleClose !== undefined) {
-          const shouldCloseModal =
-            window.location.pathname !== "/signals" &&
-            window.location.pathname !== "/checkout";
+          const shouldCloseModal = window.location.pathname !== "/checkout";
 
           if (shouldCloseModal) {
             handleClose();
@@ -152,8 +148,8 @@ const Modal: React.FC<CardProps> = ({
             className={`bg-base-100 p-6 rounded-lg shadow-lg${
               type === "products" &&
               "w-[90%] h-[85%] lg:mt-[8%] lg:w-[80%] lg:h-[80%] overflow-y-auto"
-            } ${type === "signals" && "lg:w-[40%] lg:mt-[0%] mt-[8%]"}
-              ${type === "news" && "w-[80%] h-[80%] overflow-y-auto"}
+            } 
+              
               ${
                 type === "checkout"
                   ? "w-[90%] h-[85%] lg:w-[80%] lg:h-[80%] overflow-y-auto "

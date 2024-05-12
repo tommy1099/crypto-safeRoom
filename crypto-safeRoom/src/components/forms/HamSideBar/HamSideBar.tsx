@@ -10,9 +10,7 @@ import { RootState } from "../../../Store/Store";
 
 const HamSideBar = () => {
   const { t } = useTranslation();
-  const signalIndicator = useSelector(
-    (state: RootState) => state.signalIndicator.signalIndicator
-  );
+
   const [isOpen, setIsOpen] = React.useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -39,54 +37,12 @@ const HamSideBar = () => {
           >
             {t("home")}
           </Link>
-          <Link
-            to="/news"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-          >
-            {t("news")}
-          </Link>
-          <div className="group">
-            <Link
-              to="/signals"
-              className="flex gap-1 items-center px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-            >
-              {signalIndicator && (
-                <div className="relative badge badge-primary badge-xs group-hover:bg-white">
-                  <div className="absolute animate-ping badge badge-primary group-hover:bg-white badge-xs"></div>
-                </div>
-              )}
-              {t("signals")}
-            </Link>
-          </div>
-          <Link
-            to="/exam"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-          >
-            {t("exam")}
-          </Link>
-          <Link
-            to="/tutorials?cat=All"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-          >
-            {t("tutorials")}
-          </Link>
+
           <Link
             to="/product"
             className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
             {t("products")}
-          </Link>
-          <Link
-            to="/stats"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-          >
-            {t("stats")}
-          </Link>
-          <Link
-            to="/plans"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-          >
-            {t("plans")}
           </Link>
         </div>
       </Drawer>

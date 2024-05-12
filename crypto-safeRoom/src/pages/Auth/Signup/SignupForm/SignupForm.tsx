@@ -140,7 +140,7 @@ const SignupForm = () => {
                 })
                 .then((data) => {
                   dispatch(setUser(data));
-                  navigate("/signals?toggle=true");
+                  navigate("/");
                 })
                 .catch(() => {
                   navigate("/auth/signup");

@@ -1,4 +1,3 @@
-import { NewsAdmin, SignalsAdmin } from "../..";
 import { useState } from "react";
 import {
   Sidebar,
@@ -31,10 +30,6 @@ const AdminPage = () => {
   };
   const renderSelectedComponent = () => {
     switch (selectedTab) {
-      case "signalsAdmin":
-        return <SignalsAdmin />;
-      case "newsAdmin":
-        return <NewsAdmin />;
       case "usersAdmin":
         return <UserAdmin />;
       case "AllOrders":

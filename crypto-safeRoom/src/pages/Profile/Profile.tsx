@@ -57,9 +57,7 @@ type SentForm = {
   newPass: string;
   confirmPassword: string;
 };
-type SentRefCode = {
-  refcode: string;
-};
+
 import { useTranslation } from "react-i18next";
 import { formatNumberToPersian } from "../../utils/NumberToFarsi/NumberToFarsi";
 import Modal from "../../components/forms/Modal/Modal";
@@ -84,7 +82,6 @@ const Profile = () => {
 
   // const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [formDataState, setFormDataState] = useState<SentForm>({
     img: null,
@@ -109,9 +106,7 @@ const Profile = () => {
     tp2Price: "",
     tp3Price: "",
   };
-  const [codeRefFormData, setCodeRefFormData] = useState<SentRefCode>({
-    refcode: "",
-  });
+
   const createNewItem = async () => {
     try {
       const accessToken = Cookies.get("accessToken");
@@ -140,40 +135,6 @@ const Profile = () => {
         console.error("user didnt get updated");
       }
     } catch (error) {
-      console.error("error:", error);
-    }
-  };
-  const sendRefCode = async () => {
-    setError("");
-    try {
-      if (!codeRefFormData.refcode || !codeRefFormData.refcode.trim()) {
-        setError("Enter a code please");
-      } else {
-        const accessToken = Cookies.get("accessToken");
-
-        const response = await axios.put(
-          `${BackendAddress()}/user/refcode`,
-          codeRefFormData,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          const data: SentForm = response.data;
-
-          console.log("refcode worked:", data);
-          window.location.reload();
-        } else {
-          setError("Eather this code has entered before or is invalid");
-
-          console.error("refcode didnt worked");
-        }
-      }
-    } catch (error) {
-      setError("An error occurred. Please try again later.");
       console.error("error:", error);
     }
   };
@@ -213,18 +174,7 @@ const Profile = () => {
       console.error("error:", error);
     }
   };
-  const handleRefCodeFormChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = event.target;
 
-    setCodeRefFormData((prevState: SentRefCode) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
-  };
   // useEffect(() => {
   //   // RefreshToken();
   //   const handleProfile = async () => {
@@ -314,91 +264,10 @@ const Profile = () => {
                         </button>
                       )}
                     </div>
-                    <p className="text-neutral">
-                      {userData.plan.type} {t("member")}
-                    </p>
                   </div>
-                </div>
-                <div className="flex justify-between items-center mt-[7%]">
-                  {userData.plan.type === "vip" ||
-                    (userData.plan.type === "VIP" &&
-                      userData.plan.remaining && (
-                        <div className="flex flex-col justify-center items-center text-neutral">
-                          <div className="w-[50%] md:w-[60%] text-primary ">
-                            <RadialProgressBar
-                              type="subscribtion"
-                              textSize="30px"
-                              maxValue={userData.plan.maxDays}
-                              value={userData.plan.remaining}
-                              style={{
-                                textColor: `${
-                                  isDarkTheme ? "#777" : "#374151"
-                                }`,
-                                pathColor: `${
-                                  isDarkTheme ? "#ee8f50" : "#ee8f50"
-                                }`,
-                                trailColor: `${
-                                  isDarkTheme ? "#374151" : "#777"
-                                }`,
-                              }}
-                              formatNumberToPersian={formatNumberToPersian}
-                              isFa={isFa}
-                            />
-                          </div>
-
-                          <p className="">{t("subscription")}</p>
-                        </div>
-                      ))}
                 </div>
               </div>
               <div className="flex  gap-20 flex-col md:flex-row justify-between items-center mt-[5%] border-neutral border-b-2 pb-10">
-                <div dir={`${isFa ? "rtl" : "ltr"}`} className="flex flex-col">
-                  <div className="flex flex-col items-start mt-[5%]">
-                    <p className="text-neutral">{t("yourRef")}</p>
-                    <div className="flex justify-center items-center w-full h-14 border-4 alert bg-base-100 border-primary alert-info">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        className="w-6 h-6 animate-pulse stroke-current text-primary shrink-0"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span className="text-[16px] text-neutral">
-                        {userData.refcode.userCode}
-                      </span>
-                    </div>
-                  </div>
-                  <div className=" flex flex-col mt-[2%]">
-                    <p className="text-neutral">{t("otherRef")}</p>
-                    <input
-                      name="refcode"
-                      id="refcode"
-                      type="text"
-                      className={`pl-5 mt-2 rounded-md border placeholder:text-neutral bg-base-100 ${
-                        error
-                          ? "border-red-700 focus:border-red-700"
-                          : "border-neutral focus:border-primary focus:border-2"
-                      } focus:outline-none w-[400px] h-14`}
-                      onChange={handleRefCodeFormChange}
-                      placeholder={t("otherRefPlaceHolder")}
-                    />
-                    <Button
-                      onClick={() => {
-                        sendRefCode();
-                      }}
-                      style="border-2 border-primary text-neutral hover:bg-primary hover:text-secondary my-5 p-2 w-[100px] rounded-md"
-                    >
-                      {t("submit")}
-                    </Button>
-                  </div>
-                  {error && <div className="text-red-700">{error}</div>}
-                </div>
                 <Container
                   dir=""
                   style="border-neutral border-2 h-[400px] overflow-y-auto rounded-md w-full"

@@ -1,15 +1,10 @@
 // ModalContent.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CardProps, IloginData } from "../../../../Interfaces/Interfaces";
 import { useTranslation } from "react-i18next";
-import { formatNumberToPersian } from "../../../../utils/NumberToFarsi/NumberToFarsi";
 import { RootState } from "../../../../Store/Store";
 import { useDispatch, useSelector } from "react-redux";
-import { FaBtc } from "react-icons/fa6";
-import { TbBrandTether } from "react-icons/tb";
-import { FaEthereum } from "react-icons/fa6";
-import copy from "clipboard-copy";
-import { cryptoPrice } from "../../../../utils/cryptoPrice/CryptoPrice";
+
 import { Table } from "../../../ui";
 import { BackendAddress } from "../../../../utils/BackendAddress/BackendAddress";
 import Cookies from "js-cookie";
@@ -19,32 +14,19 @@ import { setUser } from "../../../../Store/UserReducer";
 import { toggleModalFalse } from "../../../../Store/IsModalOpen";
 
 const ModalContent: React.FC<CardProps> = ({
-  tpPrices,
-  entryPoint,
-  alertDesc,
   type,
-  img,
-  desc,
   tags,
-  title,
-  handleImageClick,
-  price,
+
   onChildValue,
   order,
-  user,
+
   handleClose,
 }) => {
-  const shouldFormatNumbers = type === "signals";
-  const [totalPriceInBTC, setTotalPriceInBTC] = useState(0);
-  const [totalPriceInETH, setTotalPriceInETH] = useState(0);
-  const [totalPriceInUSDT, setTotalPriceInUSDT] = useState(0);
   const [showWalletAlert, setShowWalletAlert] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("");
   const isFa = useSelector((state: RootState) => state.lang.isFa);
   const { t } = useTranslation();
-  const isFullscreen = useSelector(
-    (state: RootState) => state.FullScreenToggleReducer.fullScreen
-  );
+
   const dispatch = useDispatch();
   const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
   const [loading, setLoading] = useState(false);
@@ -53,35 +35,12 @@ const ModalContent: React.FC<CardProps> = ({
     setTextAreaValue(e.target.value);
     if (onChildValue) onChildValue(textAreaValue);
   };
-  const handleCopyToClipboard = async (text: string | undefined) => {
-    try {
-      await copy(text || "");
-      setShowWalletAlert(true);
-    } catch (error) {
-      console.error("Error copying to clipboard:", error);
-    }
-  };
-  type formPlanDate = {
-    maxDays: string;
-    remaining: string;
-  };
+
   const [formUserDataState, setFormUserDataState] = useState<IloginData>({
     email: "",
     password: "",
   });
-  const [formDataState, setFormDataState] = useState<formPlanDate>({
-    maxDays: "",
-    remaining: "",
-  });
-  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormDataState((prevData: formPlanDate) => {
-      return {
-        ...prevData,
-        [name]: value,
-      };
-    });
-  };
+
   const handleUserFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormUserDataState((prevData: IloginData) => {
@@ -91,34 +50,7 @@ const ModalContent: React.FC<CardProps> = ({
       };
     });
   };
-  const handleSubmitPlan = async () => {
-    try {
-      const accessToken = Cookies.get("accessToken");
-      const formData = new FormData();
 
-      formData.append("maxDays", formDataState.maxDays);
-      formData.append("remaining", formDataState.remaining);
-
-      const response = await fetch(
-        `${BackendAddress()}/user/planUpdate/${user?.username}`,
-        {
-          method: "POST",
-          body: formData, //sending the form data to the backend
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      if (response.ok) {
-        console.log("Done updating user's plan");
-      } else {
-        console.error("user didnt get updated");
-      }
-    } catch (error) {
-      console.error("error:", error);
-    }
-  };
   const handleLogin = async () => {
     console.log("formDataState.email:", formUserDataState.email);
     console.log("formDataState.password:", formUserDataState.password);
@@ -192,23 +124,7 @@ const ModalContent: React.FC<CardProps> = ({
       setLoading(false);
     }
   };
-  useEffect(() => {
-    const fetchCryptoPrices = async () => {
-      try {
-        const btcPrice = await cryptoPrice("btc", price || 0);
-        const ethPrice = await cryptoPrice("eth", price || 0);
-        const usdtPrice = await cryptoPrice("usdt", price || 0);
 
-        setTotalPriceInBTC(btcPrice);
-        setTotalPriceInETH(ethPrice);
-        setTotalPriceInUSDT(usdtPrice);
-      } catch (error) {
-        console.error("Error fetching crypto prices:", error);
-      }
-    };
-
-    fetchCryptoPrices();
-  }, [price]);
   return (
     <div
       className={`flex ${
@@ -223,26 +139,7 @@ const ModalContent: React.FC<CardProps> = ({
       )} */}
       <div className="">
         {/* {!isLoaded ? <Loading /> : <></>} */}
-        {type === "signals" && (
-          <img
-            className={`w-full h-64 object-cover mb-4 cursor-pointer ${
-              isFullscreen
-                ? "fixed z-[20] lg:top-[9%] lg:left-[5%] w-full h-[30%] left-[0%] top-[35%] lg:w-[90%] lg:h-[90%]"
-                : ""
-            }`}
-            src={img}
-            onClick={handleImageClick}
-            // onLoad={handleImageLoad}
-          />
-        )}
 
-        {type === "news" && (
-          <img
-            className="w-full h-[200px] object-cover"
-            src={img}
-            alt={title}
-          />
-        )}
         {type === "checkout" && order !== undefined && order.done ? (
           <div>
             <div className="flex flex-col">
@@ -362,11 +259,7 @@ const ModalContent: React.FC<CardProps> = ({
               <div className="mb-10">
                 <p className="text-4xl text-primary">Pending Order</p>
               </div>
-              {/* <div className="flex justify-center items-center">
-            <p className="text-4xl text-primary">
-              Thank you for your purchase
-            </p>
-          </div> */}
+
               <div className="flex justify-start items-start mt-3">
                 <p className="text-2xl text-primary">Order Details</p>
               </div>
@@ -441,93 +334,7 @@ const ModalContent: React.FC<CardProps> = ({
                 src={img}
                 alt={title}
               /> */}
-                <div className="flex flex-col gap-5 mb-5">
-                  <p className="mx-2 text-neutral">Wallet Addresses</p>
-                  {desc && (
-                    <div
-                      role="alert"
-                      className="alert alert-info bg-base-100 text-neutral border-none p-0 flex w-[400px]"
-                    >
-                      <div
-                        className="flex gap-2 justify-center items-center"
-                        onClick={() => handleCopyToClipboard(desc.desc1)}
-                      >
-                        <div className="text-2xl animate-pulse text-primary">
-                          <FaBtc />
-                        </div>
 
-                        <span className="active:text-primary hover:opacity-[0.8] cursor-pointer text-neutral">
-                          {desc.desc1}
-                        </span>
-                      </div>
-
-                      <p
-                        className="active:text-neutral hover:opacity-[0.8] cursor-pointer text-primary"
-                        onClick={() =>
-                          handleCopyToClipboard(String(totalPriceInBTC))
-                        }
-                      >
-                        {totalPriceInBTC}
-                      </p>
-                    </div>
-                  )}
-                  {desc && (
-                    <div
-                      role="alert"
-                      className="alert alert-info bg-base-100 text-neutral border-none p-0 flex w-[400px]"
-                    >
-                      <div
-                        className="flex gap-2 justify-center items-center"
-                        onClick={() => handleCopyToClipboard(desc.desc2)}
-                      >
-                        <div className="text-2xl animate-pulse text-neutral">
-                          <FaEthereum />
-                        </div>
-
-                        <span className="active:text-primary hover:opacity-[0.8] cursor-pointer text-neutral">
-                          {desc.desc2}
-                        </span>
-                      </div>
-
-                      <p
-                        className="active:text-neutral hover:opacity-[0.8] cursor-pointer text-primary"
-                        onClick={() =>
-                          handleCopyToClipboard(String(totalPriceInETH))
-                        }
-                      >
-                        {totalPriceInETH}
-                      </p>
-                    </div>
-                  )}
-                  {desc && (
-                    <div
-                      role="alert"
-                      className="alert alert-info bg-base-100 text-neutral border-none p-0 flex w-[400px]"
-                    >
-                      <div
-                        className="flex gap-2 justify-center items-center"
-                        onClick={() => handleCopyToClipboard(desc.desc3)}
-                      >
-                        <div className="text-2xl text-green-600 animate-pulse">
-                          <TbBrandTether />
-                        </div>
-
-                        <span className="active:text-primary hover:opacity-[0.8] cursor-pointer text-neutral">
-                          {desc.desc3}
-                        </span>
-                      </div>
-
-                      <p
-                        className="active:text-neutral hover:opacity-[0.8] cursor-pointer text-primary"
-                        onClick={() =>
-                          handleCopyToClipboard(String(totalPriceInUSDT))
-                        }
-                      >
-                        {totalPriceInUSDT}
-                      </p>
-                    </div>
-                  )}
-                </div>
                 <div className="flex flex-col gap-2 border-none">
                   <label className="text-neutral" htmlFor="paymentText">
                     Enter Your resite
@@ -545,198 +352,9 @@ const ModalContent: React.FC<CardProps> = ({
             </>
           )
         )}
-        {/* {type !== "news" && type !== "signals" && (
-          <div className="xl:flex">
-            <img
-              className="w-[400px] h-[400px] object-cover "
-              src={img}
-              alt={title}
-            />
-            {desc && <p className="p-5 text-neutral">{desc.desc1}</p>}
-            {desc && <p className="text-neutral">{desc.desc2}</p>}
-            {desc && <p className="text-neutral">{desc.desc3}</p>}
-          </div>
-        )} */}
       </div>
-      <div className="my-5">
-        {type === "news" && <p className="mb-4">{desc && desc.desc1}</p>}
-        {type === "signals" && desc !== undefined && (
-          <div>
-            <div className="flex justify-center items-center p-2">
-              <div className="flex gap-1 p-2 shadow stats">
-                <p className="text-neutral">{t("entryPoint")}:</p>
-                <p className="border-none text-neutral">
-                  {entryPoint === "now"
-                    ? t("now")
-                    : isFa
-                    ? formatNumberToPersian(Number(entryPoint))
-                    : entryPoint}
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-center items-center p-1">
-              <div className="shadow stats">
-                <div className="flex justify-center items-center stat">
-                  <p className="text-sm text-neutral">
-                    {t("tp1")}%
-                    {shouldFormatNumbers
-                      ? isFa
-                        ? formatNumberToPersian(Number(desc.desc1))
-                        : desc.desc1
-                      : desc.desc1}
-                  </p>
-                </div>
+      <div className="my-5"></div>
 
-                <div className="flex justify-center items-center stat">
-                  <p className="text-sm text-neutral">
-                    {t("tp2")}%
-                    {shouldFormatNumbers
-                      ? isFa
-                        ? formatNumberToPersian(Number(desc.desc2))
-                        : desc.desc2
-                      : desc.desc2}
-                  </p>
-                </div>
-
-                <div className="flex justify-center items-center stat">
-                  <p className="text-sm text-neutral">
-                    {t("tp3")}%
-                    {shouldFormatNumbers
-                      ? isFa
-                        ? formatNumberToPersian(Number(desc.desc3))
-                        : desc.desc3
-                      : desc.desc3}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-center items-center p-1">
-              <div className="shadow stats">
-                <div className="flex justify-center items-center stat">
-                  <p className="text-sm text-neutral">
-                    {t("tp1Price")}
-                    {": "}
-                    {shouldFormatNumbers
-                      ? isFa
-                        ? formatNumberToPersian(Number(tpPrices?.tp1Price))
-                        : tpPrices?.tp1Price
-                      : tpPrices?.tp1Price}
-                  </p>
-                </div>
-
-                <div className="flex justify-center items-center stat">
-                  <p className="text-sm text-neutral">
-                    {t("tp2Price")}
-                    {": "}
-                    {shouldFormatNumbers
-                      ? isFa
-                        ? formatNumberToPersian(Number(tpPrices?.tp2Price))
-                        : tpPrices?.tp2Price
-                      : tpPrices?.tp2Price}
-                  </p>
-                </div>
-
-                <div className="flex justify-center items-center stat">
-                  <p className="text-sm text-neutral">
-                    {t("tp3Price")}
-                    {": "}
-                    {shouldFormatNumbers
-                      ? isFa
-                        ? formatNumberToPersian(Number(tpPrices?.tp3Price))
-                        : tpPrices?.tp3Price
-                      : tpPrices?.tp3Price}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {type === "plan" && (
-          <div>
-            <div className="flex gap-10 justify-center items-center">
-              <div className="flex gap-4 items-center">
-                <label htmlFor="maxDays">Corrent Max Days</label>
-                <p>{user?.plan.maxDays}</p>
-              </div>
-              <div className="flex gap-4 items-center">
-                <label htmlFor="remaining">Corrent Remaining Days</label>
-                <p>{user?.plan.remaining}</p>
-              </div>
-            </div>
-            <div className="flex gap-10 justify-center items-center">
-              <div className="flex gap-4 items-center">
-                <label htmlFor="maxDays">Max Days</label>
-                <input
-                  className="pl-1 mt-2 w-12 h-12 rounded-md border border-neutral bg-base-100 focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                  name="maxDays"
-                  id="maxDays"
-                  type="text"
-                  placeholder={String(user?.plan.maxDays)}
-                  onChange={handleFormChange}
-                />
-              </div>
-              <div className="flex gap-4 items-center">
-                <label htmlFor="remaining">Remaining</label>
-                <input
-                  className="pl-1 mt-2 w-12 h-12 rounded-md border border-neutral bg-base-100 focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                  name="remaining"
-                  id="remaining"
-                  type="text"
-                  placeholder={String(user?.plan.remaining)}
-                  onChange={handleFormChange}
-                />
-              </div>
-            </div>
-            <button
-              className="p-3 my-10 text-white rounded-md bg-neutral"
-              onClick={handleSubmitPlan}
-            >
-              Submit
-            </button>
-          </div>
-        )}
-      </div>
-      {type === "signals" && (
-        <div className="flex justify-center items-center mt-2 space-x-2">
-          {tags && (
-            <div className="flex text-xl">
-              <div className="shadow stats">
-                <div className="flex justify-center items-center text-sm stat">
-                  <div className="stat-title">{t("stop")}%</div>
-                  <p className="text-neutral">
-                    {shouldFormatNumbers
-                      ? isFa
-                        ? formatNumberToPersian(Number(tags.tag1))
-                        : tags.tag1
-                      : tags.tag1}
-                    %
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-          {tags && (
-            <div className="flex text-xl">
-              <div className="shadow stats">
-                <div className="flex justify-center items-center text-sm stat">
-                  <div className="stat-title">{t("sl")}</div>
-                  <p className="text-neutral">
-                    {shouldFormatNumbers && tags.tag2}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-      {type === "signals" && (
-        <div className="flex justify-center items-center p-2">
-          <div className="flex gap-1 p-2 shadow stats">
-            <p className="text-neutral">{t("alertDesc")}:</p>
-            <p className="border-none text-neutral">{alertDesc}</p>
-          </div>
-        </div>
-      )}
       {type === "checkout" && order !== undefined && order.done ? (
         <></>
       ) : type === "checkout" &&

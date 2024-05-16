@@ -26,9 +26,9 @@ function App() {
       {/* <BackgroundPattern /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminApp />} />
-        <Route path="/product" element={<Products />} />
+        <Route path="/product/:productId" element={<Products />} />
 
-        <Route path="/product/*" element={<ProductApp />} />
+        {/* <Route path="/product/*" element={<ProductApp />} /> */}
 
         <Route
           path="/auth/*"

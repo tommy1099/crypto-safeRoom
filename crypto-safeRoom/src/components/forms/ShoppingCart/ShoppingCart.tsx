@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { BsFillTrashFill } from "react-icons/bs"; // Import the shopping cart icon
 import { Link } from "react-router-dom";
-import pic from "../../../assets/img/bearandbull.png";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { Button } from "../../ui";
@@ -154,7 +153,7 @@ const ShoppingCart = () => {
                 key={index}
                 className={`flex justify-between p-5 border-b-2 border-neutral`}
               >
-                <img className="w-20" src={pic || ""} alt="Cart" />
+                <img className="w-20" src={""} alt="Cart" />
                 <div className="flex flex-col ml-2 w-[40%] items-start justify-start">
                   <p className="flex justify-start items-center max-w-[70%] truncate">
                     {item.title}

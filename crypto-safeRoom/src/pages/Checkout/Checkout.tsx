@@ -13,7 +13,6 @@ import {
 import { Button, NavBar, Footer } from "../../components/ui";
 import { Container } from "..";
 import { ScrollToTopIcon } from "../../components/forms";
-import pic from "../../assets/img/bearandbull.png";
 import MellatPic from "../../assets/img/Mellat.jpg";
 import ZarinPalPic from "../../assets/img/zarinPal.png";
 import PishtazPic from "../../assets/img/pishtaz.jpeg";
@@ -216,7 +215,7 @@ const Checkout = () => {
                   key={index}
                   className="flex justify-between p-5 border-b-2 border-b-neutral"
                 >
-                  <img className="w-20 rounded-md" src={pic || ""} alt="Cart" />
+                  <img className="w-20 rounded-md" src={""} alt="Cart" />
                   <div className="flex flex-col ml-2 w-[40%] items-start justify-start">
                     <p className="flex justify-start text-neutral items-center max-w-[70%] truncate">
                       {item.title}

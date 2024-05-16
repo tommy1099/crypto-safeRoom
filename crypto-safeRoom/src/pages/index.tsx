@@ -9,14 +9,15 @@ import Contact from "./Contact/Contact";
 import Container from "../components/ui/Container/Container";
 import NotFound from "./Auth/NotFound/NotFound";
 
-import Products from "./Products/Products";
+import Products from "./Product/Product";
 
 import Checkout from "./Checkout/Checkout";
 import Profile from "./Profile/Profile";
 import AdminPage from "./Admin/AdminPage/AdminPage";
-
+import ProductDesc from "./Product/ProductDesc";
 import Home from "./Home/Home";
 export {
+  ProductDesc,
   Home,
   AdminPage,
   Profile,

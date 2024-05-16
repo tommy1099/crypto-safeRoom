@@ -98,10 +98,7 @@ const Avatar = ({ where }: Props) => {
   };
 
   useEffect(() => {
-    if (
-      window.location.pathname === "/signals" ||
-      window.location.pathname === "/checkout"
-    )
+    if (window.location.pathname === "/checkout")
       if (!accessToken) {
         RefreshToken(navigate, location, dispatch);
         setShowModal(true);

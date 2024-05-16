@@ -12,7 +12,9 @@ import Avatar from "./Avatar/Avatar";
 import ErrorAlert from "./Alert/ErrorAlert/ErrorAlert";
 import HamSideBar from "./HamSideBar/HamSideBar";
 import HomeCarousel from "./HomeCarousel/HomeCarousel";
+import SearchBar from "./SearchBar/SearchBar";
 export {
+  SearchBar,
   HomeCarousel,
   HamSideBar,
   ErrorAlert,

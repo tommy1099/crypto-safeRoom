@@ -16,7 +16,19 @@ import Hero from "./Hero/Hero";
 import LoadingCard from "./LoadingCard/LoadingCard";
 import Table from "./Table/Table";
 import PaginationButtons from "./PaginationButtons/PaginationButtons";
+import DropDown_normal from "./DropDown/DropDown-normal";
+import CollapsibleMenu from "./CollapsibleMenu/CollapsibleMenu";
+import FeaturesSection from "./FeaturesSection/FeaturesSection";
+import BrandsSection from "./BrandsSection/BrandsSection";
+import suggestionCards from "./SuggestionCards/SuggestionsCards";
+import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 export {
+  Breadcrumbs,
+  suggestionCards,
+  BrandsSection,
+  FeaturesSection,
+  CollapsibleMenu,
+  DropDown_normal,
   PaginationButtons,
   Table,
   LoadingCard,

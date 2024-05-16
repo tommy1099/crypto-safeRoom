@@ -267,3 +267,50 @@ export interface CardProps extends PropsWithChildren {
       desc1: string;
     };
   };
+  export interface IDropDown_normal extends PropsWithChildren {
+    name: string;
+
+  }
+export interface IProduct {
+  type?: string;
+  name?: string;
+  quantity?: number;
+  in_stock?: boolean;
+  height?: number;
+  size?: string;
+  brand?: string;
+  category?: string;
+  waterproof?: boolean;
+  water_resistance?: boolean;
+  country?: string;
+  color?: string;
+  number_of_pockets?: number;
+  damage?: boolean;
+  tags?: {tag1 : string, tag2 : string, tag3 : string};
+  price?: {
+    off: boolean,
+    price_before: number,
+    price_after: number
+  };
+  texture?: string;
+  
+  img?: [];
+
+//different
+  waist_fixation?: boolean;
+  collar_to_sleeve?: number;
+  armpit_to_armpit?: number;
+  hat?: boolean;
+  waist?: number;
+  waist_to_crotch?: number;
+  crotch_to_thigh?: number;
+}
+export interface IFeatureCardProps {
+  place: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+export interface IBrandCardProps{
+  img: string;
+}

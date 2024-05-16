@@ -33,16 +33,17 @@ export default {
     themes: [
       {
         light: {
-          primary: "#ee8f50",
-
-          secondary: "#fef3c7",
+          // primary: "#ee8f50",
+          primary: "#3F4E4F",
+          // secondary: "#fef3c7",
+          secondary: "#2C3639",
 
           accent: "#111827",
 
-          neutral: "#374151",
+          neutral: "#2C3639",
 
-          "base-100": "#f3f4f6",
-
+          // "base-100": "#f3f4f6",
+          "base-100": "#FEFBF6",
           info: "#3b82f6",
 
           success: "#4d7c0f",
@@ -53,14 +54,17 @@ export default {
         },
         dark: {
           primary: "#ee8f50",
+          // primary: "#FFF2D8",
 
           secondary: "#fef3c7",
+          // secondary: "#EAD7BB",
 
           accent: "#111827",
 
-          neutral: "#777",
+          neutral: "#EAD7BB",
 
           "base-100": "#212121",
+          // "base-100": "#113946",
 
           info: "#3b82f6",
 

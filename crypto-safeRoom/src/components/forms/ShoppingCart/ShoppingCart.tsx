@@ -127,20 +127,23 @@ const ShoppingCart = () => {
       {/* Cart dropdown */}
       {isDropdownOpen && (
         <div
-          className={`absolute max-h-[500px] right-[-50px] lg:right-0 mt-4 w-[350px] text-neutral ${
+          className={`absolute max-h-[500px] min-h-[60px]  lg:right-10  text-neutral ${
             isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
-          }  rounded-md ring-1 ring-black ring-opacity-5 shadow-lg origin-top-right overflow-y-auto`}
+          }  rounded-md ring-1 ring-black ring-opacity-5  shadow-lg origin-top-right overflow-y-auto`}
         >
           <div
-            className={`fixed w-[335px] h-[7%] ${
+            className={`fixed w-[335px] rounded-md  shadow-xl  ${
               isDarkTheme ? "bg-[#2c2c2c]" : "bg-base-100"
             } `}
           >
-            <div className="flex justify-between items-center p-5">
-              <p className="text-start">{t("shoppingCart")}</p>
+            <div className="flex justify-between  items-center p-5">
+              <div className="flex flex-col items-start">
+                <p className="text-start text-[12px]">مبلغ قابل پرداخت</p>
+                <p className="text-start text-[14px]">120000 تومان</p>
+              </div>
               <div className="z-10 bg-base-100">
                 <Link to="/checkout">
-                  <button className="p-2 text-sm rounded-md bg-primary text-secondary hover:opacity-[0.9]">
+                  <button className="p-2 text-sm border border-primary rounded-md  text-secondary hover:bg-slate-100">
                     {t("checkout")}
                   </button>
                 </Link>

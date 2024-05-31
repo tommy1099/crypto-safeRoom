@@ -15,50 +15,57 @@ const SuggestionCards = () => {
       alt=""
     /> */}
       <div className="flex  flex-col items-center justify-between gap-5">
-        <span
-          className={` relative rounded-2xl shadow-md md:h-[130px] h-[100px] w-[360px] md:w-[350px] bg-base-100`}
-        >
-          <img
-            src={pants}
-            alt=""
-            className="w-full h-full rounded-md object-cover"
-          />
-        </span>
-        <span
-          className={`relative rounded-2xl shadow-md md:h-[130px] h-[100px] w-[360px] md:w-[350px] bg-base-100`}
-        >
-          <img
-            src={tshirt}
-            alt=""
-            className="w-full h-full rounded-md object-cover"
-          />
-        </span>
+        <div className="card w-96 bg-base-100 shadow-xl image-full">
+          <figure>
+            <img src={pants} alt="Shoes" />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">Shoes!</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl image-full">
+          <figure>
+            <img src={tshirt} alt="Shoes" />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">Shoes!</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="flex flex-col items-center justify-between gap-5 p-5">
-        <span
-          className={`relative rounded-2xl shadow-md md:h-[130px] h-[100px] w-[360px] md:w-[350px] bg-base-100`}
-        >
-          <img
-            src={windstopper}
-            alt=""
-            className="w-full h-full rounded-md object-cover"
-          />
-        </span>
-        <span
-          className={`relative rounded-2xl shadow-md md:h-[130px] h-[100px] w-[360px] md:w-[350px] bg-base-100`}
-        >
-          <img
-            src={jacket}
-            alt=""
-            className="w-full h-full rounded-md object-cover"
-          />
-        </span>
+        <div className="card w-96 bg-base-100 shadow-xl image-full">
+          <figure>
+            <img src={windstopper} alt="Shoes" />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">Shoes!</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+        <div className="card w-96 bg-base-100 shadow-xl image-full">
+          <figure>
+            <img src={jacket} alt="Shoes" />
+          </figure>
+          <div className="card-body">
+            <h2 className="card-title">Shoes!</h2>
+            <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
       </div>
-      {/* <img
-      className="w-[500px] -ml-[55px] rotate-12"
-      src={greenShit}
-      alt=""
-    /> */}
     </Container>
   );
 };

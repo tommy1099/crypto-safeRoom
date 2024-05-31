@@ -5,8 +5,8 @@ import {
   FeaturesSection,
   BrandsSection,
 } from "../../components/ui";
-import { useState } from "react";
-import { HomeCarousel, Loading } from "../../components/forms";
+import { useEffect, useState } from "react";
+import { HomeCarousel, Loading, SearchBar } from "../../components/forms";
 import { RootState } from "../../Store/Store";
 import { useSelector } from "react-redux";
 import "../../components/Features/InfiniteScroll/InfiniteScroll.css";
@@ -18,322 +18,30 @@ import { BsArrowLeftSquare } from "react-icons/bs";
 // import greenPants from "../../assets/img/pants-hanger-with-green-background.png";
 import timberland from "../../assets/img/logos/images.png";
 import SuggestionCards from "../../components/ui/SuggestionCards/SuggestionsCards";
+import { IProduct } from "../../Interfaces/Interfaces";
 
 // import { useTranslation } from "react-i18next";
-const list_of_products = [
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: false,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-  {
-    type: "windstopper",
-    name: "وینداستاپر کلمبیا سایز 2ایکس شسییسش",
-    quantity: 1,
-    in_stock: true,
-    height: 95,
-    collar_to_sleeve: 75,
-    armpit_to_armpit: 70,
-    size: "2xl",
-    brand: "columbia",
-    category: "sport",
-    hat: true,
-    waterproof: true,
-    water_resistance: true,
-    waist_fixation: true,
-    country: "usa",
-    color: "black",
-    number_of_pockets: 4,
-    damage: false,
-    tags: {
-      tag1: "sport",
-      tag2: "columbia",
-      tag3: "2xl",
-    },
-    price: {
-      off: true,
-      price_before: 1500000,
-      price_after: 999000,
-    },
-    img: "",
-  },
-];
 
 const Home = () => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  useEffect(() => {
+    const productFetch = async () => {
+      try {
+        const resource = await fetch(
+          "http://localhost:3000/product/discounted"
+        );
+
+        if (resource.ok) {
+          const data = await resource.json();
+          setProducts(data);
+          console.log(data);
+        }
+      } catch (error) {
+        console.error({ message: error });
+      }
+    };
+    productFetch();
+  }, []);
   const [isLoaded] = useState(false);
   // const { t } = useTranslation();
   const isFa = useSelector((state: RootState) => state.lang.isFa);
@@ -341,6 +49,9 @@ const Home = () => {
   return (
     <div className="justify-center flex flex-col items-center text-center gap-10">
       <NavBar />
+      {/* <div className="absolute  w-[500px] top-[3%] right-[10%]">
+        <SearchBar />
+      </div> */}
       <HomeCarousel />
       <Container
         dir="ltr"
@@ -356,18 +67,15 @@ const Home = () => {
               <a className="text-lg">مشاهده همه</a>
             </div>
           </div>
-          {list_of_products.map((item, index) => (
+          {products?.map((item, index) => (
             <Card
+              key={index}
+              url={item.url}
               type={item.type}
-              name={item.name}
-              quantity={item.quantity}
-              in_stock={item.in_stock}
-              size={item.size}
-              brand={item.brand}
-              category={item.category}
+              general_info={item.general_info}
               tags={item.tags}
               price={item.price}
-              img={timberland}
+              tombnailImg={timberland}
             />
           ))}
           <img className="w-40" src={smileyGirl} alt="" />
@@ -381,22 +89,23 @@ const Home = () => {
           dir={`ltr`}
           style="flex items-center overflow-x-auto md:w-[70%] gap-3 whitespace-nowrap"
         >
-          <img className="" src="" alt="" />
-          {list_of_products.map((item, index) => (
+          <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
+            <div className="flex gap-5 justify-center items-center text-center flex-col">
+              <BsArrowLeftSquare />
+              <a className="text-lg">مشاهده همه</a>
+            </div>
+          </div>
+          {products?.map((item, index) => (
             <Card
+              key={index}
+              url={item.url}
               type={item.type}
-              name={item.name}
-              quantity={item.quantity}
-              in_stock={item.in_stock}
-              size={item.size}
-              brand={item.brand}
-              category={item.category}
+              general_info={item.general_info}
               tags={item.tags}
               price={item.price}
-              img={timberland}
+              tombnailImg={timberland}
             />
           ))}
-          <img className="w-40" src={smileyGirl} alt="" />
         </Container>
       </Container>
       <BrandsSection />

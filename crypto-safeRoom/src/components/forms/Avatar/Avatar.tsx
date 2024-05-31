@@ -9,6 +9,7 @@ import { FaCrown } from "react-icons/fa6";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import { toggleModalTrue } from "../../../Store/IsModalOpen";
+import { MdOutlinePersonOutline } from "react-icons/md";
 interface Props {
   where: string;
 }
@@ -120,7 +121,7 @@ const Avatar = ({ where }: Props) => {
 
   return (
     <>
-      <div className="avatar placeholder">
+      {/* <div className="avatar placeholder">
         <div
           className={`${
             where === "navbar" ? "w-11" : "w-32 md:w-48"
@@ -147,6 +148,9 @@ const Avatar = ({ where }: Props) => {
             </div>
           )}
         </div>
+      </div> */}
+      <div className="text-3xl text-neutral">
+        <MdOutlinePersonOutline />
       </div>
       <Modal
         id="login"

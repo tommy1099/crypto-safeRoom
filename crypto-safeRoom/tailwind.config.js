@@ -7,6 +7,9 @@ export default {
       custom: "5px",
       none: "0px",
     },
+    backdropBlur: {
+      xs: "4px",
+    },
     extend: {
       colors: {
         gold: "#FFD700",
@@ -43,7 +46,7 @@ export default {
           neutral: "#2C3639",
 
           // "base-100": "#f3f4f6",
-          "base-100": "#FEFBF6",
+          "base-100": "#F9F9F9",
           info: "#3b82f6",
 
           success: "#4d7c0f",

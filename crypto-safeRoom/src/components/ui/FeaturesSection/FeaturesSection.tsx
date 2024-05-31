@@ -13,15 +13,11 @@ const FeaturesSection = ({ place }: IFeatures) => {
   return (
     <Container
       dir="ltr"
-      style={`flex  bg-primary ${
-        place === "product" && "flex-col"
-      } items-center justify-between w-screen h-full mt-32 md:w-[80%] rounded-xl gap-4 py-6`}
+      style={`flex justify-center  ${
+        place === "product" ? "bg-base-100" : "md:w-[70%] bg-primary "
+      } items-center w-screen h-full rounded-xl gap-4 py-6`}
     >
-      <div
-        className={`flex ${
-          place !== "product" && "md:flex-row "
-        } flex-col items-center justify-between gap-4`}
-      >
+      <div className={`flex ${place !== "product" && "md:flex-row "} gap-4`}>
         {/* Feature 1 */}
         <FeatureCard
           place={place}
@@ -44,11 +40,7 @@ const FeaturesSection = ({ place }: IFeatures) => {
           description="تیپاکس + پست پیشتاز"
         />
       </div>
-      <div
-        className={`flex flex-col  ${
-          place !== "product" && "md:flex-row "
-        } items-center justify-between gap-4`}
-      >
+      <div className={`flex  ${place !== "product" && "md:flex-row "}  gap-4`}>
         {/* Feature 4 */}
         <FeatureCard
           place={place}

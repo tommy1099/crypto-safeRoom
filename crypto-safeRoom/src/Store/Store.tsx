@@ -32,7 +32,9 @@ import LanguageReducer from "./LanguageReducer";
 import signalIndicator from "./signalIndicator";
 import AllSignalsReducer from "./AlltheSignals";
 import IsModalOpen from "./IsModalOpen";
+import backgroundBlurReducer from "./BackgroundBlur";
 const rootReducer = combineReducers({
+  backgroundBlurReducer: backgroundBlurReducer,
   SignalDivs: divs,
   toggleReducer: Filtertoggle,
   FullScreenToggleReducer: FullScreenToggle,

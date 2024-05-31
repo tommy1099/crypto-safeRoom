@@ -1,6 +1,6 @@
 const CollapsibleMenu = () => {
   return (
-    <ul className="menu text-neutral lg:menu-horizontal bg-base-100 rounded-box pr-32">
+    <ul className="menu text-neutral lg:menu-horizontal bg-base-100 rounded-box mr-[8%]">
       <li>
         <a>درباره ما</a>
       </li>

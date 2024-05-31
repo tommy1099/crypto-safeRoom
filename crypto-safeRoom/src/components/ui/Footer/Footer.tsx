@@ -20,7 +20,9 @@ const Footer = () => {
           <ul className="list-reset">
             <li className=""></li>
           </ul>
-          <p className="text-gray-500">&copy; {t("allRights")}</p>
+          <p className="text-gray-500">
+            &copy; ۲۰۲۳ - تمامی حق و حقوق محفوظ می باشید - ساخته شده توسط تامی
+          </p>
         </div>
       </div>
     </footer>

@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div
-      className={`text-lg ${
+      className={`text-lg  ${
         currentLanguage === "en" ? "font-english" : "font-farsi"
       }`}
       data-theme={isDarkTheme ? "dark" : "light"}

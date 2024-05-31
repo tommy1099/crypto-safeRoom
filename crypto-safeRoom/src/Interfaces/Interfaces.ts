@@ -271,40 +271,60 @@ export interface CardProps extends PropsWithChildren {
     name: string;
 
   }
-export interface IProduct {
-  type?: string;
-  name?: string;
-  quantity?: number;
-  in_stock?: boolean;
-  height?: number;
-  size?: string;
-  brand?: string;
-  category?: string;
-  waterproof?: boolean;
-  water_resistance?: boolean;
-  country?: string;
-  color?: string;
-  number_of_pockets?: number;
-  damage?: boolean;
-  tags?: {tag1 : string, tag2 : string, tag3 : string};
-  price?: {
-    off: boolean,
-    price_before: number,
-    price_after: number
-  };
-  texture?: string;
-  
-  img?: [];
+  export interface IProduct {
+    url?: string;
+    type?: string;
+    general_info?: {
+      name?: string;
+      quantity?: number;
+      stock?: {in_stock: boolean, quantity: number};
+      height?: number;
+      size?: string;
+      // Pants and Clothes specific properties
+      collar_to_sleeve?: number;
+      armpit_to_armpit?: number;
+      waist?: number;
+      waist_to_crotch?: number;
+      crotch_to_thigh?: number;
+    }
 
-//different
-  waist_fixation?: boolean;
-  collar_to_sleeve?: number;
-  armpit_to_armpit?: number;
-  hat?: boolean;
-  waist?: number;
-  waist_to_crotch?: number;
-  crotch_to_thigh?: number;
-}
+    detailedInfo?: {
+      brand?: string;
+      category?: string;
+      hat?: boolean;
+      waterproof?: boolean;
+      water_resistance?: boolean;
+      waist_fixation?: boolean;
+      country?: string;
+      color?: string;
+      number_of_pockets?: number;
+      damage?: boolean;
+    }
+
+    tags?: { 
+      tag1?: string; 
+      tag2?: string; 
+      tag3?: string;
+    };
+    price?: {
+      
+      off?: boolean;
+      price_before?: number;
+      price_after?: number;
+    };
+    texture?: string;
+    tombnailImg?: string; 
+    img?: string[]; 
+    video?: string[]; 
+  
+
+  }
+  export interface ISuggestions {
+    data: IProduct[];
+    showLoading: boolean;
+    nothingFound: boolean;
+  }
+
 export interface IFeatureCardProps {
   place: string;
   icon: React.ReactNode;
@@ -313,4 +333,11 @@ export interface IFeatureCardProps {
 }
 export interface IBrandCardProps{
   img: string;
+}
+export interface DiscountedItems {
+  discountedClothes: IProduct[];
+  discountedPants: IProduct[];
+}
+export interface ISearch {
+  handleBlurToggleFromChild: (data: boolean) => void
 }

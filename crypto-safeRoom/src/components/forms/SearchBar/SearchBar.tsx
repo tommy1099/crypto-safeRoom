@@ -3,6 +3,7 @@ import { IoIosSearch } from "react-icons/io";
 import { IProduct, ISearch } from "../../../Interfaces/Interfaces";
 import Suggestions from "./Suggestions";
 import { MdOutlineCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
@@ -12,6 +13,7 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [nothingFound, setNothingFound] = useState(false);
+  const navigate = useNavigate();
   const debouncedSearch = (query: string) => {
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
@@ -79,9 +81,18 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   useEffect(() => {
     handleBlurToggleFromChild(showSuggestions);
   }, [handleBlurToggleFromChild, setShowSuggestions, showSuggestions]);
+  const handleSearch = () => {
+    navigate(`/search?q=${searchTerm}`);
+  };
   return (
-    <div className="w-full justify-end items-end text-right z-10 relative ">
-      <span className="absolute right-2 text-3xl top-2 text-slate-400 cursor-pointer ">
+    <form
+      onSubmit={handleSearch}
+      className="w-full justify-end items-end text-right z-10 relative "
+    >
+      <span
+        onClick={handleSearch}
+        className="absolute right-2 text-3xl top-2 text-slate-400 cursor-pointer "
+      >
         <IoIosSearch />
       </span>
       <input
@@ -95,7 +106,7 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
         className={`input input-bordered  ${
           showSuggestions
             ? "border-0 border-r border-l border-t border-slate-400 rounded-b-none"
-            : "border-slate-400"
+            : "bg-gray-200 border-none"
         } md:w-full mr-1 pr-10 rounded-xl focus:ring-0 z-3 focus:outline-none `}
       />
       {showSuggestions && (
@@ -118,7 +129,7 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
           />
         </div>
       )}
-    </div>
+    </form>
   );
 };
 

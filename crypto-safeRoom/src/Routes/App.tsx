@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useSearchParams } from "react-router-dom";
 import WelcomePage from "../pages/WelcomePage/WelcomePage";
 import { Contact, NotFound, Products, Checkout, Profile, Home } from "../pages";
 import { AdminApp, ProductApp, AuthApp } from ".";
@@ -7,6 +7,8 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../Store/Store";
 import { useTranslation } from "react-i18next";
 import "../Locales/fonts.css";
+import { LiveChat } from "../components/Features";
+import { SearchPage } from "../components/ui";
 
 function App() {
   const { i18n } = useTranslation();
@@ -23,12 +25,12 @@ function App() {
       }`}
       data-theme={isDarkTheme ? "dark" : "light"}
     >
+      <LiveChat />
       {/* <BackgroundPattern /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminApp />} />
-        <Route path="/product/:productId" element={<Products />} />
 
-        {/* <Route path="/product/*" element={<ProductApp />} /> */}
+        <Route path="/product/*" element={<ProductApp />} />
 
         <Route
           path="/auth/*"
@@ -38,10 +40,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/search" element={<SearchPage />} />
 
         <Route path="/contact" element={<Contact />} />
         <Route path="/welcome" element={<WelcomePage />} />
-
+        <Route path="/notfound" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

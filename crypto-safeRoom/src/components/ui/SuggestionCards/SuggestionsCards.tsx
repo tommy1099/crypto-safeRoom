@@ -7,62 +7,74 @@ const SuggestionCards = () => {
   return (
     <Container
       dir="ltr"
-      style="  flex flex-col md:flex-row items-center justify-center w-screen md:w-[70%] rounded-xl"
+      style=" gap-5 flex flex-col md:flex-row items-center justify-center w-screen md:w-[70%] rounded-xl"
     >
-      {/* <img
+      {/* <img className="object-cover"
       className="w-[300px] ml-[200px] -rotate-12"
       src={greenPants}
       alt=""
     /> */}
-      <div className="flex  flex-col items-center justify-between gap-5">
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
+      <div className="flex items-center justify-between gap-5">
+        <div className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative ">
           <figure>
-            <img src={pants} alt="Shoes" />
+            <img
+              className="object-cover rounded-xl brightness-50"
+              src={windstopper}
+              alt="windstopper"
+            />
           </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
+          <div className="absolute top-0 right-0 flex flex-col text-right text-white p-5 gap-3">
+            <h2 className="">بادگیر</h2>
+            <p className="mr-5">
+              If a dog chews shoes whose shoes does he choose?
+            </p>
           </div>
         </div>
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
+        <div className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative ">
           <figure>
-            <img src={tshirt} alt="Shoes" />
+            <img
+              className="object-cover rounded-xl brightness-50"
+              src={jacket}
+              alt="شلوار"
+            />
           </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
+          <div className="absolute top-0 right-0 flex flex-col text-right text-white p-5 gap-3">
+            <h2 className="">شلوار</h2>
+            <p className="mr-5">
+              If a dog chews shoes whose shoes does he choose?
+            </p>
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-between gap-5 p-5">
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
+      <div className="flex items-center justify-between gap-5">
+        <div className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative ">
           <figure>
-            <img src={windstopper} alt="Shoes" />
+            <img
+              className="object-cover rounded-xl brightness-50"
+              src={tshirt}
+              alt="tshirt"
+            />
           </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
+          <div className="absolute top-0 right-0 flex flex-col text-right text-white p-5 gap-3">
+            <h2 className="">تیشرت</h2>
+            <p className="mr-5">
+              If a dog chews shoes whose shoes does he choose?
+            </p>
           </div>
         </div>
-        <div className="card w-96 bg-base-100 shadow-xl image-full">
+        <div className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative ">
           <figure>
-            <img src={jacket} alt="Shoes" />
+            <img
+              className="object-cover rounded-xl brightness-50"
+              src={jacket}
+              alt="jacket"
+            />
           </figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
+          <div className="absolute top-0 right-0 flex flex-col text-right text-white p-5 gap-3">
+            <h2 className="">بارانی</h2>
+            <p className="mr-5">
+              If a dog chews shoes whose shoes does he choose?
+            </p>
           </div>
         </div>
       </div>

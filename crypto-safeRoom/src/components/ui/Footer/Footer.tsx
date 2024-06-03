@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className="relative py-8 z-1 w-screen text-neutral bg-base-100">
       <div className="flex flex-col ">
-        <div className="flex justify-around px-[15%] ">
+        <div className="flex justify-around px-[5%] ">
           <EnamadFooter />
           <UsefullLinksFooter />
           <FollowUsFooter />

@@ -64,7 +64,7 @@ const Product = () => {
           console.log("data", data);
           setProduct(data);
         } else {
-          navigate("/");
+          navigate("/notfound");
         }
       } catch (error) {
         console.error(error);

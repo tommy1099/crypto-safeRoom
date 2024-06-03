@@ -6,7 +6,12 @@ import {
   BrandsSection,
 } from "../../components/ui";
 import { useEffect, useState } from "react";
-import { HomeCarousel, Loading, SearchBar } from "../../components/forms";
+import {
+  HomeCarousel,
+  Loading,
+  ScrollToTopIcon,
+  SearchBar,
+} from "../../components/forms";
 import { RootState } from "../../Store/Store";
 import { useSelector } from "react-redux";
 import "../../components/Features/InfiniteScroll/InfiniteScroll.css";
@@ -58,15 +63,11 @@ const Home = () => {
         style="flex flex-col text-end w-full justify-center items-center"
       >
         <Container
-          dir={`ltr`}
-          style="flex items-center overflow-x-auto md:w-[70%] gap-3 whitespace-nowrap"
+          dir={`rtl`}
+          style="flex bg-primary rounded-xl p-5 items-center overflow-x-auto md:w-[70%] gap-3 whitespace-nowrap"
         >
-          <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
-            <div className="flex gap-5 justify-center items-center text-center flex-col">
-              <BsArrowLeftSquare />
-              <a className="text-lg">مشاهده همه</a>
-            </div>
-          </div>
+          <img className="w-40" src={smileyGirl} alt="" />
+
           {products?.map((item, index) => (
             <Card
               key={index}
@@ -78,7 +79,12 @@ const Home = () => {
               tombnailImg={timberland}
             />
           ))}
-          <img className="w-40" src={smileyGirl} alt="" />
+          <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
+            <div className="flex gap-5 justify-center items-center text-center flex-col">
+              <BsArrowLeftSquare />
+              <a className="text-lg">مشاهده همه</a>
+            </div>
+          </div>
         </Container>
       </Container>
       <FeaturesSection place="home" />
@@ -111,6 +117,10 @@ const Home = () => {
       <BrandsSection />
       <div className="w-screen">
         <Footer />
+      </div>
+      <div className="fixed left-4 bottom-4">
+        {" "}
+        <ScrollToTopIcon />
       </div>
     </div>
   );

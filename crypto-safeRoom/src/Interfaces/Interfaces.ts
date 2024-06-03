@@ -341,3 +341,6 @@ export interface DiscountedItems {
 export interface ISearch {
   handleBlurToggleFromChild: (data: boolean) => void
 }
+export interface IProductsSearch {
+  query: string;
+}

@@ -30,14 +30,14 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-[3] bg-base-100 text-end  ">
       {bgBlur && (
-        <span className="top-0 bottom-0 left-0 right-0 fixed bg-black opacity-20"></span>
+        <span className="top-0 bottom-0 left-0 z-[3] right-0 fixed bg-black opacity-40"></span>
       )}
       <div className="px-4 mx-auto sm:px-6 lg:px-8 ">
         <div className="flex justify-between items-center h-16 ">
           <div className="flex flex-col items-start justify-between gap-2 mt-[3%] ">
             <div className="flex gap-5 justify-center items-center text-center ">
               <div className=" flex border-r pr-5 gap-2 mt-3 ">
-                <div className="z-[-1]">
+                <div className="z-[2]">
                   <ProfileDropdown />
                 </div>
               </div>

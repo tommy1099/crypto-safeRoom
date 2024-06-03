@@ -14,7 +14,7 @@ const FeaturesSection = ({ place }: IFeatures) => {
     <Container
       dir="ltr"
       style={`flex justify-center  ${
-        place === "product" ? "bg-base-100" : "md:w-[70%] bg-primary "
+        place === "product" ? "bg-base-100" : "md:w-[70%] "
       } items-center w-screen h-full rounded-xl gap-4 py-6`}
     >
       <div className={`flex ${place !== "product" && "md:flex-row "} gap-4`}>

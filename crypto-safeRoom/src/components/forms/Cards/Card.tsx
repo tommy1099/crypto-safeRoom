@@ -10,7 +10,7 @@ const Card = ({ type, price, tombnailImg, url, general_info }: IProduct) => {
       }}
       className={`relative ${
         !general_info?.stock?.in_stock && " grayscale-[70%] "
-      } w-[150px] h-full rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary`}
+      } w-[150px] h-[250px] rounded-xl cursor-pointer hover:shadow-2xl md:min-w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary`}
     >
       <figure>
         {price?.off && (
@@ -26,18 +26,22 @@ const Card = ({ type, price, tombnailImg, url, general_info }: IProduct) => {
         {/* </div> */}
         <img className="rounded-md" src={tombnailImg || ""} alt={type} />
       </figure>
-      <div className=" p-2 whitespace-pre-wrap overflow-hidden overflow-ellipsis">
-        <h2 className="text-primary text-sm">{general_info?.name}</h2>
-        {/* <div className="flex items-center justify-between text-center bottom-0"> */}
+      <div
+        dir="rtl"
+        className=" p-2 whitespace-pre-wrap overflow-hidden text-ellipsis flex justify-between text-start flex-col"
+      >
+        <p className="text-primary text-sm flex items-end">
+          {general_info?.name}
+        </p>
         {!general_info?.stock?.in_stock ? (
-          <p className="flex items-center text-center justify-end text-md pr-1 text-red-500 font-semibold">
+          <p className="flex items-center text-center justify-end text-sm pr-1 text-red-500 font-semibold">
             فروخته شد
           </p>
         ) : (
-          <p className="flex gap-5 justify-center items-center text-center ">
-            <h5 className="text-primary line-through">{price?.price_before}</h5>
-            <h5 className="text-red-500">{price?.price_after}</h5>
-          </p>
+          <div className="flex gap-2 text-sm text-right justify-start">
+            <p className="text-primary line-through ">{price?.price_before}</p>
+            <p className="text-red-500">{price?.price_after} تومان</p>
+          </div>
         )}
       </div>
     </div>

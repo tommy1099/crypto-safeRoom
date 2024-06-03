@@ -22,7 +22,9 @@ import FeaturesSection from "./FeaturesSection/FeaturesSection";
 import BrandsSection from "./BrandsSection/BrandsSection";
 import suggestionCards from "./SuggestionCards/SuggestionsCards";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
+import SearchPage from "./SearchPage/SearchPage";
 export {
+  SearchPage,
   Breadcrumbs,
   suggestionCards,
   BrandsSection,

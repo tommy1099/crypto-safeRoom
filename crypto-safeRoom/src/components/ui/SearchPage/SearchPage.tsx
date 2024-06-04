@@ -1,25 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Footer, NavBar } from "..";
 import { ScrollToTopIcon } from "../../forms";
 import { useSearchParams } from "react-router-dom";
-import Container from "../Container/Container";
 import RightSideProfileMenu from "./RightSideSearchPageeMenu";
-import SortSearchPage from "./SortSearchPage";
 import ProductsSearchPage from "./ProductsSearchPage";
+import SortSearchPage from "./SortSearchPage";
 
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [sortValue, setSortValue] = useState("");
+  const [query, setQuery] = useState("");
   useEffect(() => {
-    const query = searchParams.get("q");
-    console.log("query", query);
-  }, [searchParams]);
+    const queryParam = searchParams.get("q");
+    if (queryParam) {
+      setQuery(queryParam);
+    }
+    console.log("query...", searchParams);
+  }, [query, searchParams]);
+  const handlerSortValueFromChild = (value: string) => {
+    setSortValue(value);
+  };
   return (
     <div className="">
       <NavBar />
       <div className="flex justify-center mt-[6%]">
         <div className="mt-[2%] h-1/2 mr-[12%] w-[82%]">
-          <SortSearchPage />
-          <ProductsSearchPage query={searchParams.get("q") || ""} />
+          <SortSearchPage
+            handlerSortValueFromChild={handlerSortValueFromChild}
+            query={query}
+            numberOfProducts={10}
+          />
+          <ProductsSearchPage query={query} sortValue={sortValue} />
         </div>
 
         <RightSideProfileMenu />

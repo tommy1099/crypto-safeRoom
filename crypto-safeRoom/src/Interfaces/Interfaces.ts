@@ -316,6 +316,7 @@ export interface CardProps extends PropsWithChildren {
     tombnailImg?: string; 
     img?: string[]; 
     video?: string[]; 
+    createdAt?: Date;
   
 
   }
@@ -343,4 +344,14 @@ export interface ISearch {
 }
 export interface IProductsSearch {
   query: string;
+  sortValue: string; 
+}
+export interface ISortedSearch {
+  query: string;
+  handlerSortValueFromChild: (value: string) => void;
+  numberOfProducts: number;
+
+}
+export interface SortOption {
+  [key: string]: (a: IProduct, b: IProduct) => number;
 }

@@ -3,7 +3,7 @@ import { IoIosSearch } from "react-icons/io";
 import { IProduct, ISearch } from "../../../Interfaces/Interfaces";
 import Suggestions from "./Suggestions";
 import { MdOutlineCancel } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
@@ -13,6 +13,7 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [nothingFound, setNothingFound] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const debouncedSearch = (query: string) => {
     if (debounceTimeout.current) {
@@ -81,9 +82,17 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   useEffect(() => {
     handleBlurToggleFromChild(showSuggestions);
   }, [handleBlurToggleFromChild, setShowSuggestions, showSuggestions]);
-  const handleSearch = () => {
-    navigate(`/search?q=${searchTerm}`);
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    setShowSuggestions(false);
+    event.preventDefault();
+    setSearchParams({ q: searchTerm });
+    if (!window.location.pathname.includes("/search")) {
+      navigate(`/search?=${searchTerm}`);
+    }
   };
+  useEffect(() => {
+    console.log("searchParams:", searchParams);
+  }, [searchParams, setSearchParams]);
   return (
     <form
       onSubmit={handleSearch}

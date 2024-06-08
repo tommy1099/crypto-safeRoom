@@ -1,14 +1,14 @@
-import { Route, Routes, Navigate, useSearchParams } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import WelcomePage from "../pages/WelcomePage/WelcomePage";
-import { Contact, NotFound, Products, Checkout, Profile, Home } from "../pages";
+import { Contact, NotFound, Checkout, Profile, Home } from "../pages";
 import { AdminApp, ProductApp, AuthApp } from ".";
-// import { BackgroundPattern } from "./components/ui";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../Store/Store";
 import { useTranslation } from "react-i18next";
 import "../Locales/fonts.css";
-import { LiveChat } from "../components/Features";
-import { SearchPage } from "../components/ui";
+// import { LiveChat } from "../components/Features";
+import { MobileMenuBar, SearchPage } from "../components/ui";
+import { useMediaQuery } from "react-responsive";
 
 function App() {
   const { i18n } = useTranslation();
@@ -17,6 +17,7 @@ function App() {
   const isLoggedin = useSelector(
     (state: RootState) => state.isLoggedin.isLoggedin
   );
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   return (
     <div
@@ -25,8 +26,8 @@ function App() {
       }`}
       data-theme={isDarkTheme ? "dark" : "light"}
     >
-      <LiveChat />
-      {/* <BackgroundPattern /> */}
+      {isMobile && <MobileMenuBar />}
+      {/* <LiveChat /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminApp />} />
 

@@ -3,11 +3,14 @@ import Container from "../Container/Container";
 import { BsSortDown } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { ISortedSearch } from "../../../Interfaces/Interfaces";
+import { IoIosClose } from "react-icons/io";
+import { FiFilter } from "react-icons/fi";
 
 const SortSearchPage = ({
   query,
   handlerSortValueFromChild,
-  numberOfProducts,
+  toggleSidebar,
+  isSidebarOpen,
 }: ISortedSearch) => {
   const [selectedSort, setSelectedSort] = useState("جدید");
   const navigate = useNavigate();
@@ -15,12 +18,12 @@ const SortSearchPage = ({
     setSelectedSort(sort);
     updateURL(sort);
   };
+
   useEffect(() => {
     updateURL(selectedSort);
   }, [selectedSort]);
   const updateURL = (sort: string) => {
-    let url = "/search";
-    const searchParams = new URLSearchParams();
+    const searchParams = new URLSearchParams(window.location.search);
 
     if (query) {
       searchParams.set("q", query);
@@ -40,28 +43,32 @@ const SortSearchPage = ({
         searchParams.set("sort", "featured");
         break;
       default:
+        searchParams.delete("sort");
         break;
     }
     handlerSortValueFromChild(sort);
-    url += `?${searchParams.toString()}`;
-    navigate(url);
+    const url = `/search?${searchParams.toString()}`;
+    navigate(url, { replace: true });
   };
 
   return (
     <Container
       dir="rtl"
-      style=" text-sm flex justify-between items-center px-5  w-full h-12"
+      style=" text-xs flex items-center mt-20 md:mt-14 lg:mt-10  overflow-x-auto overflow-y-hidden h-12 w-full px-4 "
     >
-      <div className="flex gap-5">
-        <div className="font-bold flex items-center gap-2">
-          <div className="text-xl">
+      <button className=" md:hidden ml-2" onClick={toggleSidebar}>
+        {isSidebarOpen ? <IoIosClose size={20} /> : <FiFilter size={20} />}
+      </button>
+      <div className="flex gap-5 ">
+        <div className="font-bold flex items-center gap-2 w-[100px]">
+          <div className="text-xl ">
             <BsSortDown />
           </div>
           مرتب سازی:
         </div>
 
         <div
-          className={`cursor-pointer ${
+          className={`cursor-pointer w-[70px] ${
             selectedSort === "جدید ترین"
               ? "text-red-500 border-b-4 p-2 border-red-500 rounded-sm"
               : "  border-b-4 p-2 border-base-100"
@@ -71,7 +78,7 @@ const SortSearchPage = ({
           جدید ترین
         </div>
         <div
-          className={`cursor-pointer ${
+          className={`cursor-pointer w-[70px] ${
             selectedSort === "ارزان ترین"
               ? "text-red-500 border-b-4 p-2 border-red-500 rounded-sm"
               : "text-gray-500 border-b-4 p-2 border-base-100"
@@ -81,7 +88,7 @@ const SortSearchPage = ({
           ارزان ترین
         </div>
         <div
-          className={`cursor-pointer ${
+          className={`cursor-pointer w-[70px] ${
             selectedSort === "گران ترین"
               ? "text-red-500 border-b-4 p-2 border-red-500 rounded-sm"
               : "text-gray-500 border-b-4 p-2 border-base-100"
@@ -91,7 +98,7 @@ const SortSearchPage = ({
           گران ترین
         </div>
         <div
-          className={`cursor-pointer ${
+          className={`cursor-pointer w-[80px] ${
             selectedSort === "فروش ویژه"
               ? "text-red-500 border-b-4 p-2 border-red-500 rounded-sm"
               : "text-gray-500 border-b-4 p-2 border-base-100"
@@ -101,7 +108,6 @@ const SortSearchPage = ({
           فروش ویژه
         </div>
       </div>
-      <div className="text-gray-400">{numberOfProducts} کالا</div>
     </Container>
   );
 };

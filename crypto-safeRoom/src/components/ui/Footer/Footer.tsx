@@ -8,7 +8,7 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="relative py-8 z-1 w-screen text-neutral bg-base-100">
+    <footer className="relative mt-32 py-8 z-1 md:w-screen text-xs text-neutral bg-base-100">
       <div className="flex flex-col ">
         <div className="flex justify-around px-[5%] ">
           <EnamadFooter />

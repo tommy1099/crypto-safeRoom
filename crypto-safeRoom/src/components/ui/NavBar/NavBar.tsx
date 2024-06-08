@@ -33,71 +33,57 @@ const Navbar = () => {
         <span className="top-0 bottom-0 left-0 z-[3] right-0 fixed bg-black opacity-40"></span>
       )}
       <div className="px-4 mx-auto sm:px-6 lg:px-8 ">
-        <div className="flex justify-between items-center h-16 ">
-          <div className="flex flex-col items-start justify-between gap-2 mt-[3%] ">
-            <div className="flex gap-5 justify-center items-center text-center ">
-              <div className=" flex border-r pr-5 gap-2 mt-3 ">
-                <div className="z-[2]">
-                  <ProfileDropdown />
-                </div>
-              </div>
-              <div className="flex text-center items-center justify-center">
-                <ShoppingCart />
-              </div>
-            </div>
-
-            <div className="text-xs flex justify-center items-center text-center gap-2">
-              <p>ارسال به کرمامشاه، صحنه</p>
-              <SlLocationPin />
-            </div>
-          </div>
-
+        <div className="flex justify-between text-center items-center  h-22 ">
           {isMobile ? (
-            <div ref={dropdownRef} className="flex gap-3 items-center">
-              {/* <Notification /> */}
+            <div ref={dropdownRef} className="flex w-full gap-3 items-center">
               <SearchBar
                 handleBlurToggleFromChild={handleBlurToggleFromChild}
               />
-              <ShoppingCart />
-              <ProfileDropdown />
-              <HamSideBar />
+              <div className="flex ">
+                <Link to="/" className="flex w-[100px] items-center">
+                  <img src={`${isDarkTheme ? "" : logo}`} alt="LOGO" />
+                </Link>
+              </div>
             </div>
           ) : (
-            <div className="hidden mt-3  sm:block sm:ml-6 text-neutral">
-              <div className="flex justify-end xl:w-[700px]  items-center ">
+            <div className="flex justify-between items-center w-full">
+              <div className="flex flex-col items-start  ">
+                <div className="flex gap-5 justify-center items-center text-center ">
+                  <div className=" flex border-r pr-5 gap-2 mt-3 ">
+                    <div className="z-[2]">
+                      <ProfileDropdown />
+                    </div>
+                  </div>
+                  <div className="flex text-center items-center justify-center">
+                    <ShoppingCart />
+                  </div>
+                </div>
+
+                <div className="text-xs flex justify-center items-center text-center gap-2">
+                  <p>ارسال به کرمامشاه، صحنه</p>
+                  <SlLocationPin />
+                </div>
+              </div>
+
+              <div
+                ref={dropdownRef}
+                className="flex w-[900px] gap-3 items-center"
+              >
+                <CollapsibleMenu />
+
                 <SearchBar
                   handleBlurToggleFromChild={handleBlurToggleFromChild}
                 />
-                {/* <Link
-                  to="/"
-                  className="py-2 w-28 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-                >
-                  {t("home")}
-                </Link> */}
-
-                {/* <Link
-                  to="/contact"
-                  className=" w-28 py-2 text-sm font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-                >
-                  {t("contactUs")}
-                </Link> */}
-
-                {!isMobile && (
-                  <div className="flex">
-                    <Link
-                      to="/"
-                      className="flex w-[100px] -mr-7 mt-10 items-center"
-                    >
-                      <img src={`${isDarkTheme ? "" : logo}`} alt="LOGO" />
-                    </Link>
-                  </div>
-                )}
+                <div className="flex ">
+                  <Link to="/" className="flex w-[100px] items-center">
+                    <img src={`${isDarkTheme ? "" : logo}`} alt="LOGO" />
+                  </Link>
+                </div>
               </div>
             </div>
           )}
         </div>
       </div>
-      {!isMobile && <CollapsibleMenu />}
     </nav>
   );
 };

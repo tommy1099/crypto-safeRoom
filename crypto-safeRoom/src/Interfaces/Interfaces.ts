@@ -345,13 +345,25 @@ export interface ISearch {
 export interface IProductsSearch {
   query: string;
   sortValue: string; 
+  handlerNumberOfProducts: (num: number) => void;
+  filters?: Record<string, FilterOption[]>;
 }
 export interface ISortedSearch {
   query: string;
   handlerSortValueFromChild: (value: string) => void;
   numberOfProducts: number;
+  toggleSidebar: ()=> void;
+  isSidebarOpen: boolean;
 
 }
 export interface SortOption {
   [key: string]: (a: IProduct, b: IProduct) => number;
+}
+export   interface FilterOption {
+  id: string;
+  label: string;
+}
+export interface IRightSideSearchPageeMenu {
+  isSidebarOpen: boolean;
+  handleSendFiltersFromChild: (filters: Record<string, FilterOption[]>) => void;
 }

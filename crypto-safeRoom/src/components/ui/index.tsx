@@ -23,7 +23,11 @@ import BrandsSection from "./BrandsSection/BrandsSection";
 import suggestionCards from "./SuggestionCards/SuggestionsCards";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 import SearchPage from "./SearchPage/SearchPage";
+import SkeletonCard from "./SkeletonCard/SkeletonCard";
+import MobileMenuBar from "./MobileMenuBar/MobileMenuBar";
 export {
+  MobileMenuBar,
+  SkeletonCard,
   SearchPage,
   Breadcrumbs,
   suggestionCards,

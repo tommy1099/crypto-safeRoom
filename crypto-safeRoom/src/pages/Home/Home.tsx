@@ -64,7 +64,7 @@ const Home = () => {
       >
         <Container
           dir={`rtl`}
-          style="flex bg-primary rounded-xl p-5 items-center overflow-x-auto md:w-[70%] gap-3 whitespace-nowrap"
+          style="flex bg-primary md:rounded-xl p-5 items-center overflow-x-auto w-full md:w-[70%] gap-3 whitespace-nowrap"
         >
           <img className="w-40" src={smileyGirl} alt="" />
 
@@ -87,15 +87,18 @@ const Home = () => {
           </div>
         </Container>
       </Container>
-      <FeaturesSection place="home" />
+      <div className="justify-center flex">
+        <FeaturesSection place="home" />
+      </div>
+
       <SuggestionCards />
 
       <Container dir="ltr" style="flex w-full justify-center items-center">
         <Container
           dir={`ltr`}
-          style="flex items-center overflow-x-auto md:w-[70%] gap-3 whitespace-nowrap"
+          style="flex items-center overflow-x-auto w-[70%] gap-3 whitespace-nowrap"
         >
-          <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
+          <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] md:rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
             <div className="flex gap-5 justify-center items-center text-center flex-col">
               <BsArrowLeftSquare />
               <a className="text-lg">مشاهده همه</a>

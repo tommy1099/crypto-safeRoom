@@ -10,7 +10,7 @@ const BrandsSection = () => {
   return (
     <Container
       dir="ltr"
-      style=" flex bg-primary flex-row items-center justify-center  w-screen md:w-[70%] rounded-xl gap-5 py-6"
+      style=" flex bg-primary flex-row items-center justify-center  w-screen md:w-[70%] md:rounded-xl gap-5 py-6"
     >
       <div className="flex flex-col md:flex-row items-center justify-between gap-5 ">
         <BrandsCard img={quechua} />

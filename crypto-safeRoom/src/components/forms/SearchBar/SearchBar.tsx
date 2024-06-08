@@ -85,14 +85,16 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     setShowSuggestions(false);
     event.preventDefault();
-    setSearchParams({ q: searchTerm });
-    if (!window.location.pathname.includes("/search")) {
-      navigate(`/search?=${searchTerm}`);
-    }
+    setSearchParams({ q: searchTerm }); // if (!window.location.pathname.includes("/search")) {
+    // navigate(`/search/?q=${encodeURIComponent(searchTerm)}`);
+    // }
   };
   useEffect(() => {
-    console.log("searchParams:", searchParams);
-  }, [searchParams, setSearchParams]);
+    setSearchTerm(searchParams.get("q") || "");
+    if (searchTerm) {
+      navigate(`/search/?q=${encodeURIComponent(searchTerm)}`);
+    }
+  }, [searchParams]);
   return (
     <form
       onSubmit={handleSearch}
@@ -111,12 +113,12 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
         onClick={handleInputClick}
         dir="rtl"
         type="text"
-        placeholder={"جستجو"}
+        placeholder={"جستجو در آپولو"}
         className={`input input-bordered  ${
           showSuggestions
             ? "border-0 border-r border-l border-t border-slate-400 rounded-b-none"
             : "bg-gray-200 border-none"
-        } md:w-full mr-1 pr-10 rounded-xl focus:ring-0 z-3 focus:outline-none `}
+        } w-full mr-1 pr-10 rounded-xl focus:ring-0 z-3 focus:outline-none `}
       />
       {showSuggestions && (
         <span

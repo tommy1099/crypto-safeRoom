@@ -276,6 +276,7 @@ export interface CardProps extends PropsWithChildren {
     type?: string;
     general_info?: {
       name?: string;
+      kind?: string;
       quantity?: number;
       stock?: {in_stock: boolean, quantity: number};
       height?: number;
@@ -347,6 +348,8 @@ export interface IProductsSearch {
   sortValue: string; 
   handlerNumberOfProducts: (num: number) => void;
   filters?: Record<string, FilterOption[]>;
+  page: number;
+  limit: number;
 }
 export interface ISortedSearch {
   query: string;

@@ -44,16 +44,16 @@ const colors = [
 
 const textures = [{ id: "gortex", label: "گورتکس" }] as const;
 
-const types = [
+const kinds = [
   { id: "windstopper", label: "وینداستاپر" },
   { id: "jacket", label: "بادگیر" },
   { id: "t-shirt", label: "تیشرت" },
   { id: "pants", label: "شلوار" },
 ] as const;
 
-const features = [
-  { id: "waterproof", label: "ضدآب" },
-  { id: "water-resistance", label: "آب گریز" },
+const waterproof = [{ id: "waterproof", label: "ضدآب" }] as const;
+const water_resistance = [
+  { id: "water_resistance", label: "آب گریز" },
 ] as const;
 
 const usages = [
@@ -87,6 +87,7 @@ const RightSideSearchPageeMenu = ({
   const handleFilterChange = (category: string, option: FilterOption) => {
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters };
+      console.log("updatedFilter: ", updatedFilters);
       const categoryFilters = updatedFilters[category] || [];
 
       if (categoryFilters.some((filter) => filter.label === option.label)) {
@@ -97,15 +98,24 @@ const RightSideSearchPageeMenu = ({
         updatedFilters[category] = [...categoryFilters, option];
       }
 
-      const queryParams = new URLSearchParams();
+      const searchParams = new URLSearchParams(window.location.search);
+      // searchParams.delete(category); // Remove the existing filters for this category
+
+      // Clear all existing filters
+      for (const [key] of new URLSearchParams(searchParams.toString())) {
+        if (key.includes("[")) {
+          searchParams.delete(key);
+        }
+      }
+
       Object.entries(updatedFilters).forEach(([category, options]) => {
         options.forEach((option, i) => {
-          queryParams.append(`${category}[${i}]`, option.label);
+          searchParams.append(`${category}[${i}]`, option.label);
         });
       });
 
-      const newUrl = `&${queryParams.toString()}`;
-      window.history.replaceState(null, "", "?" + searchParams + newUrl);
+      const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+      window.history.replaceState(null, "", newUrl);
 
       return updatedFilters;
     });
@@ -123,7 +133,7 @@ const RightSideSearchPageeMenu = ({
       <div className="">فیلتر ها</div>
       <p
         onClick={handleClearFilters}
-        className="cursor-pointer my-5 text-sm text-blue-400"
+        className="my-5 text-sm text-blue-400 cursor-pointer"
       >
         حذف فیلتر ها
       </p>
@@ -131,7 +141,7 @@ const RightSideSearchPageeMenu = ({
       <DropDown_normal
         name="برندها"
         children={
-          <div className="flex flex-col  my-5">
+          <div className="flex flex-col my-5">
             {brands.map((brand) => (
               <label className="flex gap-2" key={brand.id}>
                 <input
@@ -153,7 +163,7 @@ const RightSideSearchPageeMenu = ({
       <DropDown_normal
         name="سایز ها"
         children={
-          <div className="flex flex-col  my-5">
+          <div className="flex flex-col my-5">
             {sizes.map((size) => (
               <label className="flex gap-2" key={size.id}>
                 <input
@@ -174,7 +184,7 @@ const RightSideSearchPageeMenu = ({
       <DropDown_normal
         name="رنگ ها"
         children={
-          <div className="flex flex-col  my-5">
+          <div className="flex flex-col my-5">
             {colors.map((color) => (
               <label className="flex gap-2" key={color.id}>
                 <input
@@ -195,7 +205,7 @@ const RightSideSearchPageeMenu = ({
       <DropDown_normal
         name="کشور سازنده"
         children={
-          <div className="flex flex-col  my-5">
+          <div className="flex flex-col my-5">
             {countries.map((country) => (
               <label className="flex gap-2" key={country.id}>
                 <input
@@ -216,7 +226,7 @@ const RightSideSearchPageeMenu = ({
       <DropDown_normal
         name="جنس"
         children={
-          <div className="flex flex-col  my-5">
+          <div className="flex flex-col my-5">
             {textures.map((texture) => (
               <label className="flex gap-2" key={texture.id}>
                 <input
@@ -237,8 +247,8 @@ const RightSideSearchPageeMenu = ({
       <DropDown_normal
         name="نوع"
         children={
-          <div className="flex flex-col  my-5">
-            {types.map((type) => (
+          <div className="flex flex-col my-5">
+            {kinds.map((type) => (
               <label className="flex gap-2" key={type.id}>
                 <input
                   type="checkbox"
@@ -258,7 +268,7 @@ const RightSideSearchPageeMenu = ({
       <DropDown_normal
         name=" مورد استفاده"
         children={
-          <div className="flex flex-col  my-5">
+          <div className="flex flex-col my-5">
             {usages.map((usages) => (
               <label className="flex gap-2" key={usages.id}>
                 <input
@@ -277,23 +287,31 @@ const RightSideSearchPageeMenu = ({
         }
       />
       <DropDown_normal
-        name=" ویژگی ها"
+        name="ویژگی ها"
         children={
-          <div className="flex flex-col  my-5">
-            {features.map((features) => (
-              <label className="flex gap-2" key={features.id}>
-                <input
-                  type="checkbox"
-                  checked={
-                    filters.featuress?.some(
-                      (filter) => filter.label === features.label
-                    ) || false
-                  }
-                  onChange={() => handleFilterChange("featuress", features)}
-                />
-                {features.label}
-              </label>
-            ))}
+          <div className="flex flex-col my-5">
+            <label className="flex gap-2">
+              <input
+                type="checkbox"
+                checked={filters.featuress?.some(
+                  (filter) => filter.id === "waterproof"
+                )}
+                onChange={() => handleFilterChange("waterproof", waterproof[0])}
+              />
+              {"ضدآب"}
+            </label>
+            <label className="flex gap-2">
+              <input
+                type="checkbox"
+                checked={filters.featuress?.some(
+                  (filter) => filter.id === "water_resistance"
+                )}
+                onChange={() =>
+                  handleFilterChange("water_resistance", water_resistance[0])
+                }
+              />
+              {"آب گریز"}
+            </label>
           </div>
         }
       />

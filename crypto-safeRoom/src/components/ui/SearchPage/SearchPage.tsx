@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Footer, NavBar } from "..";
+import { Footer, NavBar, PaginationButtons } from "..";
 import { ScrollToTopIcon } from "../../forms";
 import { useSearchParams } from "react-router-dom";
 import RightSideProfileMenu from "./RightSideSearchPageeMenu";
@@ -14,13 +14,15 @@ const SearchPage = () => {
   const [query, setQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [filters, setFilters] = useState<Record<string, FilterOption[]>>();
+  const [currectPage, setCurrentPage] = useState(1);
   useEffect(() => {
     const queryParam = searchParams.get("q");
     if (queryParam) {
       setQuery(queryParam);
     }
+    // setSearchParams("");
     console.log("query...", searchParams);
-  }, [query, searchParams]);
+  }, [query, searchParams, setSearchParams]);
   const handlerSortValueFromChild = (value: string) => {
     setSortValue(value);
   };
@@ -33,9 +35,20 @@ const SearchPage = () => {
   const handleSendFiltersFromChild = (data: Record<string, FilterOption[]>) => {
     setFilters(data);
   };
+  const handlerIncPageNum = () => {
+    setCurrentPage((prev) =>
+      prev <= Math.floor(numberOfProducts / 10) ? prev + 1 : prev
+    );
+  };
+
+  const handlerDecPageNum = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
   return (
     <div className="">
       <NavBar />
+
       <div className="flex justify-center mt-[5%]">
         <div className=" overflow-x-auto md:w-[82%] h-full">
           <SortSearchPage
@@ -46,11 +59,21 @@ const SearchPage = () => {
             numberOfProducts={numberOfProducts}
           />
           <ProductsSearchPage
+            limit={10}
+            page={currectPage}
             filters={filters}
             query={query}
             sortValue={sortValue}
             handlerNumberOfProducts={handlerNumberOfProducts}
           />
+          <div className="flex justify-center items-center mt-24 ml-[10%] text-center">
+            <PaginationButtons
+              isLoaded={false}
+              currentPage={currectPage}
+              decPage={handlerDecPageNum}
+              incPage={handlerIncPageNum}
+            />
+          </div>
         </div>
         <RightSideProfileMenu
           handleSendFiltersFromChild={handleSendFiltersFromChild}
@@ -60,7 +83,7 @@ const SearchPage = () => {
       <div className="w-screen">
         <Footer />
       </div>
-      <div className="fixed left-4 bottom-4">
+      <div className="fixed bottom-4 left-4">
         <ScrollToTopIcon />
       </div>
     </div>

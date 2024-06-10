@@ -79,6 +79,7 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   const handleClearClick = () => {
     setSearchTerm("");
   };
+
   useEffect(() => {
     handleBlurToggleFromChild(showSuggestions);
   }, [handleBlurToggleFromChild, setShowSuggestions, showSuggestions]);
@@ -98,11 +99,11 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   return (
     <form
       onSubmit={handleSearch}
-      className="w-full justify-end items-end text-right z-10 relative "
+      className="relative z-10 justify-end items-end w-full text-right"
     >
       <span
         onClick={handleSearch}
-        className="absolute right-2 text-3xl top-2 text-slate-400 cursor-pointer "
+        className="absolute top-2 right-2 text-3xl cursor-pointer text-slate-400"
       >
         <IoIosSearch />
       </span>
@@ -116,13 +117,13 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
         placeholder={"جستجو در آپولو"}
         className={`input input-bordered  ${
           showSuggestions
-            ? "border-0 border-r border-l border-t border-slate-400 rounded-b-none"
+            ? "rounded-b-none border-0 border-t border-r border-l border-slate-400"
             : "bg-gray-200 border-none"
         } w-full mr-1 pr-10 rounded-xl focus:ring-0 z-3 focus:outline-none `}
       />
       {showSuggestions && (
         <span
-          className="absolute left-5 text-2xl top-3 text-slate-400 cursor-pointer "
+          className="absolute top-3 left-5 text-2xl cursor-pointer text-slate-400"
           onClick={handleClearClick}
         >
           <MdOutlineCancel />

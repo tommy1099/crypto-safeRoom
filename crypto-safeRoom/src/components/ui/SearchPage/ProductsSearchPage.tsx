@@ -8,11 +8,19 @@ import {
 import dummyIMG from "../../../assets/img/logos/images.png";
 import CardSearchPage from "./CardSearchPage";
 import { SkeletonCard } from "..";
-const ProductsSearchPage = ({ query, sortValue, filters }: IProductsSearch) => {
+const ProductsSearchPage = ({
+  handlerNumberOfProducts,
+  query,
+  sortValue,
+  filters,
+  page,
+  limit,
+}: IProductsSearch) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [sortedProducts, setSortedProducts] = useState<IProduct[]>([]);
   const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+  const [numberOfProducts, setNumberOfProducts] = useState(0);
   //===================================================
   const applyFilters = (
     products: IProduct[],
@@ -55,6 +63,11 @@ const ProductsSearchPage = ({ query, sortValue, filters }: IProductsSearch) => {
               (filterOption) => product.type === filterOption.id
             );
           }
+          if (key === "kinds" && product.general_info?.kind) {
+            return filterOptions.some(
+              (filterOption) => product.general_info?.kind === filterOption.id
+            );
+          }
           return true;
         });
       });
@@ -69,17 +82,22 @@ const ProductsSearchPage = ({ query, sortValue, filters }: IProductsSearch) => {
       setShowSkeleton(true);
 
       const response = await fetch(
-        `http://localhost:3000/product/searched/${query}`
+        `http://localhost:3000/product/searched/${query ? query : "all"}/${
+          page ? page : 1
+        }/${limit ? limit : 1}`
       );
       if (response.ok) {
-        const data: IProduct[] = await response.json();
-        setProducts(data);
+        const { resutls, numberOfProducts } = await response.json();
+        console.log("products: ", resutls);
+        setNumberOfProducts(numberOfProducts);
+        handlerNumberOfProducts(numberOfProducts);
+        setProducts(resutls);
         setShowSkeleton(false);
-        setFilteredProducts(applyFilters(data, filters || {}));
+        setFilteredProducts(applyFilters(resutls, filters || {}));
       }
     };
     fetchProducts();
-  }, [filters, query]);
+  }, [filters, limit, page, query]);
 
   useEffect(() => {
     setFilteredProducts(applyFilters(products, filters || {}));
@@ -129,8 +147,8 @@ const ProductsSearchPage = ({ query, sortValue, filters }: IProductsSearch) => {
   return (
     <Container dir="" style="border-t border-grey-300 h-full">
       {" "}
-      <div className="text-gray-400 text-sm ml-2 my-2">
-        {filteredProducts.length} کالا
+      <div className="my-2 ml-2 text-sm text-gray-400">
+        {numberOfProducts} کالا
       </div>
       {!showSkeleton ? (
         <Container

@@ -13,14 +13,14 @@ const PaginationButtons = ({
   return (
     <div className="join">
       <button onClick={decPage} className="join-item btn">
-        <span className="text-primary">«</span>
+        <span className="text-primary">{"<"}</span>
       </button>
       <button className="join-item btn text-neutral">
         Page {currentPage}
         {isLoaded && <span className="loading loading-spinner"></span>}
       </button>
       <button onClick={incPage} className="join-item btn">
-        <span className="text-primary">»</span>
+        <span className="text-primary">{">"}</span>
       </button>
     </div>
   );

@@ -47,21 +47,25 @@ const SortSearchPage = ({
         break;
     }
     handlerSortValueFromChild(sort);
-    const url = `/search?${searchParams.toString()}`;
-    navigate(url, { replace: true });
+    // const url = `/search?${searchParams.toString()}`;
+    // navigate(url, { replace: true });
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+    window.history.replaceState(null, "", newUrl);
   };
-
+  //  const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+  //     window.history.replaceState(null, "", newUrl);
+  //   };
   return (
     <Container
       dir="rtl"
-      style=" text-xs flex items-center mt-20 md:mt-14 lg:mt-10  overflow-x-auto overflow-y-hidden h-12 w-full px-4 "
+      style=" text-xs flex items-center mt-20 md:mt-24 lg:mt-20  overflow-x-auto overflow-y-hidden h-12 w-full px-4 "
     >
-      <button className=" md:hidden ml-2" onClick={toggleSidebar}>
+      <button className="ml-2 md:hidden" onClick={toggleSidebar}>
         {isSidebarOpen ? <IoIosClose size={20} /> : <FiFilter size={20} />}
       </button>
-      <div className="flex gap-5 ">
+      <div className="flex gap-5">
         <div className="font-bold flex items-center gap-2 w-[100px]">
-          <div className="text-xl ">
+          <div className="text-xl">
             <BsSortDown />
           </div>
           مرتب سازی:

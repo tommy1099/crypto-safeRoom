@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Container from "../Container/Container";
 import { BsSortDown } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { ISortedSearch } from "../../../Interfaces/Interfaces";
 import { IoIosClose } from "react-icons/io";
 import { FiFilter } from "react-icons/fi";
@@ -12,8 +12,21 @@ const SortSearchPage = ({
   toggleSidebar,
   isSidebarOpen,
 }: ISortedSearch) => {
-  const [selectedSort, setSelectedSort] = useState("جدید");
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sortParam = searchParams.get("sort") || "newest";
+  const [selectedSort, setSelectedSort] = useState(() => {
+    switch (sortParam) {
+      case "cheapest":
+        return "ارزان ترین";
+      case "expensive":
+        return "گران ترین";
+      case "featured":
+        return "فروش ویژه";
+      default:
+        return "جدید ترین";
+    }
+  });
+  // const [selectedSort, setSelectedSort] = useState("جدید ترین");
   const handleSortClick = (sort: string) => {
     setSelectedSort(sort);
     updateURL(sort);
@@ -23,35 +36,34 @@ const SortSearchPage = ({
     updateURL(selectedSort);
   }, [selectedSort]);
   const updateURL = (sort: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const newSearchParams = new URLSearchParams(searchParams);
 
     if (query) {
-      searchParams.set("q", query);
+      newSearchParams.set("q", query);
     }
 
     switch (sort) {
       case "جدید ترین":
-        searchParams.set("sort", "newest");
+        newSearchParams.set("sort", "newest");
         break;
       case "ارزان ترین":
-        searchParams.set("sort", "cheapest");
+        newSearchParams.set("sort", "cheapest");
         break;
       case "گران ترین":
-        searchParams.set("sort", "expensive");
+        newSearchParams.set("sort", "expensive");
         break;
       case "فروش ویژه":
-        searchParams.set("sort", "featured");
+        newSearchParams.set("sort", "featured");
         break;
       default:
-        searchParams.delete("sort");
+        newSearchParams.delete("sort");
         break;
     }
+
     handlerSortValueFromChild(sort);
-    // const url = `/search?${searchParams.toString()}`;
-    // navigate(url, { replace: true });
-    const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
-    window.history.replaceState(null, "", newUrl);
+    setSearchParams(newSearchParams);
   };
+
   //  const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
   //     window.history.replaceState(null, "", newUrl);
   //   };

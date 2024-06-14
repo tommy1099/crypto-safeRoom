@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { Footer, NavBar, PaginationButtons } from "..";
-import { ScrollToTopIcon } from "../../forms";
+import { Footer, NavBar } from "@/components/ui";
+import { ScrollToTopIcon } from "@/components/forms";
 import { useSearchParams } from "react-router-dom";
-import RightSideProfileMenu from "./RightSideSearchPageeMenu";
-import ProductsSearchPage from "./ProductsSearchPage";
-import SortSearchPage from "./SortSearchPage";
+import ProductsSearchPage from "@/components/ui/SearchPage/ProductsSearchPage";
 import { FilterOption } from "@/Interfaces/Interfaces";
 
-const SearchPage = () => {
+const Kids = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [numberOfProducts, setNumberOfProducts] = useState(0);
   const [sortValue, setSortValue] = useState("");
@@ -51,15 +49,8 @@ const SearchPage = () => {
 
       <div className="flex justify-center mt-[5%]">
         <div className=" overflow-x-auto md:w-[82%] h-full">
-          <SortSearchPage
-            isSidebarOpen={isSidebarOpen}
-            toggleSidebar={toggleSidebar}
-            handlerSortValueFromChild={handlerSortValueFromChild}
-            query={query}
-            numberOfProducts={numberOfProducts}
-          />
           <ProductsSearchPage
-            where={"search"}
+            where={"kids"}
             limit={10}
             page={currectPage}
             filters={filters}
@@ -76,10 +67,10 @@ const SearchPage = () => {
             />
           </div> */}
         </div>
-        <RightSideProfileMenu
+        {/* <RightSideProfileMenu
           handleSendFiltersFromChild={handleSendFiltersFromChild}
           isSidebarOpen={isSidebarOpen}
-        />
+        /> */}
       </div>
       <div className="w-screen">
         <Footer />
@@ -90,4 +81,4 @@ const SearchPage = () => {
     </div>
   );
 };
-export default SearchPage;
+export default Kids;

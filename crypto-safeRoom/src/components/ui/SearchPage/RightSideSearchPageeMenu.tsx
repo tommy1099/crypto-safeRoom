@@ -211,11 +211,13 @@ const RightSideSearchPageeMenu = ({
                 <input
                   type="checkbox"
                   checked={
-                    filters.countriess?.some(
-                      (filter) => filter.label === country.label
-                    ) || false
+                    filters.countriess
+                      ? filters.countriess.some(
+                          (filter) => filter.label === country.label
+                        )
+                      : false
                   }
-                  onChange={() => handleFilterChange("colors", country)}
+                  onChange={() => handleFilterChange("countriess", country)}
                 />
                 {country.label}
               </label>

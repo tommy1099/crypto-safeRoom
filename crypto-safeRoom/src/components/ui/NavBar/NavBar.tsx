@@ -69,13 +69,14 @@ const Navbar = () => {
                 </div>
               </div>
 
-              <div ref={dropdownRef} className="flex w-[900px]  items-center">
-                <CollapsibleMenu />
-                <div className="flex flex-col gap-2 justify-center items-center mt-10 w-full text-center">
+              <div ref={dropdownRef} className="flex w-[700px]  items-center ">
+                <div className="flex flex-col gap-2 justify-center items-end mt-5 mb-2 w-full text-center">
                   <SearchBar
                     handleBlurToggleFromChild={handleBlurToggleFromChild}
                   />
-                  <div dir="rtl" className="w-full text-sm breadcrumbs">
+                  <CollapsibleMenu />
+
+                  {/* <div dir="rtl" className="w-full text-sm breadcrumbs">
                     <ul>
                       <li>
                         <a href="/">خانه</a>
@@ -96,7 +97,7 @@ const Navbar = () => {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="flex">

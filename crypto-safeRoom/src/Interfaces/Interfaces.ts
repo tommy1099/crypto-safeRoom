@@ -350,6 +350,7 @@ export interface IProductsSearch {
   filters?: Record<string, FilterOption[]>;
   page: number;
   limit: number;
+  where: string;
 }
 export interface ISortedSearch {
   query: string;

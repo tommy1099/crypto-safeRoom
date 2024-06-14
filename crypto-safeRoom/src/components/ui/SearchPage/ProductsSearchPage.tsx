@@ -8,16 +8,20 @@ import {
 import dummyIMG from "../../../assets/img/logos/images.png";
 import CardSearchPage from "./CardSearchPage";
 import { SkeletonCard } from "..";
+import { useSearchParams } from "react-router-dom";
+import emptyImg from "../../../assets/img/logos/empty_state.png";
+
 const ProductsSearchPage = ({
   handlerNumberOfProducts,
-  query,
   sortValue,
   filters,
   page,
   limit,
+  where,
 }: IProductsSearch) => {
+  const [searchParams] = useSearchParams();
   const [products, setProducts] = useState<IProduct[]>([]);
-  const [sortedProducts, setSortedProducts] = useState<IProduct[]>([]);
+  const [, setSortedProducts] = useState<IProduct[]>([]);
   const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [numberOfProducts, setNumberOfProducts] = useState(0);
@@ -78,26 +82,44 @@ const ProductsSearchPage = ({
 
   useEffect(() => {
     const fetchProducts = async () => {
+      const query = searchParams.get("q") || "";
+      console.log("queryInUseEffect: ", query);
       setProducts([]);
       setShowSkeleton(true);
-
+      console.log("where: ", where);
+      // const allProduct = `http://localhost:3000/product/searched/all`;
+      // const url = `http://localhost:3000/product/searched/${query}/${
+      //   page ? page : 1
+      // }/${limit ? limit : 10}`;
       const response = await fetch(
-        `http://localhost:3000/product/searched/${query ? query : "all"}/${
-          page ? page : 1
-        }/${limit ? limit : 1}`
+        where === "unisex"
+          ? `http://localhost:3000/product/category/unisex`
+          : where === "feminine"
+          ? `http://localhost:3000/product/category/feminine`
+          : where === "mens"
+          ? `http://localhost:3000/product/category/mens`
+          : where === "kids"
+          ? `http://localhost:3000/product/category/kids`
+          : where === "discounted"
+          ? `http://localhost:3000/product/category/limited/discounted`
+          : where === "search" && query
+          ? `http://localhost:3000/product/searched/${query}/${
+              page ? page : 1
+            }/${limit ? limit : 10}`
+          : `http://localhost:3000/product/searched/all`
       );
       if (response.ok) {
-        const { resutls, numberOfProducts } = await response.json();
-        console.log("products: ", resutls);
+        const { results, numberOfProducts } = await response.json();
+        console.log("products: ", results);
         setNumberOfProducts(numberOfProducts);
         handlerNumberOfProducts(numberOfProducts);
-        setProducts(resutls);
+        setProducts(results);
         setShowSkeleton(false);
-        setFilteredProducts(applyFilters(resutls, filters || {}));
+        setFilteredProducts(applyFilters(results, filters || {}));
       }
     };
     fetchProducts();
-  }, [filters, limit, page, query]);
+  }, [searchParams]);
 
   useEffect(() => {
     setFilteredProducts(applyFilters(products, filters || {}));
@@ -145,17 +167,26 @@ const ProductsSearchPage = ({
   }, [filteredProducts, sortValue]);
 
   return (
-    <Container dir="" style="border-t border-grey-300 h-full">
-      {" "}
-      <div className="my-2 ml-2 text-sm text-gray-400">
-        {numberOfProducts} کالا
-      </div>
+    <Container
+      dir=""
+      style={`${where === "search" && "border-t border-grey-300"} h-full`}
+    >
+      {where === "search" && (
+        <div className="my-2 ml-2 text-sm text-gray-400">
+          {numberOfProducts} کالا
+        </div>
+      )}
+      {!showSkeleton && filteredProducts.length <= 0 && (
+        <div className="flex justify-center  items-center text-center h-full ">
+          <p className="border-r-2 p-2 pr-5">چیزی یافت نشد</p>
+          <img src={emptyImg} alt="" className="w-[400px] " />
+        </div>
+      )}
       {!showSkeleton ? (
         <Container
           dir={`rtl`}
           style="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 rounded-xl gap-2"
         >
-          {" "}
           {filteredProducts?.map((item, index) => (
             <CardSearchPage
               key={index}

@@ -8,15 +8,21 @@ import WelcomePage from "./WelcomePage/WelcomePage";
 import Contact from "./Contact/Contact";
 import Container from "../components/ui/Container/Container";
 import NotFound from "./Auth/NotFound/NotFound";
-
+import Mens from "./Category/Mens/Mens";
+import Kids from "./Category/Kids/Kids";
+import Discounted from "./Category/Discounted/Discounted";
 import Products from "./Product/Product";
-
+import Feminine from "./Category/Feminine/Feminine";
 import Checkout from "./Checkout/Checkout";
 import Profile from "./Profile/Profile";
 import AdminPage from "./Admin/AdminPage/AdminPage";
 import ProductDesc from "./Product/ProductDesc";
 import Home from "./Home/Home";
 export {
+  Mens,
+  Kids,
+  Discounted,
+  Feminine,
   ProductDesc,
   Home,
   AdminPage,

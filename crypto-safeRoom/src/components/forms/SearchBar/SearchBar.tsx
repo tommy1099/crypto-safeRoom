@@ -93,7 +93,7 @@ const SearchBar = ({ handleBlurToggleFromChild }: ISearch) => {
   useEffect(() => {
     setSearchTerm(searchParams.get("q") || "");
     if (searchTerm) {
-      navigate(`/search/?q=${encodeURIComponent(searchTerm)}&sort=newest`);
+      navigate(`/search/?q=${encodeURIComponent(searchTerm)}`);
     }
   }, [searchParams]);
   return (

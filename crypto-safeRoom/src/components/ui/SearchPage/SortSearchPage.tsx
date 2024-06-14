@@ -26,7 +26,6 @@ const SortSearchPage = ({
         return "جدید ترین";
     }
   });
-  // const [selectedSort, setSelectedSort] = useState("جدید ترین");
   const handleSortClick = (sort: string) => {
     setSelectedSort(sort);
     updateURL(sort);

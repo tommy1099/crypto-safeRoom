@@ -1,13 +1,18 @@
 import { IProduct } from "../../Interfaces/Interfaces";
 import { DropDown_normal } from "../../components/ui";
-const ProductDetails = ({ type, detailedInfo, texture }: IProduct) => {
+const ProductDetails = ({
+  type,
+  detailedInfo,
+  texture,
+  general_info,
+}: IProduct) => {
   return (
-    <DropDown_normal name="مشخصات">
+    <DropDown_normal where="product" name="مشخصات">
       {type === "Clothes" ? (
-        <div className="flex items-end text-end justify-end gap-2 mb-6 border-2 rounded-xl p-4 border-primary">
-          <div className="flex flex-col w-full gap-2">
+        <div className="flex gap-2 justify-end items-end p-4 py-5 mb-6 bg-gray-100 rounded-xl text-end">
+          <div className="flex flex-col gap-2 w-full">
             <p className="border-b">{detailedInfo?.brand}</p>
-            <p className="border-b">{detailedInfo?.category}</p>
+            <p className="border-b">{general_info?.kind}</p>
             <p className="border-b">
               {detailedInfo?.waterproof ? "بله" : "خیر"}
             </p>
@@ -21,7 +26,7 @@ const ProductDetails = ({ type, detailedInfo, texture }: IProduct) => {
             <p className="border-b">{texture}</p>
           </div>
           <div dir="rtl" className="flex flex-col mr-[15%] text-right">
-            <ul className="list-disc flex flex-col w-32 gap-2 ">
+            <ul className="flex flex-col gap-2 w-32 list-disc">
               <li>
                 <p className="text-slate-500 rtl">برند:</p>
               </li>

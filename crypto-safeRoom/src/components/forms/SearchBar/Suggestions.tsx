@@ -7,6 +7,7 @@ import { IoColorPaletteOutline } from "react-icons/io5";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { formatNumberToPersian } from "@/utils/NumberToFarsi/NumberToFarsi";
+import calculateDiscountPercentage from "@/utils/calculateDiscountPercentage/calculateDiscountPercentage";
 const Suggestions = ({ data, showLoading, nothingFound }: ISuggestions) => {
   const navigate = useNavigate();
   return (
@@ -32,8 +33,17 @@ const Suggestions = ({ data, showLoading, nothingFound }: ISuggestions) => {
               onClick={() => {
                 navigate(`product/${product.url}` || "");
               }}
-              className="flex gap-2 justify-end items-center px-2 py-1 mt-1 cursor-pointer"
+              className="flex relative gap-2 justify-end items-center px-2 py-1 mt-1 cursor-pointer"
             >
+              {product.price?.off && (
+                <span className="absolute top-2 right-3 py-1 min-w-[35px] flex items-center justify-center text-center text-sm text-white bg-red-500 rounded-full">
+                  {calculateDiscountPercentage(
+                    product?.price?.price_before || 0,
+                    product.price?.price_after || 0
+                  )}
+                  %
+                </span>
+              )}
               <div className="flex flex-col gap-2">
                 <p>{product.general_info?.name}</p>
                 <div className="flex gap-2 justify-end">
@@ -58,11 +68,13 @@ const Suggestions = ({ data, showLoading, nothingFound }: ISuggestions) => {
                       تومان
                     </p>
                   </div>
+
                   <div className="text-slate-400">
                     <IoPricetagsOutline />
                   </div>
                 </div>
               </div>
+
               <img src={dummyIMG} alt="" className="w-32 rounded-md" />
             </div>
           </>

@@ -139,6 +139,7 @@ const RightSideSearchPageeMenu = ({
       </p>
 
       <DropDown_normal
+        where="searchPage"
         name="برندها"
         children={
           <div className="flex flex-col my-5">
@@ -161,6 +162,7 @@ const RightSideSearchPageeMenu = ({
       />
 
       <DropDown_normal
+        where="searchPage"
         name="سایز ها"
         children={
           <div className="flex flex-col my-5">
@@ -182,6 +184,7 @@ const RightSideSearchPageeMenu = ({
         }
       />
       <DropDown_normal
+        where="searchPage"
         name="رنگ ها"
         children={
           <div className="flex flex-col my-5">
@@ -203,6 +206,7 @@ const RightSideSearchPageeMenu = ({
         }
       />
       <DropDown_normal
+        where="searchPage"
         name="کشور سازنده"
         children={
           <div className="flex flex-col my-5">
@@ -226,6 +230,7 @@ const RightSideSearchPageeMenu = ({
         }
       />
       <DropDown_normal
+        where="searchPage"
         name="جنس"
         children={
           <div className="flex flex-col my-5">
@@ -247,6 +252,7 @@ const RightSideSearchPageeMenu = ({
         }
       />
       <DropDown_normal
+        where="searchPage"
         name="نوع"
         children={
           <div className="flex flex-col my-5">
@@ -268,6 +274,7 @@ const RightSideSearchPageeMenu = ({
         }
       />
       <DropDown_normal
+        where="searchPage"
         name=" مورد استفاده"
         children={
           <div className="flex flex-col my-5">
@@ -289,6 +296,7 @@ const RightSideSearchPageeMenu = ({
         }
       />
       <DropDown_normal
+        where="searchPage"
         name="ویژگی ها"
         children={
           <div className="flex flex-col my-5">

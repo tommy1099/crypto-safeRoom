@@ -64,7 +64,7 @@ const Home = () => {
       >
         <Container
           dir={`rtl`}
-          style="flex bg-primary md:rounded-xl p-5 items-center overflow-x-auto w-full md:w-[70%] gap-3 whitespace-nowrap"
+          style="flex bg-gray-200 md:rounded-xl p-5 items-center overflow-x-auto w-full md:w-[70%] gap-3 whitespace-nowrap"
         >
           <img className="w-40" src={smileyGirl} alt="" />
 

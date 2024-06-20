@@ -268,6 +268,7 @@ export interface CardProps extends PropsWithChildren {
     };
   };
   export interface IDropDown_normal extends PropsWithChildren {
+    where: string;
     name: string;
 
   }
@@ -276,6 +277,7 @@ export interface CardProps extends PropsWithChildren {
     type?: string;
     general_info?: {
       name?: string;
+      sex?: string;
       kind?: string;
       quantity?: number;
       stock?: {in_stock: boolean, quantity: number};
@@ -290,8 +292,8 @@ export interface CardProps extends PropsWithChildren {
     }
 
     detailedInfo?: {
+      isKid?: boolean;
       brand?: string;
-      category?: string;
       hat?: boolean;
       waterproof?: boolean;
       water_resistance?: boolean;

@@ -29,7 +29,7 @@ const Product = () => {
   const tempArr = [outdoor, northface, marmot, columbia, quechua, timberland];
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const productName = pathname.split("/")[2];
+  const productName = pathname.split("/").pop();
   const [product, setProduct] = useState<IProduct>();
 
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -73,7 +73,7 @@ const Product = () => {
     fetchData();
   }, [productName]);
   return (
-    <div className="flex flex-col gap-2 justify-center items-center">
+    <div className="flex flex-col gap-2 justify-center items-center mt-10">
       <NavBar />
       {/* <Breadcrumbs /> */}
       <div className="flex w-[85%] justify-center gap-2">
@@ -103,7 +103,7 @@ const Product = () => {
       <FeaturesSection place="product" />
       <Container
         dir={`ltr`}
-        style="flex items-center overflow-x-auto md:w-[85%] gap-3 mt-10 whitespace-nowrap"
+        style="flex items-center overflow-x-auto md:w-[85%] gap-3 mt-10 whitespace-nowrap bg-gray-100 p-5  rounded-xl"
       >
         <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
           <div className="flex flex-col gap-5 justify-center items-center text-center">
@@ -123,8 +123,43 @@ const Product = () => {
           />
         ))}
       </Container>
+      <div
+        dir="rtl"
+        className="flex gap-5 mt-10 flex-col w-[85%] bg-gray-100 rounded-xl p-5"
+      >
+        <div>توضیحات</div>
+        <div className="flex">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Risus
+          ultricies tristique nulla aliquet enim tortor at auctor. Integer
+          malesuada nunc vel risus commodo viverra. Ac odio tempor orci dapibus
+          ultrices in. Eros donec ac odio tempor orci. Phasellus faucibus
+          scelerisque eleifend donec pretium. Convallis tellus id interdum velit
+          laoreet id. Adipiscing diam donec adipiscing tristique risus nec. Nam
+          libero justo laoreet sit amet. Ornare lectus sit amet est placerat in
+          egestas erat. Nisi est sit amet facilisis magna etiam tempor orci eu.
+          Id eu nisl nunc mi. Adipiscing enim eu turpis egestas pretium. Diam
+          maecenas ultricies mi eget mauris pharetra et ultrices. Ullamcorper
+          eget nulla facilisi etiam dignissim diam quis enim. At quis risus sed
+          vulputate odio ut enim blandit volutpat. Ante metus dictum at tempor
+          commodo. Pellentesque sit amet porttitor eget dolor morbi non arcu
+          risus. Accumsan tortor posuere ac ut consequat semper viverra. Cursus
+          in hac habitasse platea dictumst quisque sagittis purus. Cras pulvinar
+          mattis nunc sed blandit libero volutpat sed cras. Pellentesque diam
+          volutpat commodo sed egestas egestas. Ipsum suspendisse ultrices
+          gravida dictum fusce ut placerat orci nulla. Tincidunt arcu non
+          sodales neque sodales ut etiam. Orci eu lobortis elementum nibh. Massa
+          tempor nec feugiat nisl pretium fusce id velit. Nec nam aliquam sem et
+          tortor consequat. Et ultrices neque ornare aenean. Vestibulum morbi
+          blandit cursus risus at ultrices mi tempus imperdiet. Massa tempor nec
+          feugiat nisl pretium fusce id velit ut. Risus nec feugiat in fermentum
+          posuere urna nec. Tempor id eu nisl nunc mi ipsum faucibus vitae. Leo
+          duis ut diam quam.
+        </div>
+      </div>
       <div className="flex w-[85%] flex-col gap-2">
         <ProductDetails
+          general_info={product?.general_info}
           type={product?.type}
           detailedInfo={product?.detailedInfo}
           texture={product?.texture}

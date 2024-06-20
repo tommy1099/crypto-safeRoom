@@ -21,10 +21,10 @@ const ProductPictures = ({ img }: IProduct) => {
 
   const ref = useRef(null);
   return (
-    <div className="flex flex-col items-center mt-32 relative">
-      <div className="w-[500px] h-[400px] rounded-xl border-2 border-primary overflow-hidden">
+    <div className="flex relative flex-col items-center mt-32">
+      <div className="w-[500px] h-[400px] rounded-xl border border-gray-200 overflow-hidden">
         <img
-          className="w-full h-full object-cover"
+          className="object-cover w-full h-full"
           src={img[selectedIndex]}
           alt=""
         />
@@ -46,8 +46,10 @@ const ProductPictures = ({ img }: IProduct) => {
           {img?.map((imgSrc, index) => (
             <img
               key={index}
-              className={`w-32 rounded-xl border-2 object-cover cursor-pointer ${
-                index === selectedIndex ? "border-primary" : "border-gray-300"
+              className={`w-32 rounded-xl border object-cover cursor-pointer ${
+                index === selectedIndex
+                  ? "border-gray-400 border-2"
+                  : "border-gray-200"
               }`}
               src={imgSrc}
               onClick={() => setSelectedIndex(index)}

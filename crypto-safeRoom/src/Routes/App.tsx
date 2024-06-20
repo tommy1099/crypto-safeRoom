@@ -31,6 +31,7 @@ function App() {
       <Routes>
         <Route path="/admin/*" element={<AdminApp />} />
         <Route path="/product/*" element={<ProductApp />} />
+        <Route path="/search/product/*" element={<ProductApp />} />
         <Route
           path="/auth/*"
           element={isLoggedin ? <Navigate to="/" /> : <AuthApp />}

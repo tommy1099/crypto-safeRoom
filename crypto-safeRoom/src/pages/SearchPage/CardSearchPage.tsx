@@ -3,6 +3,7 @@ import { IProduct } from "../../Interfaces/Interfaces";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { BsCartPlus } from "react-icons/bs";
 import { formatNumberToPersian } from "@/utils/NumberToFarsi/NumberToFarsi";
+import calculateDiscountPercentage from "@/utils/calculateDiscountPercentage/calculateDiscountPercentage";
 const CardSearchPage = ({
   general_info,
   url,
@@ -10,13 +11,14 @@ const CardSearchPage = ({
   tombnailImg,
   type,
 }: IProduct) => {
+  const lastPathSegment = url?.split("/").pop();
   const navigate = useNavigate();
   return (
     <>
       <div
         dir="rtl"
         onClick={() => {
-          navigate(`product/${url}` || "");
+          navigate(`product/${lastPathSegment}` || "");
         }}
         className={`flex  md:flex-col gap-2 border-b md:border border-gray-200 p-2 ${
           !general_info?.stock?.in_stock && " grayscale-[70%] "
@@ -58,7 +60,11 @@ const CardSearchPage = ({
             <div className="">
               {price?.off && (
                 <div className="bg-red-500 px-2 font-bold rounded-full text-white absolute text-[12px]">
-                  15٪
+                  {calculateDiscountPercentage(
+                    price?.price_before || 0,
+                    price?.price_after || 0
+                  )}
+                  %
                 </div>
               )}
               <div className="flex flex-col gap-2 items-end text-md">

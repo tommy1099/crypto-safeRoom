@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import { Footer, NavBar } from "@/components/ui";
 import { ScrollToTopIcon } from "@/components/forms";
-import { useSearchParams } from "react-router-dom";
-import ProductsSearchPage from "@/components/ui/SearchPage/ProductsSearchPage";
-import { FilterOption } from "@/Interfaces/Interfaces";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import DiscountedCategoryCards from "./DiscountedCategoryCards";
+import ProductDicountedPage from "./ProductDicountedPage";
 
 const Discounted = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [numberOfProducts, setNumberOfProducts] = useState(0);
-  const [sortValue, setSortValue] = useState("");
   const [query, setQuery] = useState("");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [filters, setFilters] = useState<Record<string, FilterOption[]>>();
-  const [currectPage, setCurrentPage] = useState(1);
   useEffect(() => {
     const queryParam = searchParams.get("q");
     if (queryParam) {
@@ -22,27 +17,6 @@ const Discounted = () => {
     // setSearchParams("");
     console.log("query...", searchParams);
   }, [query, searchParams, setSearchParams]);
-  const handlerSortValueFromChild = (value: string) => {
-    setSortValue(value);
-  };
-  const handlerNumberOfProducts = (num: number) => {
-    setNumberOfProducts(num);
-  };
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-  const handleSendFiltersFromChild = (data: Record<string, FilterOption[]>) => {
-    setFilters(data);
-  };
-  // const handlerIncPageNum = () => {
-  //   setCurrentPage((prev) =>
-  //     prev <= Math.floor(numberOfProducts / 10) ? prev + 1 : prev
-  //   );
-  // };
-
-  // const handlerDecPageNum = () => {
-  //   setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
-  // };
 
   return (
     <div className="">
@@ -51,31 +25,15 @@ const Discounted = () => {
       <div className="flex flex-col items-center pt-[10%] justify-center">
         <DiscountedCategoryCards />
         <div className=" overflow-x-auto mt-10 md:w-[82%] h-full">
-          <div className=" flex mb-4" dir="rtl">
+          <div
+            onClick={() => navigate("/search/?q=&sort=featured")}
+            className="flex mr-2 mb-4 cursor-pointer hover:text-red-500"
+            dir="rtl"
+          >
             مشاهده همه
           </div>
-          <ProductsSearchPage
-            where={"discounted"}
-            limit={10}
-            page={currectPage}
-            filters={filters}
-            query={query}
-            sortValue={sortValue}
-            handlerNumberOfProducts={handlerNumberOfProducts}
-          />
-          {/* <div className="flex justify-center items-center mt-24 ml-[10%] text-center">
-            <PaginationButtons
-              isLoaded={false}
-              currentPage={currectPage}
-              decPage={handlerDecPageNum}
-              incPage={handlerIncPageNum}
-            />
-          </div> */}
+          <ProductDicountedPage />
         </div>
-        {/* <RightSideProfileMenu
-          handleSendFiltersFromChild={handleSendFiltersFromChild}
-          isSidebarOpen={isSidebarOpen}
-        /> */}
       </div>
       <div className="w-screen">
         <Footer />

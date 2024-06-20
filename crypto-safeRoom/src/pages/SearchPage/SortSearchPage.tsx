@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Container from "../Container/Container";
+import Container from "../../components/ui/Container/Container";
 import { BsSortDown } from "react-icons/bs";
 import { useSearchParams } from "react-router-dom";
-import { ISortedSearch } from "../../../Interfaces/Interfaces";
+import { ISortedSearch } from "../../Interfaces/Interfaces";
 import { IoIosClose } from "react-icons/io";
 import { FiFilter } from "react-icons/fi";
 

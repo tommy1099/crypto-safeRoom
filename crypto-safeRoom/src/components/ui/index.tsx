@@ -22,10 +22,10 @@ import FeaturesSection from "./FeaturesSection/FeaturesSection";
 import BrandsSection from "./BrandsSection/BrandsSection";
 import suggestionCards from "./SuggestionCards/SuggestionsCards";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
-import SearchPage from "./SearchPage/SearchPage";
+import SearchPage from "../../pages/SearchPage/SearchPage";
 import SkeletonCard from "./SkeletonCard/SkeletonCard";
 import MobileMenuBar from "./MobileMenuBar/MobileMenuBar";
-import RightSideSearchPageeMenu from "./SearchPage/RightSideSearchPageeMenu";
+import RightSideSearchPageeMenu from "../../pages/SearchPage/RightSideSearchPageeMenu";
 export {
   RightSideSearchPageeMenu,
   MobileMenuBar,

@@ -30,22 +30,18 @@ function App() {
       {/* <LiveChat /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminApp />} />
-
         <Route path="/product/*" element={<ProductApp />} />
-
         <Route
           path="/auth/*"
           element={isLoggedin ? <Navigate to="/" /> : <AuthApp />}
         />
-
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/search" element={<SearchPage />} />
-
         <Route path="/contact" element={<Contact />} />
         <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/notfound" element={<NotFound />} />
+        <Route path="/notfound" element={<NotFound />} /> */ /*{" "}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

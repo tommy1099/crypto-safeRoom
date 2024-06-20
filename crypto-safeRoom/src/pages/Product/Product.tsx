@@ -41,9 +41,9 @@ const Product = () => {
         );
 
         if (resource.ok) {
-          const data = await resource.json();
-          setProducts(data);
-          console.log(data);
+          const { results } = await resource.json();
+          setProducts(results);
+          console.log(results);
         }
       } catch (error) {
         console.error({ message: error });
@@ -73,7 +73,7 @@ const Product = () => {
     fetchData();
   }, [productName]);
   return (
-    <div className="flex flex-col justify-center items-center gap-2">
+    <div className="flex flex-col gap-2 justify-center items-center">
       <NavBar />
       {/* <Breadcrumbs /> */}
       <div className="flex w-[85%] justify-center gap-2">
@@ -82,7 +82,7 @@ const Product = () => {
           price={product?.price}
           general_info={product?.general_info}
         />
-        <div className="flex w-1/3 gap-2">
+        <div className="flex gap-2 w-1/3">
           {/* <div className="mt-[40%] text-right">
             <ProductDesc
               type="clothes"
@@ -106,7 +106,7 @@ const Product = () => {
         style="flex items-center overflow-x-auto md:w-[85%] gap-3 mt-10 whitespace-nowrap"
       >
         <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
-          <div className="flex gap-5 justify-center items-center text-center flex-col">
+          <div className="flex flex-col gap-5 justify-center items-center text-center">
             <BsArrowLeftSquare />
             <a className="text-lg">مشاهده همه</a>
           </div>

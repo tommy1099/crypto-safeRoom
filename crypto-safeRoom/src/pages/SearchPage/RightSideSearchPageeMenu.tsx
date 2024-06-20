@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Container } from "../../../pages";
+import { Container } from "..";
 import "rc-slider/assets/index.css";
-import { DropDown_normal } from "..";
+import { DropDown_normal } from "../../components/ui";
 import {
   FilterOption,
   IRightSideSearchPageeMenu,
@@ -126,7 +126,7 @@ const RightSideSearchPageeMenu = ({
   return (
     <Container
       dir="rtl"
-      style={`fixed text-sm top-10 h-[1000px] overflow-y-auto right-0 overlfow-y-auto w-64  bg-base-100 rounded-md p-5 transform transition-transform duration-300 ease-in-out ${
+      style={`fixed text-sm top-14 h-[1000px] overflow-y-auto right-0 overlfow-y-auto w-64  bg-base-100 rounded-md p-5 transform transition-transform duration-300 ease-in-out ${
         isSidebarOpen ? "translate-x-0" : "translate-x-full"
       } md:translate-x-0 md:relative w-[250px]`}
     >

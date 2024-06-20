@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Footer, NavBar, PaginationButtons } from "..";
-import { ScrollToTopIcon } from "../../forms";
+import { Footer, NavBar, PaginationButtons } from "../../components/ui";
+import { ScrollToTopIcon } from "../../components/forms";
 import { useSearchParams } from "react-router-dom";
 import RightSideProfileMenu from "./RightSideSearchPageeMenu";
 import ProductsSearchPage from "./ProductsSearchPage";

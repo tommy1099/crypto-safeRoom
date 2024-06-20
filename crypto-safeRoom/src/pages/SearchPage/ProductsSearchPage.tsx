@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import Container from "../Container/Container";
+import Container from "../../components/ui/Container/Container";
 import {
   FilterOption,
   IProduct,
   IProductsSearch,
-} from "../../../Interfaces/Interfaces";
-import dummyIMG from "../../../assets/img/logos/images.png";
+} from "../../Interfaces/Interfaces";
+import dummyIMG from "../../assets/img/hero/27734.jpg";
 import CardSearchPage from "./CardSearchPage";
-import { SkeletonCard } from "..";
+import { SkeletonCard } from "../../components/ui";
 import { useSearchParams } from "react-router-dom";
-import emptyImg from "../../../assets/img/logos/empty_state.png";
+import emptyImg from "../../assets/img/logos/empty_state.png";
 
 const ProductsSearchPage = ({
   handlerNumberOfProducts,
@@ -92,17 +92,7 @@ const ProductsSearchPage = ({
       //   page ? page : 1
       // }/${limit ? limit : 10}`;
       const response = await fetch(
-        where === "unisex"
-          ? `http://localhost:3000/product/category/unisex`
-          : where === "feminine"
-          ? `http://localhost:3000/product/category/feminine`
-          : where === "mens"
-          ? `http://localhost:3000/product/category/mens`
-          : where === "kids"
-          ? `http://localhost:3000/product/category/kids`
-          : where === "discounted"
-          ? `http://localhost:3000/product/category/limited/discounted`
-          : where === "search" && query
+        where === "search" && query
           ? `http://localhost:3000/product/searched/${query}/${
               page ? page : 1
             }/${limit ? limit : 10}`
@@ -177,8 +167,8 @@ const ProductsSearchPage = ({
         </div>
       )}
       {!showSkeleton && filteredProducts.length <= 0 && (
-        <div className="flex justify-center  items-center text-center h-full ">
-          <p className="border-r-2 p-2 pr-5">چیزی یافت نشد</p>
+        <div className="flex justify-center items-center h-full text-center">
+          <p className="p-2 pr-5 border-r-2">چیزی یافت نشد</p>
           <img src={emptyImg} alt="" className="w-[400px] " />
         </div>
       )}

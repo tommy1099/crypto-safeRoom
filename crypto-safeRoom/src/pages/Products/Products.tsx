@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Footer, NavBar } from "@/components/ui";
-import { ScrollToTopIcon } from "@/components/forms";
+import { Footer, NavBar, RightSideSearchPageeMenu } from "../../components/ui";
+import { ScrollToTopIcon } from "../../components/forms";
 import { useSearchParams } from "react-router-dom";
+import ProductsSearchPage from "../SearchPage/ProductsSearchPage";
+import SortSearchPage from "../SearchPage/SortSearchPage";
 import { FilterOption } from "@/Interfaces/Interfaces";
-import ProductUnisexPage from "./ProductUnisexPage";
 
-const Unisex = () => {
+const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [numberOfProducts, setNumberOfProducts] = useState(0);
   const [sortValue, setSortValue] = useState("");
@@ -49,7 +50,22 @@ const Unisex = () => {
 
       <div className="flex justify-center mt-[5%]">
         <div className=" overflow-x-auto md:w-[82%] h-full">
-          <ProductUnisexPage />
+          <SortSearchPage
+            isSidebarOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+            handlerSortValueFromChild={handlerSortValueFromChild}
+            query={query}
+            numberOfProducts={numberOfProducts}
+          />
+          <ProductsSearchPage
+            where={"search"}
+            limit={10}
+            page={currectPage}
+            filters={filters}
+            query={query}
+            sortValue={sortValue}
+            handlerNumberOfProducts={handlerNumberOfProducts}
+          />
           {/* <div className="flex justify-center items-center mt-24 ml-[10%] text-center">
             <PaginationButtons
               isLoaded={false}
@@ -59,10 +75,10 @@ const Unisex = () => {
             />
           </div> */}
         </div>
-        {/* <RightSideProfileMenu
+        <RightSideSearchPageeMenu
           handleSendFiltersFromChild={handleSendFiltersFromChild}
           isSidebarOpen={isSidebarOpen}
-        /> */}
+        />
       </div>
       <div className="w-screen">
         <Footer />
@@ -73,4 +89,4 @@ const Unisex = () => {
     </div>
   );
 };
-export default Unisex;
+export default Products;

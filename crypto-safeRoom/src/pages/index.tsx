@@ -18,7 +18,9 @@ import Profile from "./Profile/Profile";
 import AdminPage from "./Admin/AdminPage/AdminPage";
 import ProductDesc from "./Product/ProductDesc";
 import Home from "./Home/Home";
+import Product from "./Product/Product";
 export {
+  Product,
   Mens,
   Kids,
   Discounted,

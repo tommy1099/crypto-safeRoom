@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { IProduct } from "../../../Interfaces/Interfaces";
+import { IProduct } from "../../Interfaces/Interfaces";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { BsCartPlus } from "react-icons/bs";
+import { formatNumberToPersian } from "@/utils/NumberToFarsi/NumberToFarsi";
 const CardSearchPage = ({
   general_info,
   url,
@@ -29,7 +30,7 @@ const CardSearchPage = ({
               }`}
           >
             - فروش ویژه -
-            {/* <span className="text-primary text-2xl">
+            {/* <span className="text-2xl text-primary">
               <BsCartPlus />
             </span> */}
           </div>
@@ -42,7 +43,7 @@ const CardSearchPage = ({
         </figure>
         <div
           dir="rtl"
-          className="whitespace-pre-wrap overflow-hidden text-ellipsis mt-9 md:mt-2 flex justify-between flex-col w-full"
+          className="flex overflow-hidden flex-col justify-between mt-9 w-full whitespace-pre-wrap text-ellipsis md:mt-2"
         >
           <div className="text-primary text-[11px] item-start hidden md:flex text-center gap-2">
             ارسال رایگان
@@ -50,23 +51,29 @@ const CardSearchPage = ({
               <LiaShippingFastSolid />
             </div>{" "}
           </div>
-          <p className="text-primary  text-sm md:text-[17px] item-start mb-5">
+          <p className="text-primary  text-sm md:text-[15px] item-start mb-5">
             {general_info?.name}
           </p>
           {general_info?.stock?.in_stock ? (
             <div className="">
-              <div className="bg-red-500 px-2 font-bold rounded-full text-white absolute text-[12px]">
-                15٪
-              </div>
-              <div className="flex flex-col gap-2 text-md items-end">
-                <p className="text-red-500 font-bold">{price?.price_after}</p>
-                <p className="text-primary text-sm line-through">
-                  {price?.price_before}
+              {price?.off && (
+                <div className="bg-red-500 px-2 font-bold rounded-full text-white absolute text-[12px]">
+                  15٪
+                </div>
+              )}
+              <div className="flex flex-col gap-2 items-end text-md">
+                <p className="font-bold text-red-500">
+                  {formatNumberToPersian(price?.price_after || 0)}
                 </p>
+                {price?.off && (
+                  <p className="text-sm line-through text-primary">
+                    {formatNumberToPersian(price?.price_before || 0)}
+                  </p>
+                )}
               </div>
             </div>
           ) : (
-            <p className="flex items-center text-center justify-end text-sm pr-1 text-red-500 font-semibold">
+            <p className="flex justify-end items-center pr-1 text-sm font-semibold text-center text-red-500">
               فروخته شد
             </p>
           )}

@@ -37,9 +37,9 @@ const Home = () => {
         );
 
         if (resource.ok) {
-          const data = await resource.json();
-          setProducts(data);
-          console.log(data);
+          const { results } = await resource.json();
+          setProducts(results);
+          console.log(results);
         }
       } catch (error) {
         console.error({ message: error });
@@ -52,7 +52,7 @@ const Home = () => {
   const isFa = useSelector((state: RootState) => state.lang.isFa);
 
   return (
-    <div className="justify-center flex flex-col items-center text-center gap-10">
+    <div className="flex flex-col gap-10 justify-center items-center text-center">
       <NavBar />
       {/* <div className="absolute  w-[500px] top-[3%] right-[10%]">
         <SearchBar />
@@ -80,14 +80,14 @@ const Home = () => {
             />
           ))}
           <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
-            <div className="flex gap-5 justify-center items-center text-center flex-col">
+            <div className="flex flex-col gap-5 justify-center items-center text-center">
               <BsArrowLeftSquare />
               <a className="text-lg">مشاهده همه</a>
             </div>
           </div>
         </Container>
       </Container>
-      <div className="justify-center flex">
+      <div className="flex justify-center">
         <FeaturesSection place="home" />
       </div>
 
@@ -99,7 +99,7 @@ const Home = () => {
           style="flex items-center overflow-x-auto w-[70%] gap-3 whitespace-nowrap"
         >
           <div className="flex p-[67px] text-6xl justify-center items-center text-center text-primary w-[150px] md:rounded-xl cursor-pointer hover:shadow-2xl md:w-[200px] bg-base-100 flex-shrink-0 shadow-md border-4 border-primary">
-            <div className="flex gap-5 justify-center items-center text-center flex-col">
+            <div className="flex flex-col gap-5 justify-center items-center text-center">
               <BsArrowLeftSquare />
               <a className="text-lg">مشاهده همه</a>
             </div>
@@ -121,7 +121,7 @@ const Home = () => {
       <div className="w-screen">
         <Footer />
       </div>
-      <div className="fixed left-4 bottom-4">
+      <div className="fixed bottom-4 left-4">
         {" "}
         <ScrollToTopIcon />
       </div>

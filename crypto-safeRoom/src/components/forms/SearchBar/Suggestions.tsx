@@ -6,6 +6,7 @@ import emptyImg from "../../../assets/img/logos/empty_state.png";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { formatNumberToPersian } from "@/utils/NumberToFarsi/NumberToFarsi";
 const Suggestions = ({ data, showLoading, nothingFound }: ISuggestions) => {
   const navigate = useNavigate();
   return (
@@ -14,24 +15,24 @@ const Suggestions = ({ data, showLoading, nothingFound }: ISuggestions) => {
       style="w-full max-h-[400px] dropdown-bottom  -mt-4 pt-5 overflow-y-auto absolute border-t-0 -z-10 shadow-xl rounded-t-xl rounded-b-md bg-base-100  border border-slate-400"
     >
       {showLoading && (
-        <div className="my-5 flex justify-center">
+        <div className="flex justify-center my-5">
           <Loading />
         </div>
       )}
       {nothingFound && (
-        <div className="flex justify-center text-sm items-center text-center">
-          <p className="border-r-2 p-2 pr-5">چیزی یافت نشد</p>
+        <div className="flex justify-center items-center text-sm text-center">
+          <p className="p-2 pr-5 border-r-2">چیزی یافت نشد</p>
           <img src={emptyImg} alt="" className="w-[200px] " />
         </div>
       )}
-      <div className=" ">
+      <div className="">
         {data.map((product: IProduct) => (
           <>
             <div
               onClick={() => {
                 navigate(`product/${product.url}` || "");
               }}
-              className="flex items-center cursor-pointer justify-end px-2 py-1 mt-1 gap-2 "
+              className="flex gap-2 justify-end items-center px-2 py-1 mt-1 cursor-pointer"
             >
               <div className="flex flex-col gap-2">
                 <p>{product.general_info?.name}</p>
@@ -47,13 +48,14 @@ const Suggestions = ({ data, showLoading, nothingFound }: ISuggestions) => {
                 <div className="flex gap-2 justify-end">
                   <div
                     dir="rtl"
-                    className="flex gap-2 text-sm text-right justify-start"
+                    className="flex gap-2 justify-start text-sm text-right"
                   >
-                    <p className="text-slate-500 line-through ">
-                      {product.price?.price_before}
+                    <p className="line-through text-slate-500">
+                      {formatNumberToPersian(product.price?.price_before || 0)}
                     </p>
                     <p className="text-red-500">
-                      {product.price?.price_after} تومان
+                      {formatNumberToPersian(product.price?.price_after || 0)}{" "}
+                      تومان
                     </p>
                   </div>
                   <div className="text-slate-400">

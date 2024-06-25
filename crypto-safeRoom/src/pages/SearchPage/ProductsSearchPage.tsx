@@ -98,8 +98,8 @@ const ProductsSearchPage = ({
             }/${limit ? limit : 10}`
           : where === "allDiscountedProducts"
           ? `http://localhost:3000/product/discounted/all`
-          : where === "allFeminieProducts"
-          ? `http://localhost:3000/product/feminie/all`
+          : where === "allFeminineProducts"
+          ? `http://localhost:3000/product/feminine/all`
           : where === "allMensProducts"
           ? `http://localhost:3000/product/mens/all`
           : where === "allKidsProducts"

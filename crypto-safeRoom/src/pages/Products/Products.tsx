@@ -13,7 +13,7 @@ const Products = () => {
   const [query, setQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [filters, setFilters] = useState<Record<string, FilterOption[]>>();
-  const [currectPage, setCurrentPage] = useState(1);
+  const [currectPage] = useState(1);
   useEffect(() => {
     const queryParam = searchParams.get("q");
     if (queryParam) {

@@ -26,7 +26,7 @@ const Feminine = () => {
         <FeminineCategoryCards />
         <div className=" overflow-x-auto mt-10 md:w-[82%] h-full">
           <div
-            onClick={() => navigate("/product/category/feminie/all")}
+            onClick={() => navigate("/product/category/feminine/all")}
             className="flex mr-2 mb-4 cursor-pointer hover:text-red-500"
             dir="rtl"
           >

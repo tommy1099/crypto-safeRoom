@@ -3,7 +3,7 @@ import {
   NavBar,
   Footer,
   FeaturesSection,
-  Breadcrumbs,
+  // Breadcrumbs,
 } from "../../components/ui";
 import ProductDetails from "./ProductDetails";
 import ProductPictures from "./ProductPictures";
@@ -11,7 +11,7 @@ import ProductToCart from "./ProductToCart";
 
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { Container } from "..";
-import smileyGirl from "../../assets/img/cheerful-young-woman-smiling.png";
+// import smileyGirl from "../../assets/img/cheerful-young-woman-smiling.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../Interfaces/Interfaces";

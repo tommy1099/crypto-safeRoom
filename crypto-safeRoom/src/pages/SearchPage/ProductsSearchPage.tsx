@@ -96,6 +96,14 @@ const ProductsSearchPage = ({
           ? `http://localhost:3000/product/searched/${query}/${
               page ? page : 1
             }/${limit ? limit : 10}`
+          : where === "allDiscountedProducts"
+          ? `http://localhost:3000/product/discounted/all`
+          : where === "allFeminieProducts"
+          ? `http://localhost:3000/product/feminie/all`
+          : where === "allMensProducts"
+          ? `http://localhost:3000/product/mens/all`
+          : where === "allKidsProducts"
+          ? `http://localhost:3000/product/kids/all`
           : `http://localhost:3000/product/searched/all`
       );
       if (response.ok) {

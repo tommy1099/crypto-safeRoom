@@ -42,8 +42,9 @@ function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/notfound" element={<NotFound />} /> */ /*{" "}
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="/notfound" element={<NotFound />} /> */
+        /*{" "}
+        <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </div>
   );

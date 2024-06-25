@@ -25,7 +25,7 @@ import Breadcrumbs from "./Breadcrumbs/Breadcrumbs";
 import SearchPage from "../../pages/SearchPage/SearchPage";
 import SkeletonCard from "./SkeletonCard/SkeletonCard";
 import MobileMenuBar from "./MobileMenuBar/MobileMenuBar";
-import RightSideSearchPageeMenu from "../../pages/SearchPage/RightSideSearchPageeMenu";
+import RightSideSearchPageeMenu from "../../pages/SearchPage/RightSideSearchPageMenu";
 export {
   RightSideSearchPageeMenu,
   MobileMenuBar,

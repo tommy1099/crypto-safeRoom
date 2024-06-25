@@ -1,6 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import { Discounted, Feminine, Kids, Mens, NotFound, Product } from "../pages";
-import Unisex from "@/pages/Category/Unisex/Unisex";
+// import Unisex from "@/pages/Category/Unisex/Unisex";
+import {
+  DiscountedProducts,
+  FeminineProducts,
+  KidsProducts,
+  MensProducts,
+} from "@/pages/ProductPages";
 
 function ProductApp() {
   return (
@@ -10,6 +16,7 @@ function ProductApp() {
       <Route path="category/feminine">
         <Route path=":productId" element={<Product />} />
         {/* <Route path="/:productType" element={<ProductType />} /> */}
+        <Route path="all" element={<FeminineProducts />} />
         <Route path=":productType/:productId" element={<Product />} />
         <Route path="" element={<Feminine />} />
       </Route>
@@ -17,6 +24,7 @@ function ProductApp() {
       <Route path="category/mens">
         <Route path=":productId" element={<Product />} />
         {/* <Route path="/:productType" element={<ProductType />} /> */}
+        <Route path="all" element={<MensProducts />} />
         <Route path=":productType/:productId" element={<Product />} />
         <Route path="" element={<Mens />} />
       </Route>
@@ -24,13 +32,15 @@ function ProductApp() {
       <Route path="category/unisex">
         <Route path=":productId" element={<Product />} />
         {/* <Route path="/:productType" element={<ProductType />} /> */}
+        {/* <Route path="all" element={<UN />} /> */}
         <Route path=":productType/:productId" element={<Product />} />
-        <Route path="" element={<Unisex />} />
+        {/* <Route path="" element={<Unisex />} /> */}
       </Route>
 
       <Route path="category/kids">
         <Route path=":productId" element={<Product />} />
         {/* <Route path="/:productType" element={<ProductType />} /> */}
+        <Route path="all" element={<KidsProducts />} />
         <Route path=":productType/:productId" element={<Product />} />
         <Route path="" element={<Kids />} />
       </Route>
@@ -38,6 +48,7 @@ function ProductApp() {
       <Route path="category/discounted">
         <Route path=":productId" element={<Product />} />
         {/* <Route path="/:productType" element={<ProductType />} /> */}
+        <Route path="all" element={<DiscountedProducts />} />
         <Route path=":productType/:productId" element={<Product />} />
         <Route path="" element={<Discounted />} />
       </Route>

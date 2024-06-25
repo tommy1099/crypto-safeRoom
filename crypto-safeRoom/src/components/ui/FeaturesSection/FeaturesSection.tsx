@@ -19,7 +19,7 @@ const FeaturesSection = ({ place }: IFeatures) => {
     >
       <div
         className={`flex flex-col  ${
-          place == "product" && "md:flex-row "
+          place !== "product" && "md:flex-row "
         } gap-4`}
       >
         {/* Feature 1 */}
@@ -46,7 +46,7 @@ const FeaturesSection = ({ place }: IFeatures) => {
       </div>
       <div
         className={`flex flex-col  ${
-          place == "product" && "md:flex-row "
+          place !== "product" && "md:flex-row "
         }  gap-4`}
       >
         {/* Feature 4 */}

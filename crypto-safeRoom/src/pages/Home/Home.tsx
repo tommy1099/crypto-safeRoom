@@ -6,14 +6,9 @@ import {
   BrandsSection,
 } from "../../components/ui";
 import { useEffect, useState } from "react";
-import {
-  HomeCarousel,
-  Loading,
-  ScrollToTopIcon,
-  SearchBar,
-} from "../../components/forms";
-import { RootState } from "../../Store/Store";
-import { useSelector } from "react-redux";
+import { HomeCarousel, ScrollToTopIcon } from "../../components/forms";
+// import { RootState } from "../../Store/Store";
+// import { useSelector } from "react-redux";
 import "../../components/Features/InfiniteScroll/InfiniteScroll.css";
 import { Card } from "../../components/forms/Cards/index";
 
@@ -47,9 +42,9 @@ const Home = () => {
     };
     productFetch();
   }, []);
-  const [isLoaded] = useState(false);
+  // const [isLoaded] = useState(false);
   // const { t } = useTranslation();
-  const isFa = useSelector((state: RootState) => state.lang.isFa);
+  // const isFa = useSelector((state: RootState) => state.lang.isFa);
 
   return (
     <div className="flex flex-col gap-10 justify-center items-center text-center">

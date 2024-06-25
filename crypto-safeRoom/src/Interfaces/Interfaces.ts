@@ -369,7 +369,7 @@ export   interface FilterOption {
   id: string;
   label: string;
 }
-export interface IRightSideSearchPageeMenu {
+export interface IRightSideSearchPageMenu {
   isSidebarOpen: boolean;
   handleSendFiltersFromChild: (filters: Record<string, FilterOption[]>) => void;
 }

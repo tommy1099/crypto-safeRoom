@@ -26,7 +26,7 @@ const Kids = () => {
         <KidsCategoryCards />
         <div className=" overflow-x-auto mt-10 md:w-[82%] h-full">
           <div
-            onClick={() => navigate("/search/?q=&sort=featured")}
+            onClick={() => navigate("/product/category/kids/all")}
             className="flex mr-2 mb-4 cursor-pointer hover:text-red-500"
             dir="rtl"
           >

@@ -8,104 +8,105 @@ const MensCategoryCards = () => {
       dir="ltr"
       style=" gap-5 flex flex-col md:flex-row items-center justify-center w-screen md:w-[70%] rounded-xl"
     >
-      {/* <img className="object-cover"
-  className="w-[300px] ml-[200px] -rotate-12"
-  src={greenPants}
-  alt=""
-/> */}
-      <div className="flex flex-col gap-5 justify-between items-center">
-        <div className="relative w-full h-full shadow-lg cursor-pointer hover:shadow-2xl bg-base-100 image-full">
-          <figure>
-            <img
-              className="object-cover rounded-xl brightness-50"
-              src={windstopper}
-              alt="windstopper"
-            />
+      <div className="flex flex-col items-center justify-between gap-5">
+        <div
+          onClick={() => {}}
+          className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative overflow-hidden rounded-xl"
+        >
+          <figure className="object-cover   brightness-75  hover:scale-110 hover:brightness-50 transition-all">
+            <img className="" src={tshirt} alt="tshirt" />
           </figure>
-          <div className="flex absolute top-0 right-0 flex-col gap-3 p-5 text-right text-white">
-            <h2 className="">بادگیر</h2>
-            <p className="mr-5">
-              If a dog chews shoes whose shoes does he choose?
-            </p>
+          <div
+            dir="rtl"
+            className="absolute bottom-2 right-2 justify-center items-center flex flex-col text-white p-5 gap-3"
+          >
+            <h2 className="text-[20px] border border-base-100 rounded-full px-3 py-1 bg-opacity-25 bg-base-100">
+              تی شرت های مردانه
+            </h2>
           </div>
         </div>
-        <div className="relative w-full h-full shadow-lg cursor-pointer hover:shadow-2xl bg-base-100 image-full">
-          <figure>
-            <img
-              className="object-cover rounded-xl brightness-50"
-              src={jacket}
-              alt="شلوار"
-            />
+        <div
+          onClick={() => {}}
+          className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative overflow-hidden rounded-xl"
+        >
+          <figure className="object-cover   brightness-75  hover:scale-110 hover:brightness-50 transition-all">
+            <img className="" src={jacket} alt="tshirt" />
           </figure>
-          <div className="flex absolute top-0 right-0 flex-col gap-3 p-5 text-right text-white">
-            <h2 className="">شلوار</h2>
-            <p className="mr-5">
-              If a dog chews shoes whose shoes does he choose?
-            </p>
+          <div
+            dir="rtl"
+            className="absolute bottom-2 right-2 justify-center items-center flex flex-col text-white p-5 gap-3"
+          >
+            <h2 className="text-[20px] border border-base-100 rounded-full px-3 py-1 bg-opacity-25 bg-base-100">
+              بادگیر های مردانه
+            </h2>
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5 justify-between items-center">
-        <div className="relative w-full h-full shadow-lg cursor-pointer hover:shadow-2xl bg-base-100 image-full">
-          <figure>
-            <img
-              className="object-cover rounded-xl brightness-50"
-              src={tshirt}
-              alt="tshirt"
-            />
+      <div className="flex flex-col items-center justify-between gap-5">
+        <div
+          onClick={() => {}}
+          className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative overflow-hidden rounded-xl"
+        >
+          <figure className="object-cover   brightness-75  hover:scale-110 hover:brightness-50 transition-all">
+            <img className="" src={tshirt} alt="tshirt" />
           </figure>
-          <div className="flex absolute top-0 right-0 flex-col gap-3 p-5 text-right text-white">
-            <h2 className="">تیشرت</h2>
-            <p className="mr-5">
-              If a dog chews shoes whose shoes does he choose?
-            </p>
+          <div
+            dir="rtl"
+            className="absolute bottom-2 right-2 justify-center items-center flex flex-col text-white p-5 gap-3"
+          >
+            <h2 className="text-[20px] border border-base-100 rounded-full px-3 py-1 bg-opacity-25 bg-base-100">
+              شلوار های مردانه
+            </h2>
           </div>
         </div>
-        <div className="relative w-full h-full shadow-lg cursor-pointer hover:shadow-2xl bg-base-100 image-full">
-          <figure>
-            <img
-              className="object-cover rounded-xl brightness-50"
-              src={jacket}
-              alt="jacket"
-            />
+        <div
+          onClick={() => {}}
+          className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative overflow-hidden rounded-xl"
+        >
+          <figure className="object-cover   brightness-75  hover:scale-110 hover:brightness-50 transition-all">
+            <img className="" src={windstopper} alt="tshirt" />
           </figure>
-          <div className="flex absolute top-0 right-0 flex-col gap-3 p-5 text-right text-white">
-            <h2 className="">بارانی</h2>
-            <p className="mr-5">
-              If a dog chews shoes whose shoes does he choose?
-            </p>
+          <div
+            dir="rtl"
+            className="absolute bottom-2 right-2 justify-center items-center flex flex-col text-white p-5 gap-3"
+          >
+            <h2 className="text-[20px] border border-base-100 rounded-full px-3 py-1 bg-opacity-25 bg-base-100">
+              وینداستاپر های مردانه
+            </h2>
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5 justify-between items-center">
-        <div className="relative w-full h-full shadow-lg cursor-pointer hover:shadow-2xl bg-base-100 image-full">
-          <figure>
-            <img
-              className="object-cover rounded-xl brightness-50"
-              src={tshirt}
-              alt="tshirt"
-            />
+      <div className="flex flex-col items-center justify-between gap-5">
+        <div
+          onClick={() => {}}
+          className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative overflow-hidden rounded-xl"
+        >
+          <figure className="object-cover   brightness-75  hover:scale-110 hover:brightness-50 transition-all">
+            <img className="" src={tshirt} alt="tshirt" />
           </figure>
-          <div className="flex absolute top-0 right-0 flex-col gap-3 p-5 text-right text-white">
-            <h2 className="">تیشرت</h2>
-            <p className="mr-5">
-              If a dog chews shoes whose shoes does he choose?
-            </p>
+          <div
+            dir="rtl"
+            className="absolute bottom-2 right-2 justify-center items-center flex flex-col text-white p-5 gap-3"
+          >
+            <h2 className="text-[20px] border border-base-100 rounded-full px-3 py-1 bg-opacity-25 bg-base-100">
+              ورزشی های مردانه
+            </h2>
           </div>
         </div>
-        <div className="relative w-full h-full shadow-lg cursor-pointer hover:shadow-2xl bg-base-100 image-full">
-          <figure>
-            <img
-              className="object-cover rounded-xl brightness-50"
-              src={jacket}
-              alt="jacket"
-            />
+        <div
+          onClick={() => {}}
+          className=" w-full cursor-pointer hover:shadow-2xl h-full bg-base-100 shadow-lg image-full relative overflow-hidden rounded-xl"
+        >
+          <figure className="object-cover  brightness-75  hover:scale-110 hover:brightness-50 transition-all">
+            <img className="" src={tshirt} alt="tshirt" />
           </figure>
-          <div className="flex absolute top-0 right-0 flex-col gap-3 p-5 text-right text-white">
-            <h2 className="">بارانی</h2>
-            <p className="mr-5">
-              If a dog chews shoes whose shoes does he choose?
-            </p>
+          <div
+            dir="rtl"
+            className="absolute bottom-2 right-2 justify-center items-center flex flex-col text-white p-5 gap-3"
+          >
+            <h2 className="text-[20px] border border-base-100 rounded-full px-3 py-1 bg-opacity-25 bg-base-100">
+              غیر ورزشی های مردانه
+            </h2>
           </div>
         </div>
       </div>

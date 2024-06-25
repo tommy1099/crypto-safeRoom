@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { Footer, NavBar } from "@/components/ui";
+import { Footer, NavBar } from "../../../components/ui";
 import { ScrollToTopIcon } from "@/components/forms";
 import { useSearchParams } from "react-router-dom";
+import RightSideSearchPageMenu from "@/pages/SearchPage/RightSideSearchPageMenu";
+import ProductsSearchPage from "@/pages/SearchPage/ProductsSearchPage";
+import SortSearchPage from "@/pages/SearchPage/SortSearchPage";
 import { FilterOption } from "@/Interfaces/Interfaces";
-import ProductUnisexPage from "./ProductUnisexPage";
 
-const Unisex = () => {
+const MensProducts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [numberOfProducts, setNumberOfProducts] = useState(0);
   const [sortValue, setSortValue] = useState("");
   const [query, setQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [filters, setFilters] = useState<Record<string, FilterOption[]>>();
-  const [currectPage, setCurrentPage] = useState(1);
+  const [currectPage] = useState(1);
   useEffect(() => {
     const queryParam = searchParams.get("q");
     if (queryParam) {
@@ -49,7 +51,22 @@ const Unisex = () => {
 
       <div className="flex justify-center mt-[5%]">
         <div className=" overflow-x-auto md:w-[82%] h-full">
-          <ProductUnisexPage />
+          <SortSearchPage
+            isSidebarOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+            handlerSortValueFromChild={handlerSortValueFromChild}
+            query={query}
+            numberOfProducts={numberOfProducts}
+          />
+          <ProductsSearchPage
+            where={"allMensProducts"}
+            limit={10}
+            page={currectPage}
+            filters={filters}
+            query={query}
+            sortValue={sortValue}
+            handlerNumberOfProducts={handlerNumberOfProducts}
+          />
           {/* <div className="flex justify-center items-center mt-24 ml-[10%] text-center">
             <PaginationButtons
               isLoaded={false}
@@ -59,10 +76,10 @@ const Unisex = () => {
             />
           </div> */}
         </div>
-        {/* <RightSideProfileMenu
+        <RightSideSearchPageMenu
           handleSendFiltersFromChild={handleSendFiltersFromChild}
           isSidebarOpen={isSidebarOpen}
-        /> */}
+        />
       </div>
       <div className="w-screen">
         <Footer />
@@ -73,4 +90,4 @@ const Unisex = () => {
     </div>
   );
 };
-export default Unisex;
+export default MensProducts;

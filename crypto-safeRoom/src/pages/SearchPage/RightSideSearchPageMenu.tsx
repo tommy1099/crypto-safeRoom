@@ -4,9 +4,8 @@ import "rc-slider/assets/index.css";
 import { DropDown_normal } from "../../components/ui";
 import {
   FilterOption,
-  IRightSideSearchPageeMenu,
+  IRightSideSearchPageMenu,
 } from "@/Interfaces/Interfaces";
-import { useSearchParams } from "react-router-dom";
 const countries = [
   { id: "germany", label: "آلمان" },
   { id: "japan", label: "ژاپن" },
@@ -74,12 +73,11 @@ const brands = [
   { id: "arc_teryx", label: "Arc'teryx" },
 ] as const;
 
-const RightSideSearchPageeMenu = ({
+const RightSideSearchPageMenu = ({
   handleSendFiltersFromChild,
   isSidebarOpen,
-}: IRightSideSearchPageeMenu) => {
+}: IRightSideSearchPageMenu) => {
   const [filters, setFilters] = useState<Record<string, FilterOption[]>>({});
-  const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     handleSendFiltersFromChild(filters);
     console.log("filters: ", filters);
@@ -329,4 +327,4 @@ const RightSideSearchPageeMenu = ({
   );
 };
 
-export default RightSideSearchPageeMenu;
+export default RightSideSearchPageMenu;

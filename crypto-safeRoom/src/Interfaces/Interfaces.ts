@@ -373,3 +373,6 @@ export interface IRightSideSearchPageMenu {
   isSidebarOpen: boolean;
   handleSendFiltersFromChild: (filters: Record<string, FilterOption[]>) => void;
 }
+export interface ICheckoutSummary {
+  shippingPrice: number;
+}

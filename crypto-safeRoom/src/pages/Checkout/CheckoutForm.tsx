@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Store/Store";
-import MellatPic from "../../assets/img/Mellat.jpg";
-import ZarinPalPic from "../../assets/img/zarinPal.png";
-import PishtazPic from "../../assets/img/pishtaz.jpeg";
-import TipaxPic from "../../assets/img/tipax.jpeg";
+// import MellatPic from "../../assets/img/Mellat.jpg";
+// import ZarinPalPic from "../../assets/img/zarinPal.png";
+// import PishtazPic from "../../assets/img/pishtaz.jpeg";
+// import TipaxPic from "../../assets/img/tipax.jpeg";
 import Cookies from "js-cookie";
 import { resetShippingCart } from "@/Store/CartListReducer";
 import { orders } from "@/Interfaces/Interfaces";
 import PaymentSection from "./CheckoutPeymentSelection";
 import CheckoutShippingOption from "./CheckoutShippingOption";
+import CheckoutAddressSelection from "./CheckoutAddressSelection";
 
 const CheckoutForm = () => {
+  const [selectedAddress, setSelectedAddress] = useState<number | null>(null);
   const userData = useSelector((state: RootState) => state.user);
   const accessToken = Cookies.get("accessToken");
   const abortController = new AbortController();
@@ -22,25 +24,30 @@ const CheckoutForm = () => {
   const { price, discount } = useSelector((state: RootState) => state.Price);
   const handleSelectPayment = (value: string) => setSelectedPayment(value);
   const [selectedPayment, setSelectedPayment] = useState("");
-  const [newOrder, setNewOrder] = useState<orders>();
-  const [showModal, setShowModal] = useState(false);
+  const [, setNewOrder] = useState<orders>();
+  const [, setShowModal] = useState(false);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    console.log("userData: ", userData);
+  }, []);
   const handleSelectShipping = (value: string) => {
     setSelectedShipping(value);
 
     setShippingPrice(value === "tipax" ? 15 : 10);
   };
+  const handleAddressSelection = () => {
+    setSelectedAddress(0);
+  };
+
   const [formDataState, setFormDataState] = useState({
     firstname: "",
     lastname: "",
-    country: "ایران/Iran",
     city: "",
     town: "",
     zipCode: "",
     address: "",
     phone: "",
-    username: userData.username,
+    username: "",
     // userId: "",
     // orderDate: null,
     // state: false,
@@ -64,6 +71,10 @@ const CheckoutForm = () => {
       };
     });
   };
+  const [newAddressRadioChecked, setNewAddressRadioChecked] = useState(true);
+  // const radioNewAddressChecked = () => {
+  //   setNewAddressRadioChecked(true);
+  // };
   const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (cartItems.length <= 0) return;
@@ -75,7 +86,6 @@ const CheckoutForm = () => {
       formData.append("selectedShipping", selectedShipping);
       formData.append("firstname", formDataState.firstname);
       formData.append("lastname", formDataState.lastname);
-      formData.append("country", formDataState.country);
       formData.append("city", formDataState.city);
       formData.append("zipCode", formDataState.zipCode);
       formData.append("address", formDataState.address);
@@ -111,139 +121,191 @@ const CheckoutForm = () => {
   return (
     <Container
       dir="ltr"
-      style="relative flex rounded-md lg:w-[55%] lg:h-[45%]  justify-center items-center text-neutral "
+      style="relative flex rounded-md justify-center items-center text-neutral border-l pl-10"
     >
       <form
         onSubmit={handleCheckout}
         action=""
-        className="flex  flex-col justify-center text-right items-end"
+        className="flex flex-col justify-center items-end w-full text-right"
       >
-        <div className="flex border-b border-grey-300 pb-5">
-          <div className="flex flex-col ">
-            <div className="flex flex-col gap-20 md:flex-row">
-              <div>
-                <p dir={"rtl"} className="mb-5 text-xl font-bold">
-                  {"صورت حساب و حمل و نقل"}
-                </p>
-                <div className="flex gap-5">
+        <p className="pb-2 mb-5 text-xl font-bold text-right border-b-2 border-orange-400">
+          {"صورت حساب"}
+        </p>
+        <div dir="rtl" className="flex w-[65%]  justify-start ">
+          <div
+            onClick={() => setNewAddressRadioChecked(false)}
+            id="selectAddress"
+            dir="rtl"
+            className="flex flex-col gap-2 justify-between w-full"
+          >
+            {userData.user?.addresses.map((address, index) => (
+              <CheckoutAddressSelection
+                key={index}
+                firstname={address.firstname}
+                lastname={address.lastname}
+                town={address.town}
+                city={address.city}
+                zipCode={address.zipCode}
+                address={address.address}
+                phone={address.phone}
+                index={index}
+                selectedAddress={selectedAddress}
+                setSelectedAddress={setSelectedAddress}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div
+            dir="rtl"
+            className="flex gap-2 justify-start items-center py-5 mt-5 mr-1"
+          >
+            <input
+              type="radio"
+              id="newAddress"
+              name="addressType"
+              value="new"
+              checked={newAddressRadioChecked}
+              onChange={handleAddressSelection}
+              className="accent-orange-400"
+            />
+            <label htmlFor="newAddress" className="text-sm">
+              ثبت آدرس جدید
+            </label>
+          </div>
+
+          <div
+            onClick={() => {
+              setSelectedAddress(null);
+              setNewAddressRadioChecked(true);
+            }}
+            id="newAddress"
+            className={`flex pb-5 rounded-md border-b border-grey-300`}
+          >
+            <div className="flex flex-col">
+              <div className="flex flex-col gap-20 md:flex-row">
+                <div>
+                  <div className="flex gap-5">
+                    <div className="flex flex-col w-[300px] ">
+                      <label className="mb-2 text-sm" htmlFor="lastname">
+                        {"نام خانوادگی"}
+                      </label>
+                      <input
+                        dir="rtl"
+                        id="lastname"
+                        name="lastname"
+                        className="px-2 mb-1 h-10 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral"
+                        type="text"
+                        placeholder={""}
+                        required
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                    <div className="flex flex-col w-[300px]">
+                      <label className="mb-2 text-sm" htmlFor="firstname">
+                        {"نام"}
+                      </label>
+                      <input
+                        dir="rtl"
+                        id="firstname"
+                        name="firstname"
+                        className="px-2 mb-1 h-10 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral"
+                        type="text"
+                        placeholder={""}
+                        required
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                  </div>
                   <div className="flex flex-col">
-                    <label className="mb-2 text-sm" htmlFor="lastname">
-                      {"نام خانوادگی"}
+                    <label className="mb-2 text-sm" htmlFor="address">
+                      {"آدرس"}
                     </label>
                     <input
                       dir="rtl"
-                      id="lastname"
-                      name="lastname"
-                      className="border pl-2 h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
+                      id="address"
+                      name="address"
+                      className="px-2 mb-1 h-10 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral"
                       type="text"
                       placeholder={""}
                       required
                       onChange={handleOnChange}
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <label className="mb-2 text-sm" htmlFor="firstname">
-                      {"نام"}
-                    </label>
-                    <input
-                      dir="rtl"
-                      id="firstname"
-                      name="firstname"
-                      className="border pl-2  h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                      type="text"
-                      placeholder={""}
-                      required
-                      onChange={handleOnChange}
-                    />
+                  <div className="flex gap-5">
+                    <div className="flex flex-col w-[300px]">
+                      <label className="mb-2 text-sm" htmlFor="city">
+                        {"شهر"}
+                      </label>
+                      <input
+                        dir="rtl"
+                        id="city"
+                        name="city"
+                        className="px-2 mb-1 h-10 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral"
+                        type="text"
+                        placeholder={""}
+                        required
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                    <div className="flex flex-col w-[300px]">
+                      <label className="mb-2 text-sm" htmlFor="town">
+                        {"استان"}
+                      </label>
+                      <input
+                        dir="rtl"
+                        id="town"
+                        name="town"
+                        className="px-2 mb-1 h-10 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral"
+                        type="text"
+                        placeholder={""}
+                        required
+                        onChange={handleOnChange}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="flex flex-col">
-                  <label className="mb-2 text-sm" htmlFor="address">
-                    {"آدرس"}
-                  </label>
-                  <input
-                    dir="rtl"
-                    id="address"
-                    name="address"
-                    className="border pl-2  h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                    type="text"
-                    placeholder={""}
-                    required
-                    onChange={handleOnChange}
-                  />
-                </div>
-                <div className="flex gap-5">
-                  <div className="flex flex-col">
-                    <label className="mb-2 text-sm" htmlFor="city">
-                      {"شهر"}
-                    </label>
-                    <input
-                      dir="rtl"
-                      id="city"
-                      name="city"
-                      className="border pl-2  h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                      type="text"
-                      placeholder={""}
-                      required
-                      onChange={handleOnChange}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="mb-2 text-sm" htmlFor="town">
-                      {"استان"}
-                    </label>
-                    <input
-                      dir="rtl"
-                      id="town"
-                      name="town"
-                      className="border pl-2  h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                      type="text"
-                      placeholder={""}
-                      required
-                      onChange={handleOnChange}
-                    />
-                  </div>
-                </div>
-                <div className="flex gap-5">
-                  <div className="flex flex-col">
-                    <label className="mb-2 text-sm" htmlFor="zipCode">
-                      {"کد پستی"}
-                    </label>
-                    <input
-                      dir="rtl"
-                      id="zipCode"
-                      name="zipCode"
-                      className="border pl-2  h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                      type="text"
-                      placeholder={""}
-                      required
-                      onChange={handleOnChange}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="mb-2 text-sm" htmlFor="phone">
-                      {"شماره تماس"}
-                    </label>
-                    <input
-                      dir="rtl"
-                      id="phone"
-                      name="phone"
-                      className="border pl-2  h-10 rounded-md mb-1 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-neutral"
-                      type="text"
-                      placeholder={""}
-                      required
-                      onChange={handleOnChange}
-                    />
+                  <div className="flex gap-5">
+                    <div className="flex flex-col w-[300px]">
+                      <label className="mb-2 text-sm" htmlFor="zipCode">
+                        {"کد پستی"}
+                      </label>
+                      <input
+                        dir="rtl"
+                        id="zipCode"
+                        name="zipCode"
+                        className="px-2 mb-1 h-10 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral"
+                        type="text"
+                        placeholder={""}
+                        required
+                        onChange={handleOnChange}
+                      />
+                    </div>
+                    <div className="flex flex-col w-[300px]">
+                      <label className="mb-2 text-sm" htmlFor="phone">
+                        {"شماره تماس"}
+                      </label>
+                      <input
+                        dir="rtl"
+                        id="phone"
+                        name="phone"
+                        className="px-2 mb-1 h-10 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral"
+                        type="text"
+                        placeholder={""}
+                        required
+                        onChange={handleOnChange}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            {/* <button
+              {/* <button
               type="submit"
               className="p-2 text-sm rounded-md bg-primary text-secondary hover:opacity-[0.9]"
             >
               {"checkout"}
             </button> */}
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-5">
@@ -259,13 +321,13 @@ const CheckoutForm = () => {
             <label htmlFor="userNote">{"توضیحات سفارش (اختیاری)"}</label>
             <textarea
               dir="rtl"
-              className=" rounded-md border p-2 bg-base-100 border-neutral focus:border-primary focus:border-2 focus:outline-none placeholder:text-gray-400 placeholder:text-sm"
+              className="p-2 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-gray-400"
               name="userNote"
               id="userNote"
               cols={30}
               rows={5}
               placeholder={
-                "یادداشت ها درباره سفارش شما، برای مثال نکان مهم درباره نحوه تحویل سفارش"
+                "یادداشت ها درباره سفارش شما، برای مثال نکات مهم درباره نحوه تحویل سفارش"
               }
               onChange={handleOnChange}
             ></textarea>

@@ -1,40 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { userState } from "../Interfaces/Interfaces";
 
-const initialState: userState = {
-  pic: "",
-  email: {
-    email: "",
-    confirm: false,
-  },
-  username: "₿",
-  plan: {
-    remaining: 0,
-    maxDays: 0,
-    type: "",
-  },
-  firstname: "",
-  lastname: "",
-  refcode: {
-    userCode: "",
-    enteredCodes: [],
-  },
-  phone: "",
-  orders: [],
-  role: "",
-  ban: false,
+interface IuserModel {
+  user: userState | null;
+  isLoading: boolean;
+  error: string | null;
+}
+
+const initialState: IuserModel = {
+  user: null,
+  isLoading: false,
+  error: null,
 };
 
 const userProfile = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<Partial<userState>>) => {
-      // Merge action.payload into state, overwriting existing properties
+    setUser: (state, action: PayloadAction<Partial<IuserModel>>) => {
       Object.assign(state, action.payload);
     },
     resetUser: (state) => {
-      // Merge action.payload into state, overwriting existing properties
       Object.assign(state, initialState);
     },
   },

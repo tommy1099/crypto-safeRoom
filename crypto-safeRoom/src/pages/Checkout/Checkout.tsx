@@ -5,15 +5,11 @@ import { RootState } from "../../Store/Store";
 import { NavBar, Footer } from "../../components/ui";
 import { ScrollToTopIcon } from "../../components/forms";
 
-import { useTranslation } from "react-i18next";
-
 import Modal from "../../components/forms/Modal/Modal";
 import { orders } from "../../Interfaces/Interfaces";
 import CheckoutSummary from "./CheckoutSummary";
 import CheckoutForm from "./CheckoutForm";
 const Checkout = () => {
-  const { t } = useTranslation();
-
   const cartItems = useSelector((state: RootState) => state.cartList.list);
   const [, setIncludesPhysical] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -21,21 +17,6 @@ const Checkout = () => {
   const [shippingPrice] = useState(0);
   const handleCloseModal = () => {
     setShowModal(false);
-  };
-
-  const desc = {
-    desc1: "alksdjlkajsdajwdlkasjdasidoqw",
-    desc2: "aisudhasdasd54asdasdaiusdhasd",
-    desc3: "asdhjahsdjahsdiqwuhdpwdhhambn",
-  };
-  const tags = {
-    tag1: "you can see this page again by clicking on the order in your profile",
-    tag2: "after your time ran out your order will be dismissed",
-  };
-  const tpPrices = {
-    tp1Price: "",
-    tp2Price: "",
-    tp3Price: "",
   };
 
   // const handleDecreaseOneItem = (
@@ -67,7 +48,7 @@ const Checkout = () => {
     <div className="pt-[10%]">
       <NavBar />
 
-      <div dir="" className="flex justify-center">
+      <div dir="" className="flex gap-10 justify-center">
         <CheckoutSummary shippingPrice={shippingPrice} />
         <CheckoutForm />
         {/* <div className="flex flex-col">
@@ -83,20 +64,12 @@ const Checkout = () => {
       </div>
       <Modal
         key=""
-        physical={false} //doest matter
-        tpPrices={tpPrices} //doest matter
-        entryPoint={""} //doest matter
-        alertDesc={""} //doest matter
-        children={<></>} //doest matter
         price={newOrder?.totalPrice}
         id={newOrder?._id || ""}
         type={"checkout"}
         showModal={showModal}
         handleClose={handleCloseModal}
         img={""}
-        desc={desc}
-        tags={tags}
-        crypto={""} //doest matter
         title={newOrder?._id}
       />
     </div>

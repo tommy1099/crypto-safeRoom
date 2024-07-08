@@ -45,10 +45,10 @@ const CheckoutSummary = ({ shippingPrice }: ICheckoutSummary) => {
   };
   return (
     <Container
-      dir="ltr"
-      style={`relative flex flex-col bg-gray-100 rounded-md lg:w-[30%] lg:h-[90%] p-10 shadow-2xl "bg-base-100" text-neutral `}
+      dir="rtl"
+      style={`relative flex flex-col bg-base-100 text-right rounded-md lg:w-[30%] lg:h-full p-10 "bg-base-100" text-neutral `}
     >
-      <p dir={"rtl"} className={`text-2xl font-bold text-neutral`}>
+      <p className="pb-2 mb-5 w-28 text-xl font-bold text-right border-b-2 border-orange-400">
         {"سبد خرید"}
       </p>
       {cartItems.length ? (
@@ -93,36 +93,63 @@ const CheckoutSummary = ({ shippingPrice }: ICheckoutSummary) => {
       )}
 
       <div className="mt-[5%]">
-        <div className="flex justify-between items-center">
-          <div className="flex">
-            <div className="mt-2 mr-3 text-primary">
+        <div className="flex justify-between items-center text-sm">
+          <div dir="rtl" className="flex relative justify-center items-center">
+            <div
+              onClick={() => {}}
+              className="absolute left-3 cursor-pointer text-primary"
+            >
               <FaArrowsRotate />
             </div>
             <input
               ref={myRef}
               type="text"
-              className={`border bg-base-100 p-2 rounded-md w-[130px] h-8 focus:border-primary border-neutral focus:border-2 focus:outline-none placeholder:text-neutral text-neutral`}
-              placeholder={"code"}
+              className={`px-2 py-1 w-32 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral`}
+              placeholder={""}
               required={false}
             />
           </div>{" "}
           <p>{"کد تخفیف"}</p>
         </div>
-        <div className="flex justify-between items-center">
-          <p>تومان{formatNumberToPersian(price)}</p> <p>{"قیمت کالاها"}</p>
+        <div className="flex justify-between items-center mt-3 text-sm">
+          <p dir="rtl">{formatNumberToPersian(price)} تومان</p>
+          <p>{"قیمت کالاها"}</p>
         </div>
-        <div className="flex justify-between items-center pt-2 mt-5 text-xl font-bold border-t-2 border-primary">
-          <p>
-            تومان
+        <div className="flex justify-between items-center pt-2 mt-5 text-xl font-bold border-t-2 border-gray-300">
+          <p dir="rtl">
             {myRef.current && myRef.current.value === "off"
               ? formatNumberToPersian(
                   shippingPrice + price - (shippingPrice + price) * (10 / 100)
                 )
-              : formatNumberToPersian(shippingPrice + price)}
+              : formatNumberToPersian(shippingPrice + price)}{" "}
+            تومان
           </p>
           <p>{"مجموع"}</p>
         </div>
       </div>
+      <label
+        className="flex gap-2 justify-start items-center mt-5"
+        htmlFor="acceptingRules"
+      >
+        <p dir="" className="inline text-sm">
+          <a
+            href="#"
+            className="text-orange-500 hover:underline"
+            target="_blank"
+          >
+            شرایت و مقررات
+          </a>{" "}
+          را خوانده ام و آن را می پذیرم.
+        </p>
+        <input
+          className="cursor-pointer accent-orange-400 focus:accent-orange-500"
+          id="acceptingRules"
+          type="checkbox"
+        />
+      </label>
+      <button className="py-1 mt-5 rounded-md border-2 border-orange-400 transition-all cursor-pointer hover:bg-orange-400 hover:border-orange-400">
+        پرداخت
+      </button>
     </Container>
   );
 };

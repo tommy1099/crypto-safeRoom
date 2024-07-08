@@ -127,24 +127,73 @@ export interface CardProps extends PropsWithChildren {
     _id: string;
   };
 
-  export interface userState {
-    pic?: string;
-    email: {email: string; confirm: boolean;};
+export interface userState {
+  username: string;
+password: string;
+email: {
+  confirm: boolean;
+  email: string;
+  emailToken: {
+    confirmationToken: string;
+    isUsedToken: string;
+  };
+};
+orders: {
+  userInfo: {
     username: string;
-    plan: {
-      remaining: number;
-      maxDays: number;
-      type: string;
+    userID: string;
+    shippingAddress: {
+      firstname: string;
+      lastname: string;
+      town: string;
+      city: string;
+      zipCode: string;
+      address: string;
+      phone: string;
     };
-    firstname?: string;
-    lastname?: string;
-    refcode: {userCode: string; enteredCodes: string[]};
-    phone?: string;
-    orders: orders[];
-    role: string;
-    ban: boolean;
-  }
-
+  };
+  orderDate: Date;
+  paymentMethod: {
+    paid: boolean;
+    method: string;
+  };
+  productName: {
+    id: string;
+    title: string;
+    price: number;
+    img?: string;
+  }[];
+  totalPrice: number;
+  userNote?: string;
+  status: string;
+}[];
+favorite: string[];
+addresses: {
+  firstname: string;
+  lastname: string;
+  city: string;
+  town: string;
+  zipCode: string;
+  address: string;
+  phone: string;
+}[];
+firstname: string;
+lastname: string;
+phone: string;
+refreshToken: string;
+role: string;
+ban: boolean;
+}
+  
+export interface IUserAddress {
+    firstname: string;
+    lastname: string;
+    city: string;
+    town: string;
+    zipCode: string;
+    address: string;
+    phone: string;
+}
   export interface RadialProgressProps extends PropsWithChildren {
     value: number;
     style: { textColor: string; pathColor: string; trailColor: string };

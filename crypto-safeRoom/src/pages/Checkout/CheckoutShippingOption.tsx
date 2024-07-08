@@ -36,16 +36,16 @@ const CheckoutShippingOption: React.FC<ShippingSectionProps> = ({
   ];
 
   return (
-    <div className="shipping-section border-b border-grey-300 py-5 flex justify-end gap-5  w-[500px]">
+    <div className="shipping-section border-b border-grey-300 py-5 flex justify-end gap-5  w-[600px]">
       <div className="shipping-options">
         {shippingOptions.map((option) => (
-          <div dir="rtl" key={option.id} className="shipping-option ">
+          <div dir="rtl" key={option.id} className="shipping-option">
             <input
               dir="rtl"
               id={option.id}
               type="radio"
               name={option.name}
-              className="shipping-input"
+              className="shipping-input accent-orange-400"
               defaultChecked={option.defaultChecked}
               onChange={option.onChange}
               required={false}
@@ -53,15 +53,15 @@ const CheckoutShippingOption: React.FC<ShippingSectionProps> = ({
             <label
               dir=""
               htmlFor={option.id}
-              className="shipping-label text-sm mr-2"
+              className="mr-2 text-sm shipping-label"
             >
               {option.label}
             </label>
           </div>
         ))}
       </div>
-      <p className="shipping-title flex w-[420px] items-center text-center justify-center border-l-8 border-orange-500">
-        روش پرداخت
+      <p className="shipping-title flex w-[70%] items-center text-center justify-center border-l-8 border-orange-400">
+        روش ارسال
       </p>
     </div>
   );

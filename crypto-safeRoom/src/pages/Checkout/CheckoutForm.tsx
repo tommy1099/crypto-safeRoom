@@ -20,7 +20,7 @@ const CheckoutForm = () => {
   const abortController = new AbortController();
   const cartItems = useSelector((state: RootState) => state.cartList.list);
   const [selectedShipping, setSelectedShipping] = useState("");
-  const [shippingPrice, setShippingPrice] = useState(0);
+  // const [shippingPrice, setShippingPrice] = useState(0);
   const { price, discount } = useSelector((state: RootState) => state.Price);
   const handleSelectPayment = (value: string) => setSelectedPayment(value);
   const [selectedPayment, setSelectedPayment] = useState("");
@@ -33,10 +33,7 @@ const CheckoutForm = () => {
   const handleSelectShipping = (value: string) => {
     setSelectedShipping(value);
 
-    setShippingPrice(value === "tipax" ? 15 : 10);
-  };
-  const handleAddressSelection = () => {
-    setSelectedAddress(0);
+    // setShippingPrice(value === "tipax"? 45000 : 0);
   };
 
   const [formDataState, setFormDataState] = useState({
@@ -66,7 +63,7 @@ const CheckoutForm = () => {
       return {
         ...prevData,
         products: JSON.stringify(cartItems),
-        totalPrice: String(price - discount + shippingPrice),
+        totalPrice: String(price - discount),
         [name]: value,
       };
     });
@@ -162,12 +159,15 @@ const CheckoutForm = () => {
             className="flex gap-2 justify-start items-center py-5 mt-5 mr-1"
           >
             <input
+              onClick={() => {
+                setSelectedAddress(null);
+                setNewAddressRadioChecked(true);
+              }}
               type="radio"
               id="newAddress"
               name="addressType"
               value="new"
               checked={newAddressRadioChecked}
-              onChange={handleAddressSelection}
               className="accent-orange-400"
             />
             <label htmlFor="newAddress" className="text-sm">

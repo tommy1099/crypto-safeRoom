@@ -322,6 +322,7 @@ export interface IUserAddress {
 
   }
   export interface IProduct {
+    _id?: string;
     url?: string;
     type?: string;
     general_info?: {

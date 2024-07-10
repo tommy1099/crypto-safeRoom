@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 
-import { RootState } from "../../Store/Store";
 import { NavBar, Footer } from "../../components/ui";
 import { ScrollToTopIcon } from "../../components/forms";
 
@@ -10,8 +8,6 @@ import { orders } from "../../Interfaces/Interfaces";
 import CheckoutSummary from "./CheckoutSummary";
 import CheckoutForm from "./CheckoutForm";
 const Checkout = () => {
-  const cartItems = useSelector((state: RootState) => state.cartList.list);
-  const [, setIncludesPhysical] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [newOrder] = useState<orders>();
   const [shippingPrice] = useState(0);
@@ -39,10 +35,6 @@ const Checkout = () => {
   //   dispatch(addItem({ id, title, img, quantity, price, physical }));
   // };
   //if cart includes physical item enable shipping methods
-  useEffect(() => {
-    const includesPhysical = cartItems.some((item) => item.physical === true);
-    setIncludesPhysical(includesPhysical);
-  }, [cartItems]);
 
   return (
     <div className="pt-[10%]">

@@ -1,5 +1,4 @@
 import { IUserAddress } from "@/Interfaces/Interfaces";
-import { useState } from "react";
 
 const CheckoutAddressSelection = ({
   firstname,
@@ -32,7 +31,11 @@ const CheckoutAddressSelection = ({
         onChange={handleAddressSelection}
       />
       <label htmlFor={`address-${index}`} className="mr-2 w-[90%] text-sm">
-        <div className={`p-5 text-sm rounded-md cursor-pointer`}>
+        <div
+          className={`p-5 text-sm cursor-pointer border-l-2 ${
+            index === selectedAddress ? "border-orange-400" : "border-base-100"
+          }`}
+        >
           <div>
             گیرنده: {firstname} {lastname}
           </div>

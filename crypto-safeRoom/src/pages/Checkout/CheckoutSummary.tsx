@@ -5,43 +5,74 @@ import { FaArrowsRotate } from "react-icons/fa6";
 import { formatNumberToPersian } from "@/utils/NumberToFarsi/NumberToFarsi";
 import EmptyCartPic from "../../assets/img/empty-cart.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
-import { removeItem } from "@/Store/CartListReducer";
+import { useEffect, useRef, useState } from "react";
+import {
+  removeItem,
+  resetShippingCart,
+  setDiscount,
+} from "@/Store/CartListReducer";
+import { RxCross1 } from "react-icons/rx";
+import dummyIMG from "../../assets/img/logos/images.png";
+
 import { RootState } from "@/Store/Store";
 import { ICheckoutSummary } from "@/Interfaces/Interfaces";
-import {
-  discountPriceCalculator,
-  priceCalculator,
-  reset,
-} from "@/Store/priceReducer";
 
 const CheckoutSummary = ({ shippingPrice }: ICheckoutSummary) => {
-  useEffect(() => {
-    dispatch(reset());
-    console.log("price:", price);
-    console.log("discount:", discount);
-    console.log("shipping:", shippingPrice);
-    dispatch(discountPriceCalculator((shippingPrice + price) * (10 / 100)));
-
-    cartItems.forEach((item) =>
-      dispatch(priceCalculator(item.quantity * item.price))
-    );
-  }, [shippingPrice]);
-  //cartItems, discount, dispatch, price,
-  const { price, discount } = useSelector((state: RootState) => state.Price);
-  const cartItems = useSelector((state: RootState) => state.cartList.list);
-
-  const myRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const [EnteredDiscountCode, seEnteredDiscountCode] = useState<string>("");
+  // const [discountState, setDiscountState] = useState<boolean>(false);
+  const [discoiuntAmount, setDiscoiuntAmount] = useState<number>(0);
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    seEnteredDiscountCode(event.target.value);
+  };
+  const discountState = useSelector(
+    (state: RootState) => state.cartList.isDiscounted
+  );
+
+  const handleDiscount = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ enteredDiscountCode: EnteredDiscountCode }),
+    };
+    const response = await fetch(
+      "http://localhost:3000/product/discountAmount",
+      requestOptions
+    );
+    if (response.ok) {
+      const { state, amount } = await response.json();
+      console.log("state: ", state);
+      console.log("amount: ", amount);
+      // setDiscountState(state);
+      dispatch(setDiscount({ state, amount }));
+      setDiscoiuntAmount(amount);
+    }
+  };
+  useEffect(() => {
+    console.log("original price: ", priceBefore);
+    console.log("discountState: ", discountState);
+    // dispatch(resetShippingCart());
+  }, [discountState]);
+  //cartItems, discount, dispatch, price,
+  const cartItems = useSelector((state: RootState) => state.cartList.list);
+  const priceAfter = useSelector(
+    (state: RootState) => state.cartList.priceAfter
+  );
+  const priceBefore = useSelector(
+    (state: RootState) => state.cartList.priceBefore
+  );
+  const myRef = useRef<HTMLInputElement>(null);
 
   const handleRemoveItem = (
     id: string,
     title: string,
-    img: string | undefined,
+    link: string,
+    img: string,
     quantity: number,
-    physical: boolean
+    price: number
   ) => {
-    dispatch(removeItem({ id, title, img, quantity, price, physical }));
+    dispatch(removeItem({ id, title, link, img, quantity, price }));
   };
   return (
     <Container
@@ -56,15 +87,15 @@ const CheckoutSummary = ({ shippingPrice }: ICheckoutSummary) => {
           {cartItems.map((item, index) => (
             <li
               key={index}
-              className="flex justify-between p-5 border-b-2 border-b-neutral"
+              className="flex justify-between p-1 border-b border-gray-200"
             >
-              <img className="w-20 rounded-md" src={""} alt="Cart" />
-              <div className="flex flex-col ml-2 w-[40%] items-start justify-start">
-                <p className="flex justify-start text-neutral items-center max-w-[70%] truncate">
+              <img className="w-24 rounded-md" src={dummyIMG} alt="Cart" />
+              <div className="flex flex-col justify-center items-start text-sm">
+                <p className="flex justify-start text-neutral items-center max-w-[70%]  truncate">
                   {item.title}
                 </p>
                 <p className="text-neutral">
-                  تومان{formatNumberToPersian(item.price)}
+                  {formatNumberToPersian(item.price)} تومان
                 </p>
               </div>
               <div className="flex items-center">
@@ -74,9 +105,10 @@ const CheckoutSummary = ({ shippingPrice }: ICheckoutSummary) => {
                     handleRemoveItem(
                       item.id,
                       item.title,
+                      item.link,
                       item.img,
                       item.quantity,
-                      item.physical
+                      item.price
                     )
                   }
                 >
@@ -95,34 +127,52 @@ const CheckoutSummary = ({ shippingPrice }: ICheckoutSummary) => {
       <div className="mt-[5%]">
         <div className="flex justify-between items-center text-sm">
           <div dir="rtl" className="flex relative justify-center items-center">
-            <div
-              onClick={() => {}}
-              className="absolute left-3 cursor-pointer text-primary"
-            >
-              <FaArrowsRotate />
-            </div>
-            <input
-              ref={myRef}
-              type="text"
-              className={`px-2 py-1 w-32 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral`}
-              placeholder={""}
-              required={false}
-            />
+            {!discountState ? (
+              <>
+                <div
+                  onClick={handleDiscount}
+                  className="absolute left-3 cursor-pointer text-primary"
+                >
+                  <FaArrowsRotate />
+                </div>
+                <input
+                  ref={myRef}
+                  type="text"
+                  className={`px-2 py-1 w-32 text-sm rounded-md border-2 bg-base-200 border-base-100 focus:border-orange-400 focus:outline-none placeholder:text-neutral`}
+                  placeholder={""}
+                  required={false}
+                  onBlur={handleInputBlur}
+                />
+              </>
+            ) : (
+              <div className="flex gap-5 items-center p-1 rounded-md border-2 border-orange-400">
+                <span>% {formatNumberToPersian(discoiuntAmount)} </span>
+                <div
+                  onClick={() => {}}
+                  className="cursor-pointer hover:text-orange-200"
+                >
+                  <RxCross1 />
+                </div>
+              </div>
+            )}
           </div>{" "}
           <p>{"کد تخفیف"}</p>
         </div>
-        <div className="flex justify-between items-center mt-3 text-sm">
-          <p dir="rtl">{formatNumberToPersian(price)} تومان</p>
+        <div className={`flex justify-between items-center mt-3 text-sm`}>
+          <p className={`${discountState && "line-through"}`} dir="rtl">
+            {formatNumberToPersian(priceBefore)} تومان
+          </p>
           <p>{"قیمت کالاها"}</p>
         </div>
+        {discountState && (
+          <div className="flex justify-between items-center mt-3 text-sm">
+            <p dir="rtl">{formatNumberToPersian(priceAfter)} تومان</p>
+            <p>{"قیمت کالاها با تخفیف"}</p>
+          </div>
+        )}
         <div className="flex justify-between items-center pt-2 mt-5 text-xl font-bold border-t-2 border-gray-300">
           <p dir="rtl">
-            {myRef.current && myRef.current.value === "off"
-              ? formatNumberToPersian(
-                  shippingPrice + price - (shippingPrice + price) * (10 / 100)
-                )
-              : formatNumberToPersian(shippingPrice + price)}{" "}
-            تومان
+            {formatNumberToPersian(shippingPrice + priceAfter)} تومان
           </p>
           <p>{"مجموع"}</p>
         </div>
@@ -147,7 +197,13 @@ const CheckoutSummary = ({ shippingPrice }: ICheckoutSummary) => {
           type="checkbox"
         />
       </label>
-      <button className="py-1 mt-5 rounded-md border-2 border-orange-400 transition-all cursor-pointer hover:bg-orange-400 hover:border-orange-400">
+      <button
+        className={` ${
+          cartItems.length <= 0
+            ? "disabled border-base-100 bg-gray-200 text-gray-400"
+            : "border-orange-400 cursor-pointer hover:bg-orange-400 hover:border-orange-400 hover:text-orange-100"
+        } py-1 mt-5 rounded-md border-2  transition-all `}
+      >
         پرداخت
       </button>
     </Container>

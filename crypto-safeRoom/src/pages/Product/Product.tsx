@@ -78,6 +78,9 @@ const Product = () => {
       {/* <Breadcrumbs /> */}
       <div className="flex w-[85%] justify-center gap-2">
         <ProductToCart
+          url={product?.url}
+          _id={product?._id}
+          tombnailImg={product?.tombnailImg}
           type={product?.type}
           price={product?.price}
           general_info={product?.general_info}

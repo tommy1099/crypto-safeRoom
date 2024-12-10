@@ -127,24 +127,73 @@ export interface CardProps extends PropsWithChildren {
     _id: string;
   };
 
-  export interface userState {
-    pic?: string;
-    email: {email: string; confirm: boolean;};
+export interface userState {
+  username: string;
+password: string;
+email: {
+  confirm: boolean;
+  email: string;
+  emailToken: {
+    confirmationToken: string;
+    isUsedToken: string;
+  };
+};
+orders: {
+  userInfo: {
     username: string;
-    plan: {
-      remaining: number;
-      maxDays: number;
-      type: string;
+    userID: string;
+    shippingAddress: {
+      firstname: string;
+      lastname: string;
+      town: string;
+      city: string;
+      zipCode: string;
+      address: string;
+      phone: string;
     };
-    firstname?: string;
-    lastname?: string;
-    refcode: {userCode: string; enteredCodes: string[]};
-    phone?: string;
-    orders: orders[];
-    role: string;
-    ban: boolean;
-  }
-
+  };
+  orderDate: Date;
+  paymentMethod: {
+    paid: boolean;
+    method: string;
+  };
+  productName: {
+    id: string;
+    title: string;
+    price: number;
+    img?: string;
+  }[];
+  totalPrice: number;
+  userNote?: string;
+  status: string;
+}[];
+favorite: string[];
+addresses: {
+  firstname: string;
+  lastname: string;
+  city: string;
+  town: string;
+  zipCode: string;
+  address: string;
+  phone: string;
+}[];
+firstname: string;
+lastname: string;
+phone: string;
+refreshToken: string;
+role: string;
+ban: boolean;
+}
+  
+export interface IUserAddress {
+    firstname: string;
+    lastname: string;
+    city: string;
+    town: string;
+    zipCode: string;
+    address: string;
+    phone: string;
+}
   export interface RadialProgressProps extends PropsWithChildren {
     value: number;
     style: { textColor: string; pathColor: string; trailColor: string };
@@ -267,3 +316,113 @@ export interface CardProps extends PropsWithChildren {
       desc1: string;
     };
   };
+  export interface IDropDown_normal extends PropsWithChildren {
+    where: string;
+    name: string;
+
+  }
+  export interface IProduct {
+    _id?: string;
+    url?: string;
+    type?: string;
+    general_info?: {
+      name?: string;
+      sex?: string;
+      kind?: string;
+      quantity?: number;
+      stock?: {in_stock: boolean, quantity: number};
+      height?: number;
+      size?: string;
+      // Pants and Clothes specific properties
+      collar_to_sleeve?: number;
+      armpit_to_armpit?: number;
+      waist?: number;
+      waist_to_crotch?: number;
+      crotch_to_thigh?: number;
+    }
+
+    detailedInfo?: {
+      isKid?: boolean;
+      brand?: string;
+      hat?: boolean;
+      waterproof?: boolean;
+      water_resistance?: boolean;
+      waist_fixation?: boolean;
+      country?: string;
+      color?: string;
+      number_of_pockets?: number;
+      damage?: boolean;
+    }
+
+    tags?: { 
+      tag1?: string; 
+      tag2?: string; 
+      tag3?: string;
+    };
+    price?: {
+      
+      off?: boolean;
+      price_before?: number;
+      price_after?: number;
+    };
+    texture?: string;
+    tombnailImg?: string; 
+    img?: string[]; 
+    video?: string[]; 
+    createdAt?: Date;
+  
+
+  }
+  export interface ISuggestions {
+    data: IProduct[];
+    showLoading: boolean;
+    nothingFound: boolean;
+  }
+
+export interface IFeatureCardProps {
+  place: string;
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+export interface IBrandCardProps{
+  img: string;
+}
+export interface DiscountedItems {
+  discountedClothes: IProduct[];
+  discountedPants: IProduct[];
+}
+export interface ISearch {
+  handleBlurToggleFromChild: (data: boolean) => void
+}
+export interface IProductsSearch {
+  query: string;
+  sortValue: string; 
+  handlerNumberOfProducts: (num: number) => void;
+  filters?: Record<string, FilterOption[]>;
+  page: number;
+  limit: number;
+  where: string;
+}
+export interface ISortedSearch {
+  query: string;
+  handlerSortValueFromChild: (value: string) => void;
+  numberOfProducts: number;
+  toggleSidebar: ()=> void;
+  isSidebarOpen: boolean;
+
+}
+export interface SortOption {
+  [key: string]: (a: IProduct, b: IProduct) => number;
+}
+export   interface FilterOption {
+  id: string;
+  label: string;
+}
+export interface IRightSideSearchPageMenu {
+  isSidebarOpen: boolean;
+  handleSendFiltersFromChild: (filters: Record<string, FilterOption[]>) => void;
+}
+export interface ICheckoutSummary {
+  shippingPrice: number;
+}

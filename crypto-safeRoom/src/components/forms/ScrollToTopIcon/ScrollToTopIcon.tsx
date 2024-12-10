@@ -28,7 +28,7 @@ const ScrollToTopIcon = () => {
     };
   }, []);
   const returnStyle = () => {
-    return `    'inline-flex items-center p-3 text-white bg-primary rounded-full shadow-sm transition-opacity hover:bg-orange-200 focus:ring-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2'
+    return `    'inline-flex items-center p-3 text-white bg-primary rounded-full shadow-sm transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2'
     ${isVisible ? "opacity-100" : "opacity-0"}`;
   };
   return (

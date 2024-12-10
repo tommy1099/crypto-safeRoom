@@ -7,12 +7,11 @@ import { useTranslation } from "react-i18next";
 import "react-modern-drawer/dist/index.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Store/Store";
+import { DropDown_normal, Dropdown } from "../../ui";
 
 const HamSideBar = () => {
   const { t } = useTranslation();
-  const signalIndicator = useSelector(
-    (state: RootState) => state.signalIndicator.signalIndicator
-  );
+
   const [isOpen, setIsOpen] = React.useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -30,7 +29,7 @@ const HamSideBar = () => {
       >
         <div
           dir={`${isFa ? "rtl" : "ltr"}`}
-          className="flex flex-col gap-5 justify-center items-center space-x-4 min-h-full bg-base-100"
+          className="flex flex-col gap-5 justify-center items-start px-4 space-x-4 min-h-full bg-base-100"
         >
           <span className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"></span>
           <Link
@@ -40,53 +39,106 @@ const HamSideBar = () => {
             {t("home")}
           </Link>
           <Link
-            to="/news"
+            to="/"
             className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
-            {t("news")}
+            {t("فروش ویژه")}
           </Link>
-          <div className="group">
+          <DropDown_normal name={"زنانه"}>
             <Link
-              to="/signals"
-              className="flex gap-1 items-center px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
             >
-              {signalIndicator && (
-                <div className="relative badge badge-primary badge-xs group-hover:bg-white">
-                  <div className="absolute animate-ping badge badge-primary group-hover:bg-white badge-xs"></div>
-                </div>
-              )}
-              {t("signals")}
+              {"بادگیر"}
             </Link>
-          </div>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"شلوار"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"وینداستاپر"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"تی شرت"}
+            </Link>
+          </DropDown_normal>
+          <DropDown_normal name={"مردانه"}>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"بادگیر"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"شلوار"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"وینداستاپر"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"تی شرت"}
+            </Link>
+          </DropDown_normal>
+          <DropDown_normal name={"بچه گانه"}>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"بادگیر"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"شلوار"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"وینداستاپر"}
+            </Link>
+            <Link
+              to="/product"
+              className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
+            >
+              {"تی شرت"}
+            </Link>
+          </DropDown_normal>
           <Link
-            to="/exam"
+            to="/"
             className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
-            {t("exam")}
+            {t("پیگیری")}
           </Link>
           <Link
-            to="/tutorials?cat=All"
+            to="/"
             className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
-            {t("tutorials")}
+            {t("تماس با ما")}
           </Link>
           <Link
-            to="/product"
+            to="/"
             className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
           >
-            {t("products")}
-          </Link>
-          <Link
-            to="/stats"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-          >
-            {t("stats")}
-          </Link>
-          <Link
-            to="/plans"
-            className="px-3 py-2 text-lg font-medium rounded-md transition-all text-neutral hover:bg-primary hover:text-secondary"
-          >
-            {t("plans")}
+            {t("درباره ما")}
           </Link>
         </div>
       </Drawer>

@@ -44,7 +44,7 @@ const LiveChat: React.FC = () => {
     document.head.appendChild(script);
   }, []);
 
-  return <></>; // or any other placeholder you want
+  return <></>;
 };
 
 export default LiveChat;

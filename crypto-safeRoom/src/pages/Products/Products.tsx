@@ -1,53 +1,90 @@
-import { NavBar, Footer, Button } from "../../components/ui";
-import { Container } from "..";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Footer, NavBar, RightSideSearchPageeMenu } from "../../components/ui";
+import { ScrollToTopIcon } from "../../components/forms";
+import { useSearchParams } from "react-router-dom";
+import ProductsSearchPage from "../SearchPage/ProductsSearchPage";
+import SortSearchPage from "../SearchPage/SortSearchPage";
+import { FilterOption } from "@/Interfaces/Interfaces";
 
-import { Catagories } from "../../components/forms";
 const Products = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [numberOfProducts, setNumberOfProducts] = useState(0);
+  const [sortValue, setSortValue] = useState("");
+  const [query, setQuery] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [filters, setFilters] = useState<Record<string, FilterOption[]>>();
+  const [currectPage] = useState(1);
+  useEffect(() => {
+    const queryParam = searchParams.get("q");
+    if (queryParam) {
+      setQuery(queryParam);
+    }
+    // setSearchParams("");
+    console.log("query...", searchParams);
+  }, [query, searchParams, setSearchParams]);
+  const handlerSortValueFromChild = (value: string) => {
+    setSortValue(value);
+  };
+  const handlerNumberOfProducts = (num: number) => {
+    setNumberOfProducts(num);
+  };
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+  const handleSendFiltersFromChild = (data: Record<string, FilterOption[]>) => {
+    setFilters(data);
+  };
+  // const handlerIncPageNum = () => {
+  //   setCurrentPage((prev) =>
+  //     prev <= Math.floor(numberOfProducts / 10) ? prev + 1 : prev
+  //   );
+  // };
+
+  // const handlerDecPageNum = () => {
+  //   setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  // };
+
   return (
     <div className="">
       <NavBar />
-      <Catagories />
-      <Container
-        dir="ltr"
-        style=" grid  lg:grid-cols-4 mt-10 mb-[97px] mt-[10%]"
-      >
-        <Link
-          className="m-5 text-[50px] flex justify-center h-[400px] bg-gradient-to-r from-slate-500 to-white"
-          to="/"
-        >
-          <Button onClick={() => {}} style="">
-            Miners
-          </Button>
-        </Link>
-        <Link
-          className="m-5 text-[50px] flex justify-center h-[400px] bg-gradient-to-r from-slate-500 to-white"
-          to="/product/accessories"
-        >
-          <Button onClick={() => {}} style="">
-            Accessories
-          </Button>
-        </Link>
-        <Link
-          className="m-5 text-[50px] flex justify-center h-[400px] bg-gradient-to-r from-slate-500 to-white"
-          to="/product/wallet"
-        >
-          <Button onClick={() => {}} style="">
-            Wallet
-          </Button>
-        </Link>
-        <Link
-          className="m-5 text-[50px] flex justify-center h-[400px] bg-gradient-to-r from-slate-500 to-white"
-          to="/product/tutorial_packages"
-        >
-          <Button onClick={() => {}} style="">
-            Tutorial Packs
-          </Button>
-        </Link>
-      </Container>
 
-      <div className="">
+      <div className="flex justify-center mt-[5%]">
+        <div className=" overflow-x-auto md:w-[82%] h-full">
+          <SortSearchPage
+            isSidebarOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+            handlerSortValueFromChild={handlerSortValueFromChild}
+            query={query}
+            numberOfProducts={numberOfProducts}
+          />
+          <ProductsSearchPage
+            where={"search"}
+            limit={10}
+            page={currectPage}
+            filters={filters}
+            query={query}
+            sortValue={sortValue}
+            handlerNumberOfProducts={handlerNumberOfProducts}
+          />
+          {/* <div className="flex justify-center items-center mt-24 ml-[10%] text-center">
+            <PaginationButtons
+              isLoaded={false}
+              currentPage={currectPage}
+              decPage={handlerDecPageNum}
+              incPage={handlerIncPageNum}
+            />
+          </div> */}
+        </div>
+        <RightSideSearchPageeMenu
+          handleSendFiltersFromChild={handleSendFiltersFromChild}
+          isSidebarOpen={isSidebarOpen}
+        />
+      </div>
+      <div className="w-screen">
         <Footer />
+      </div>
+      <div className="fixed bottom-4 left-4">
+        <ScrollToTopIcon />
       </div>
     </div>
   );

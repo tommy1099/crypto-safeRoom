@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BackendAddress } from "../../../../utils/BackendAddress/BackendAddress";
 import React, { useState, FormEvent, useEffect } from "react";
-// import { z } from "zod";
+import logo from "../../../../assets/img/logos/Picsart_23-10-31_00-04-43-079.png";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,7 +29,6 @@ const SignupForm = () => {
   const [error, setError] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
-  const isDarkTheme = useSelector((state: RootState) => state.themeToggle.Dark);
   const isFa = useSelector((state: RootState) => state.lang.isFa);
   const [formDataState, setFormDataState] = useState<ISignupForm>({
     username: "",
@@ -140,7 +139,7 @@ const SignupForm = () => {
                 })
                 .then((data) => {
                   dispatch(setUser(data));
-                  navigate("/signals?toggle=true");
+                  navigate("/");
                 })
                 .catch(() => {
                   navigate("/auth/signup");
@@ -188,14 +187,7 @@ const SignupForm = () => {
         <div className="w-full max-w-sm shadow-2xl card shrink-0 bg-base-100">
           <div className="flex justify-center items-center mt-5">
             <Link to="/" className="flex w-[190px] items-center justify-center">
-              <img
-                src={`${
-                  isDarkTheme
-                    ? "../../../src/assets/img/logoDark212121.png"
-                    : "../../../src/assets/img/logo.png"
-                }`}
-                alt="LOGO"
-              />
+              <img src={logo} alt="LOGO" />
             </Link>
           </div>
           <form onSubmit={handleSubmit} className="card-body">

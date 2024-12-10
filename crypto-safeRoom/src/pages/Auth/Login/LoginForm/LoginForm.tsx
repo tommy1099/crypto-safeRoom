@@ -81,8 +81,8 @@ const LoginForm = () => {
             }
             const contentType = response.headers.get("Content-Type");
             if (contentType && contentType.includes("application/json")) {
-              const data = await response.json();
-              dispatch(setUser(data));
+              const { user } = await response.json();
+              dispatch(setUser(user));
             } else {
               // Handle non-JSON responses here
               throw new Error("Invalid response format: expected JSON");

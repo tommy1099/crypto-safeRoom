@@ -1,5 +1,6 @@
 export function formatNumberToPersian(input: number | string): string {
   const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
+  const thousandSeparator = "،";
 
   // Convert only if the input is a number or a string containing numbers
   if (typeof input !== 'number' && !/^\d+$/.test(input)) {
@@ -12,5 +13,5 @@ export function formatNumberToPersian(input: number | string): string {
   }
 
   // If the input is a number or a string containing only numbers, convert the numbers
-  return input.toString().replace(/\d/g, match => persianDigits[parseInt(match, 10)]).replace(/\//g, '۔');
+  return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator).replace(/\d/g, match => persianDigits[parseInt(match, 10)]).replace(/\//g, '۔');
 }

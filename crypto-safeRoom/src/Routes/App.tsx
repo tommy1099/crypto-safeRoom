@@ -1,25 +1,14 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import WelcomePage from "../pages/WelcomePage/WelcomePage";
-import {
-  Contact,
-  NotFound,
-  Signals,
-  News,
-  Products,
-  Tutorials,
-  Checkout,
-  Profile,
-  Stats,
-  Plans,
-  Home,
-} from "../pages";
+import { Contact, NotFound, Checkout, Profile, Home } from "../pages";
 import { AdminApp, ProductApp, AuthApp } from ".";
-import { Exam } from "../components/forms";
-// import { BackgroundPattern } from "./components/ui";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../Store/Store";
 import { useTranslation } from "react-i18next";
 import "../Locales/fonts.css";
+// import { LiveChat } from "../components/Features";
+import { MobileMenuBar, SearchPage } from "../components/ui";
+import { useMediaQuery } from "react-responsive";
 
 function App() {
   const { i18n } = useTranslation();
@@ -28,52 +17,34 @@ function App() {
   const isLoggedin = useSelector(
     (state: RootState) => state.isLoggedin.isLoggedin
   );
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   return (
     <div
-      className={`text-lg ${
+      className={`text-lg  ${
         currentLanguage === "en" ? "font-english" : "font-farsi"
       }`}
       data-theme={isDarkTheme ? "dark" : "light"}
     >
-      {/* <BackgroundPattern /> */}
+      {isMobile && <MobileMenuBar />}
+      {/* <LiveChat /> */}
       <Routes>
-        <Route path="/plans" element={<Plans />} />
-        <Route path="/stats" element={<Stats />} />
         <Route path="/admin/*" element={<AdminApp />} />
-        <Route path="/product" element={<Products />} />
-
         <Route path="/product/*" element={<ProductApp />} />
-
+        <Route path="/search/product/*" element={<ProductApp />} />
         <Route
           path="/auth/*"
-          element={isLoggedin ? <Navigate to="/signals" /> : <AuthApp />}
+          element={isLoggedin ? <Navigate to="/" /> : <AuthApp />}
         />
-
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/checkout" element={<Checkout />} />
-
-        <Route
-          //<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdQ7nj5Qi-mn4UEobqNEKk2xg_FioEFt7w8hVPBN1OWAh1_uw/viewform?embedded=true" width="640" height="1027" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-          path="/exam"
-          element={
-            <Exam
-              src="https://forms.gle/KFkDmKJMSTJfaUNz9"
-              width={640}
-              height={2000}
-            />
-          }
-        />
-
-        <Route path="/news" element={<News />} />
-        <Route path="/tutorials" element={<Tutorials />} />
-
-        <Route path="/signals" element={<Signals />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/welcome" element={<WelcomePage />} />
-
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="/notfound" element={<NotFound />} /> */
+        /*{" "}
+        <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </div>
   );
